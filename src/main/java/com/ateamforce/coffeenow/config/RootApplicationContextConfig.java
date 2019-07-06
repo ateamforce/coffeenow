@@ -17,9 +17,9 @@ public class RootApplicationContextConfig {
 
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             dataSource.setUrl(
-              "jdbc:mysql://localhost:3306/coffeenow"); 
+              "jdbc:mysql://localhost:3306/coffenow5?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false"); 
 
             return dataSource;
 	}
