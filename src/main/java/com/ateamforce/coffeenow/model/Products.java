@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -64,7 +66,10 @@ public class Products implements Serializable {
     private String image;
     @ManyToMany(mappedBy = "productsCollection")
     private Collection<Clients> clientsCollection;
-    @ManyToMany(mappedBy = "productsCollection")
+    @JoinTable(name = "productcategories_products", joinColumns = {
+        @JoinColumn(name = "productid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "categoryid", referencedColumnName = "id")})
+    @ManyToMany
     private Collection<Productcategories> productcategoriesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
     private Collection<OrdersProducts> ordersProductsCollection;

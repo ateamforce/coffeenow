@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -60,10 +58,7 @@ public class Productcategories implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @JoinTable(name = "productcategories_products", joinColumns = {
-        @JoinColumn(name = "categoryid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "productid", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "productcategoriesCollection")
     private Collection<Products> productsCollection;
     @ManyToMany(mappedBy = "productcategoriesCollection")
     private Collection<Extrascategories> extrascategoriesCollection;
