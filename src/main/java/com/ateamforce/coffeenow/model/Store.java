@@ -109,7 +109,7 @@ public class Store extends AppUser {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
     private Collection<StoreExtra> storesExtrasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeid")
-    private Collection<Storemedia> storemediaCollection;
+    private Collection<StoreMedia> storemediaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
     private Collection<StoreProduct> storesProductsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
@@ -241,11 +241,11 @@ public class Store extends AppUser {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Storemedia> getStoremediaCollection() {
+    public Collection<StoreMedia> getStoremediaCollection() {
         return storemediaCollection;
     }
 
-    public void setStoremediaCollection(Collection<Storemedia> storemediaCollection) {
+    public void setStoremediaCollection(Collection<StoreMedia> storemediaCollection) {
         this.storemediaCollection = storemediaCollection;
     }
 

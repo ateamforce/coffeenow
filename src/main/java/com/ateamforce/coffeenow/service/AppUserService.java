@@ -17,4 +17,6 @@ public interface AppUserService {
     
     void deleteAppUser(AppUser appUser);
     
+    AppUser getUserByEmail(String email);
+    
 }

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AppUserServiceImplementation implements AppUserService {
-    
+
     @Autowired
     AppUserRepository appUserRepository;
 
@@ -30,5 +30,10 @@ public class AppUserServiceImplementation implements AppUserService {
     public void deleteAppUser(AppUser appUser) {
         appUserRepository.delete(appUser);
     }
-    
+
+    @Override
+    public AppUser getUserByEmail(String email) {
+        return appUserRepository.findfindByEmail(email);
+    }
+
 }

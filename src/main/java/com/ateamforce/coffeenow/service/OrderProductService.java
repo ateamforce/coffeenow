@@ -13,7 +13,7 @@ import com.ateamforce.coffeenow.model.OrderProduct;
  */
 public interface OrderProductService {
     
-    void addOrderPoduct(OrderProduct orderProduct);
+    void addOrderProduct(OrderProduct orderProduct);
     
     void deleteOrderProduct(OrderProduct orderProduct);
     

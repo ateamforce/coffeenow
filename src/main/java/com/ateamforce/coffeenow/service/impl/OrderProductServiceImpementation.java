@@ -22,7 +22,7 @@ public class OrderProductServiceImpementation implements OrderProductService  {
     OrderProductRepository orderProductRepository;
 
     @Override
-    public void addOrderPoduct(OrderProduct orderProduct) {
+    public void addOrderProduct(OrderProduct orderProduct) {
         orderProductRepository.save(orderProduct);
     }
 

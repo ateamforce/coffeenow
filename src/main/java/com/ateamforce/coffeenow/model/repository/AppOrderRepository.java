@@ -16,4 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppOrderRepository extends JpaRepository<AppOrder,Integer> {
     
+    
 }
