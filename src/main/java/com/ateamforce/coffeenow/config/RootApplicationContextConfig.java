@@ -15,7 +15,7 @@ public class RootApplicationContextConfig {
 	public DataSource dataSource() {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            dataSource.setDriverClassName("com.mysql.jdbc.Driver");
             dataSource.setUsername("root");
             dataSource.setPassword("root");
             dataSource.setUrl(
