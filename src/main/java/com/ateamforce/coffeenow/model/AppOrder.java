@@ -37,11 +37,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "orders")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o")
-    , @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id")
-    , @NamedQuery(name = "Order.findByMode", query = "SELECT o FROM Order o WHERE o.mode = :mode")
-    , @NamedQuery(name = "Order.findByTotal", query = "SELECT o FROM Order o WHERE o.total = :total")
-    , @NamedQuery(name = "Order.findByDate", query = "SELECT o FROM Order o WHERE o.date = :date")})
+    @NamedQuery(name = "AppOrder.findAll", query = "SELECT o FROM AppOrder o")
+    , @NamedQuery(name = "AppOrder.findById", query = "SELECT o FROM AppOrder o WHERE o.id = :id")
+    , @NamedQuery(name = "AppOrder.findByMode", query = "SELECT o FROM AppOrder o WHERE o.mode = :mode")
+    , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT o FROM AppOrder o WHERE o.total = :total")
+    , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})
 public class AppOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

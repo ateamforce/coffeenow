@@ -5,7 +5,7 @@
  */
 package com.ateamforce.coffeenow.model.repository;
 
-import com.ateamforce.coffeenow.model.AppUser;
+import com.ateamforce.coffeenow.model.OrderProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author alexa
  */
 @Repository
-public interface AppUserRepository extends JpaRepository<AppUser,Integer> {
-    
-    
+public interface OrderProductRepository extends JpaRepository<OrderProduct,Integer> {
     
 }
