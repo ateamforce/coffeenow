@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,12 +26,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author alexa
  */
 @Entity
-@Table(name = "orders_products")
+@Table(name = "clientmedia")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrdersProducts.findAll", query = "SELECT o FROM OrdersProducts o")
-    , @NamedQuery(name = "OrdersProducts.findById", query = "SELECT o FROM OrdersProducts o WHERE o.id = :id")})
-public class OrdersProducts implements Serializable {
+    @NamedQuery(name = "ClientMedia.findAll", query = "SELECT c FROM ClientMedia c")
+    , @NamedQuery(name = "ClientMedia.findById", query = "SELECT c FROM ClientMedia c WHERE c.id = :id")
+    , @NamedQuery(name = "ClientMedia.findByFilename", query = "SELECT c FROM ClientMedia c WHERE c.filename = :filename")})
+public class ClientMedia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,21 +40,25 @@ public class OrdersProducts implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "extraid", referencedColumnName = "id")
-    @ManyToOne
-    private Extras extraid;
-    @JoinColumn(name = "orderid", referencedColumnName = "id")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "filename")
+    private String filename;
+    @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Orders orderid;
-    @JoinColumn(name = "productid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Products productid;
+    private Client clientid;
 
-    public OrdersProducts() {
+    public ClientMedia() {
     }
 
-    public OrdersProducts(Integer id) {
+    public ClientMedia(Integer id) {
         this.id = id;
+    }
+
+    public ClientMedia(Integer id, String filename) {
+        this.id = id;
+        this.filename = filename;
     }
 
     public Integer getId() {
@@ -62,28 +69,20 @@ public class OrdersProducts implements Serializable {
         this.id = id;
     }
 
-    public Extras getExtraid() {
-        return extraid;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setExtraid(Extras extraid) {
-        this.extraid = extraid;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
-    public Orders getOrderid() {
-        return orderid;
+    public Client getClientid() {
+        return clientid;
     }
 
-    public void setOrderid(Orders orderid) {
-        this.orderid = orderid;
-    }
-
-    public Products getProductid() {
-        return productid;
-    }
-
-    public void setProductid(Products productid) {
-        this.productid = productid;
+    public void setClientid(Client clientid) {
+        this.clientid = clientid;
     }
 
     @Override
@@ -96,10 +95,10 @@ public class OrdersProducts implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OrdersProducts)) {
+        if (!(object instanceof ClientMedia)) {
             return false;
         }
-        OrdersProducts other = (OrdersProducts) object;
+        ClientMedia other = (ClientMedia) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +107,7 @@ public class OrdersProducts implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.OrdersProducts[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Clientmedia[ id=" + id + " ]";
     }
     
 }

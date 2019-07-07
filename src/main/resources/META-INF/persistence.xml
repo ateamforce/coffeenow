@@ -2,21 +2,21 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.ateamforce_coffeenow_war_1.0PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.ateamforce.coffeenow.model.Orders</class>
-    <class>com.ateamforce.coffeenow.model.OrdersProducts</class>
-    <class>com.ateamforce.coffeenow.model.Ratings</class>
-    <class>com.ateamforce.coffeenow.model.Clientmedia</class>
-    <class>com.ateamforce.coffeenow.model.Extrascategories</class>
-    <class>com.ateamforce.coffeenow.model.Paymenttypes</class>
-    <class>com.ateamforce.coffeenow.model.Products</class>
     <class>com.ateamforce.coffeenow.model.Storemedia</class>
-    <class>com.ateamforce.coffeenow.model.Appusers</class>
-    <class>com.ateamforce.coffeenow.model.Productcategories</class>
-    <class>com.ateamforce.coffeenow.model.StoresExtras</class>
-    <class>com.ateamforce.coffeenow.model.Stores</class>
-    <class>com.ateamforce.coffeenow.model.Clients</class>
-    <class>com.ateamforce.coffeenow.model.StoresProducts</class>
-    <class>com.ateamforce.coffeenow.model.Extras</class>
+    <class>com.ateamforce.coffeenow.model.Client</class>
+    <class>com.ateamforce.coffeenow.model.Extra</class>
+    <class>com.ateamforce.coffeenow.model.OrderProduct</class>
+    <class>com.ateamforce.coffeenow.model.Product</class>
+    <class>com.ateamforce.coffeenow.model.Rating</class>
+    <class>com.ateamforce.coffeenow.model.Store</class>
+    <class>com.ateamforce.coffeenow.model.StoreExtra</class>
+    <class>com.ateamforce.coffeenow.model.StoreProduct</class>
+    <class>com.ateamforce.coffeenow.model.AppOrder</class>
+    <class>com.ateamforce.coffeenow.model.AppUser</class>
+    <class>com.ateamforce.coffeenow.model.ClientMedia</class>
+    <class>com.ateamforce.coffeenow.model.ExtraCategory</class>
+    <class>com.ateamforce.coffeenow.model.PaymentType</class>
+    <class>com.ateamforce.coffeenow.model.ProductCategory</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/coffeenow5?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"/>

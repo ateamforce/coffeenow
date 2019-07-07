@@ -16,31 +16,23 @@ import javax.validation.constraints.NotNull;
  * @author alexa
  */
 @Embeddable
-public class RatingsPK implements Serializable {
+public class StoreProductPK implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "clientid")
-    private int clientid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "storeid")
     private int storeid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "productid")
+    private int productid;
 
-    public RatingsPK() {
+    public StoreProductPK() {
     }
 
-    public RatingsPK(int clientid, int storeid) {
-        this.clientid = clientid;
+    public StoreProductPK(int storeid, int productid) {
         this.storeid = storeid;
-    }
-
-    public int getClientid() {
-        return clientid;
-    }
-
-    public void setClientid(int clientid) {
-        this.clientid = clientid;
+        this.productid = productid;
     }
 
     public int getStoreid() {
@@ -51,25 +43,33 @@ public class RatingsPK implements Serializable {
         this.storeid = storeid;
     }
 
+    public int getProductid() {
+        return productid;
+    }
+
+    public void setProductid(int productid) {
+        this.productid = productid;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) clientid;
         hash += (int) storeid;
+        hash += (int) productid;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RatingsPK)) {
+        if (!(object instanceof StoreProductPK)) {
             return false;
         }
-        RatingsPK other = (RatingsPK) object;
-        if (this.clientid != other.clientid) {
-            return false;
-        }
+        StoreProductPK other = (StoreProductPK) object;
         if (this.storeid != other.storeid) {
+            return false;
+        }
+        if (this.productid != other.productid) {
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ public class RatingsPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.RatingsPK[ clientid=" + clientid + ", storeid=" + storeid + " ]";
+        return "com.ateamforce.coffeenow.model.StoresProductsPK[ storeid=" + storeid + ", productid=" + productid + " ]";
     }
     
 }

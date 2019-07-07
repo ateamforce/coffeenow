@@ -17,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,13 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author alexa
  */
 @Entity
-@Table(name = "storemedia")
+@Table(name = "orders_products")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Storemedia.findAll", query = "SELECT s FROM Storemedia s")
-    , @NamedQuery(name = "Storemedia.findById", query = "SELECT s FROM Storemedia s WHERE s.id = :id")
-    , @NamedQuery(name = "Storemedia.findByFilename", query = "SELECT s FROM Storemedia s WHERE s.filename = :filename")})
-public class Storemedia implements Serializable {
+    @NamedQuery(name = "OrderProduct.findAll", query = "SELECT o FROM OrderProduct o")
+    , @NamedQuery(name = "OrderProduct.findById", query = "SELECT o FROM OrderProduct o WHERE o.id = :id")})
+public class OrderProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,25 +37,21 @@ public class Storemedia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "filename")
-    private String filename;
-    @JoinColumn(name = "storeid", referencedColumnName = "id")
+    @JoinColumn(name = "extraid", referencedColumnName = "id")
+    @ManyToOne
+    private Extra extraid;
+    @JoinColumn(name = "orderid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Store storeid;
+    private AppOrder orderid;
+    @JoinColumn(name = "productid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Product productid;
 
-    public Storemedia() {
+    public OrderProduct() {
     }
 
-    public Storemedia(Integer id) {
+    public OrderProduct(Integer id) {
         this.id = id;
-    }
-
-    public Storemedia(Integer id, String filename) {
-        this.id = id;
-        this.filename = filename;
     }
 
     public Integer getId() {
@@ -69,20 +62,28 @@ public class Storemedia implements Serializable {
         this.id = id;
     }
 
-    public String getFilename() {
-        return filename;
+    public Extra getExtraid() {
+        return extraid;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setExtraid(Extra extraid) {
+        this.extraid = extraid;
     }
 
-    public Store getStoreid() {
-        return storeid;
+    public AppOrder getOrderid() {
+        return orderid;
     }
 
-    public void setStoreid(Store storeid) {
-        this.storeid = storeid;
+    public void setOrderid(AppOrder orderid) {
+        this.orderid = orderid;
+    }
+
+    public Product getProductid() {
+        return productid;
+    }
+
+    public void setProductid(Product productid) {
+        this.productid = productid;
     }
 
     @Override
@@ -95,10 +96,10 @@ public class Storemedia implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Storemedia)) {
+        if (!(object instanceof OrderProduct)) {
             return false;
         }
-        Storemedia other = (Storemedia) object;
+        OrderProduct other = (OrderProduct) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +108,7 @@ public class Storemedia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Storemedia[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.OrdersProducts[ id=" + id + " ]";
     }
     
 }

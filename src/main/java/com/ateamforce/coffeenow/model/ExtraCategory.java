@@ -30,14 +30,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
-@Table(name = "paymenttypes")
+@Table(name = "extrascategories")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Paymenttypes.findAll", query = "SELECT p FROM Paymenttypes p")
-    , @NamedQuery(name = "Paymenttypes.findById", query = "SELECT p FROM Paymenttypes p WHERE p.id = :id")
-    , @NamedQuery(name = "Paymenttypes.findByTitle", query = "SELECT p FROM Paymenttypes p WHERE p.title = :title")
-    , @NamedQuery(name = "Paymenttypes.findByImage", query = "SELECT p FROM Paymenttypes p WHERE p.image = :image")})
-public class Paymenttypes implements Serializable {
+    @NamedQuery(name = "ExtraCategory.findAll", query = "SELECT e FROM ExtraCategory e")
+    , @NamedQuery(name = "ExtraCategory.findById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :id")
+    , @NamedQuery(name = "ExtraCategory.findByTitle", query = "SELECT e FROM ExtraCategory e WHERE e.title = :title")
+    , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")
+    , @NamedQuery(name = "ExtraCategory.findByImage", query = "SELECT e FROM ExtraCategory e WHERE e.image = :image")})
+public class ExtraCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,30 +48,37 @@ public class Paymenttypes implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 255)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Column(name = "parent")
+    private int parent;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @JoinTable(name = "stores_paymenttypes", joinColumns = {
-        @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "storeid", referencedColumnName = "id")})
+    @ManyToMany(mappedBy = "extrascategoriesCollection")
+    private Collection<Extra> extrasCollection;
+    @JoinTable(name = "extras_products", joinColumns = {
+        @JoinColumn(name = "extracategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Stores> storesCollection;
+    private Collection<ProductCategory> productcategoriesCollection;
 
-    public Paymenttypes() {
+    public ExtraCategory() {
     }
 
-    public Paymenttypes(Integer id) {
+    public ExtraCategory(Integer id) {
         this.id = id;
     }
 
-    public Paymenttypes(Integer id, String title, String image) {
+    public ExtraCategory(Integer id, String title, int parent, String image) {
         this.id = id;
         this.title = title;
+        this.parent = parent;
         this.image = image;
     }
 
@@ -90,6 +98,14 @@ public class Paymenttypes implements Serializable {
         this.title = title;
     }
 
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
     public String getImage() {
         return image;
     }
@@ -100,12 +116,22 @@ public class Paymenttypes implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Stores> getStoresCollection() {
-        return storesCollection;
+    public Collection<Extra> getExtrasCollection() {
+        return extrasCollection;
     }
 
-    public void setStoresCollection(Collection<Stores> storesCollection) {
-        this.storesCollection = storesCollection;
+    public void setExtrasCollection(Collection<Extra> extrasCollection) {
+        this.extrasCollection = extrasCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<ProductCategory> getProductcategoriesCollection() {
+        return productcategoriesCollection;
+    }
+
+    public void setProductcategoriesCollection(Collection<ProductCategory> productcategoriesCollection) {
+        this.productcategoriesCollection = productcategoriesCollection;
     }
 
     @Override
@@ -118,10 +144,10 @@ public class Paymenttypes implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Paymenttypes)) {
+        if (!(object instanceof ExtraCategory)) {
             return false;
         }
-        Paymenttypes other = (Paymenttypes) object;
+        ExtraCategory other = (ExtraCategory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -130,7 +156,7 @@ public class Paymenttypes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Paymenttypes[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + " ]";
     }
     
 }

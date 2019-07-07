@@ -31,19 +31,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ratings")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ratings.findAll", query = "SELECT r FROM Ratings r")
-    , @NamedQuery(name = "Ratings.findByClientid", query = "SELECT r FROM Ratings r WHERE r.ratingsPK.clientid = :clientid")
-    , @NamedQuery(name = "Ratings.findByStoreid", query = "SELECT r FROM Ratings r WHERE r.ratingsPK.storeid = :storeid")
-    , @NamedQuery(name = "Ratings.findByRatingQuality", query = "SELECT r FROM Ratings r WHERE r.ratingQuality = :ratingQuality")
-    , @NamedQuery(name = "Ratings.findByRatingSpeed", query = "SELECT r FROM Ratings r WHERE r.ratingSpeed = :ratingSpeed")
-    , @NamedQuery(name = "Ratings.findByRatingService", query = "SELECT r FROM Ratings r WHERE r.ratingService = :ratingService")
-    , @NamedQuery(name = "Ratings.findByRatingdate", query = "SELECT r FROM Ratings r WHERE r.ratingdate = :ratingdate")
-    , @NamedQuery(name = "Ratings.findByAnswerdate", query = "SELECT r FROM Ratings r WHERE r.answerdate = :answerdate")})
-public class Ratings implements Serializable {
+    @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r")
+    , @NamedQuery(name = "Rating.findByClientid", query = "SELECT r FROM Rating r WHERE r.ratingPK.clientid = :clientid")
+    , @NamedQuery(name = "Rating.findByStoreid", query = "SELECT r FROM Rating r WHERE r.ratingPK.storeid = :storeid")
+    , @NamedQuery(name = "Rating.findByRatingQuality", query = "SELECT r FROM Rating r WHERE r.ratingQuality = :ratingQuality")
+    , @NamedQuery(name = "Rating.findByRatingpeed", query = "SELECT r FROM Rating r WHERE r.ratingSpeed = :ratingSpeed")
+    , @NamedQuery(name = "Rating.findByRatingervice", query = "SELECT r FROM Rating r WHERE r.ratingService = :ratingService")
+    , @NamedQuery(name = "Rating.findByRatingdate", query = "SELECT r FROM Rating r WHERE r.ratingdate = :ratingdate")
+    , @NamedQuery(name = "Rating.findByAnswerdate", query = "SELECT r FROM Rating r WHERE r.answerdate = :answerdate")})
+public class Rating implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected RatingsPK ratingsPK;
+    protected RatingPK ratingPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "rating_quality")
@@ -74,36 +74,36 @@ public class Ratings implements Serializable {
     private Date answerdate;
     @JoinColumn(name = "clientid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Clients clients;
+    private Client clients;
     @JoinColumn(name = "storeid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Stores stores;
+    private Store stores;
 
-    public Ratings() {
+    public Rating() {
     }
 
-    public Ratings(RatingsPK ratingsPK) {
-        this.ratingsPK = ratingsPK;
+    public Rating(RatingPK ratingPK) {
+        this.ratingPK = ratingPK;
     }
 
-    public Ratings(RatingsPK ratingsPK, int ratingQuality, int ratingSpeed, int ratingService, Date ratingdate) {
-        this.ratingsPK = ratingsPK;
+    public Rating(RatingPK ratingsPK, int ratingQuality, int ratingSpeed, int ratingService, Date ratingdate) {
+        this.ratingPK = ratingsPK;
         this.ratingQuality = ratingQuality;
         this.ratingSpeed = ratingSpeed;
         this.ratingService = ratingService;
         this.ratingdate = ratingdate;
     }
 
-    public Ratings(int clientid, int storeid) {
-        this.ratingsPK = new RatingsPK(clientid, storeid);
+    public Rating(int clientid, int storeid) {
+        this.ratingPK = new RatingPK(clientid, storeid);
     }
 
-    public RatingsPK getRatingsPK() {
-        return ratingsPK;
+    public RatingPK getRatingsPK() {
+        return ratingPK;
     }
 
-    public void setRatingsPK(RatingsPK ratingsPK) {
-        this.ratingsPK = ratingsPK;
+    public void setRatingsPK(RatingPK ratingsPK) {
+        this.ratingPK = ratingsPK;
     }
 
     public int getRatingQuality() {
@@ -162,37 +162,37 @@ public class Ratings implements Serializable {
         this.answerdate = answerdate;
     }
 
-    public Clients getClients() {
+    public Client getClients() {
         return clients;
     }
 
-    public void setClients(Clients clients) {
+    public void setClients(Client clients) {
         this.clients = clients;
     }
 
-    public Stores getStores() {
+    public Store getStores() {
         return stores;
     }
 
-    public void setStores(Stores stores) {
+    public void setStores(Store stores) {
         this.stores = stores;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (ratingsPK != null ? ratingsPK.hashCode() : 0);
+        hash += (ratingPK != null ? ratingPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ratings)) {
+        if (!(object instanceof Rating)) {
             return false;
         }
-        Ratings other = (Ratings) object;
-        if ((this.ratingsPK == null && other.ratingsPK != null) || (this.ratingsPK != null && !this.ratingsPK.equals(other.ratingsPK))) {
+        Rating other = (Rating) object;
+        if ((this.ratingPK == null && other.ratingPK != null) || (this.ratingPK != null && !this.ratingPK.equals(other.ratingPK))) {
             return false;
         }
         return true;
@@ -200,7 +200,7 @@ public class Ratings implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Ratings[ ratingsPK=" + ratingsPK + " ]";
+        return "com.ateamforce.coffeenow.model.Ratings[ ratingsPK=" + ratingPK + " ]";
     }
     
 }

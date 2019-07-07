@@ -37,12 +37,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "orders")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
-    , @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id")
-    , @NamedQuery(name = "Orders.findByMode", query = "SELECT o FROM Orders o WHERE o.mode = :mode")
-    , @NamedQuery(name = "Orders.findByTotal", query = "SELECT o FROM Orders o WHERE o.total = :total")
-    , @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date")})
-public class Orders implements Serializable {
+    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o")
+    , @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.id = :id")
+    , @NamedQuery(name = "Order.findByMode", query = "SELECT o FROM Order o WHERE o.mode = :mode")
+    , @NamedQuery(name = "Order.findByTotal", query = "SELECT o FROM Order o WHERE o.total = :total")
+    , @NamedQuery(name = "Order.findByDate", query = "SELECT o FROM Order o WHERE o.date = :date")})
+public class AppOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,22 +65,22 @@ public class Orders implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderid")
-    private Collection<OrdersProducts> ordersProductsCollection;
+    private Collection<OrderProduct> ordersProductsCollection;
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne
-    private Clients clientid;
+    private Client clientid;
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
-    private Stores storeid;
+    private Store storeid;
 
-    public Orders() {
+    public AppOrder() {
     }
 
-    public Orders(Integer id) {
+    public AppOrder(Integer id) {
         this.id = id;
     }
 
-    public Orders(Integer id, String mode, float total, Date date) {
+    public AppOrder(Integer id, String mode, float total, Date date) {
         this.id = id;
         this.mode = mode;
         this.total = total;
@@ -121,27 +121,27 @@ public class Orders implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<OrdersProducts> getOrdersProductsCollection() {
+    public Collection<OrderProduct> getOrdersProductsCollection() {
         return ordersProductsCollection;
     }
 
-    public void setOrdersProductsCollection(Collection<OrdersProducts> ordersProductsCollection) {
+    public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
         this.ordersProductsCollection = ordersProductsCollection;
     }
 
-    public Clients getClientid() {
+    public Client getClientid() {
         return clientid;
     }
 
-    public void setClientid(Clients clientid) {
+    public void setClientid(Client clientid) {
         this.clientid = clientid;
     }
 
-    public Stores getStoreid() {
+    public Store getStoreid() {
         return storeid;
     }
 
-    public void setStoreid(Stores storeid) {
+    public void setStoreid(Store storeid) {
         this.storeid = storeid;
     }
 
@@ -155,10 +155,10 @@ public class Orders implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Orders)) {
+        if (!(object instanceof AppOrder)) {
             return false;
         }
-        Orders other = (Orders) object;
+        AppOrder other = (AppOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

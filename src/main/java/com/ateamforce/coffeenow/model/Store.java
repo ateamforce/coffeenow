@@ -5,13 +5,13 @@
  */
 package com.ateamforce.coffeenow.model;
 
-import java.io.Serializable;
+
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -31,28 +31,26 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
+@DiscriminatorValue("store")
 @Table(name = "stores")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Stores.findAll", query = "SELECT s FROM Stores s")
-    , @NamedQuery(name = "Stores.findById", query = "SELECT s FROM Stores s WHERE s.id = :id")
-    , @NamedQuery(name = "Stores.findByVat", query = "SELECT s FROM Stores s WHERE s.vat = :vat")
-    , @NamedQuery(name = "Stores.findByStorename", query = "SELECT s FROM Stores s WHERE s.storename = :storename")
-    , @NamedQuery(name = "Stores.findByContactname", query = "SELECT s FROM Stores s WHERE s.contactname = :contactname")
-    , @NamedQuery(name = "Stores.findByLogo", query = "SELECT s FROM Stores s WHERE s.logo = :logo")
-    , @NamedQuery(name = "Stores.findByPhone", query = "SELECT s FROM Stores s WHERE s.phone = :phone")
-    , @NamedQuery(name = "Stores.findByState", query = "SELECT s FROM Stores s WHERE s.state = :state")
-    , @NamedQuery(name = "Stores.findByZip", query = "SELECT s FROM Stores s WHERE s.zip = :zip")
-    , @NamedQuery(name = "Stores.findByLongitude", query = "SELECT s FROM Stores s WHERE s.longitude = :longitude")
-    , @NamedQuery(name = "Stores.findByLatitude", query = "SELECT s FROM Stores s WHERE s.latitude = :latitude")})
-public class Stores implements Serializable {
+    @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
+    , @NamedQuery(name = "Store.findById", query = "SELECT s FROM Store s WHERE s.id = :id")
+    , @NamedQuery(name = "Store.findByVat", query = "SELECT s FROM Store s WHERE s.vat = :vat")
+    , @NamedQuery(name = "Store.findByStorename", query = "SELECT s FROM Store s WHERE s.storename = :storename")
+    , @NamedQuery(name = "Store.findByContactname", query = "SELECT s FROM Store s WHERE s.contactname = :contactname")
+    , @NamedQuery(name = "Store.findByLogo", query = "SELECT s FROM Store s WHERE s.logo = :logo")
+    , @NamedQuery(name = "Store.findByPhone", query = "SELECT s FROM Store s WHERE s.phone = :phone")
+    , @NamedQuery(name = "Store.findByState", query = "SELECT s FROM Store s WHERE s.state = :state")
+    , @NamedQuery(name = "Store.findByZip", query = "SELECT s FROM Store s WHERE s.zip = :zip")
+    , @NamedQuery(name = "Store.findByLongitude", query = "SELECT s FROM Store s WHERE s.longitude = :longitude")
+    , @NamedQuery(name = "Store.findByLatitude", query = "SELECT s FROM Stores s WHERE s.latitude = :latitude")})
+public class Store extends AppUser {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
-    private Integer id;
+    
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "vat")
@@ -102,51 +100,26 @@ public class Stores implements Serializable {
     @Column(name = "latitude")
     private double latitude;
     @ManyToMany(mappedBy = "storesCollection")
-    private Collection<Clients> clientsCollection;
+    private Collection<Client> clientsCollection;
     @ManyToMany(mappedBy = "storesCollection")
-    private Collection<Paymenttypes> paymenttypesCollection;
+    private Collection<PaymentType> paymenttypesCollection;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Appusers appusers;
+    private AppUser appusers;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<StoresExtras> storesExtrasCollection;
+    private Collection<StoreExtra> storesExtrasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeid")
     private Collection<Storemedia> storemediaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<StoresProducts> storesProductsCollection;
+    private Collection<StoreProduct> storesProductsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<Ratings> ratingsCollection;
+    private Collection<Rating> ratingsCollection;
     @OneToMany(mappedBy = "storeid")
-    private Collection<Orders> ordersCollection;
+    private Collection<AppOrder> ordersCollection;
 
-    public Stores() {
+    public Store() {
     }
 
-    public Stores(Integer id) {
-        this.id = id;
-    }
-
-    public Stores(Integer id, long vat, String storename, String contactname, String logo, String phone, String address, String state, int zip, double longitude, double latitude) {
-        this.id = id;
-        this.vat = vat;
-        this.storename = storename;
-        this.contactname = contactname;
-        this.logo = logo;
-        this.phone = phone;
-        this.address = address;
-        this.state = state;
-        this.zip = zip;
-        this.longitude = longitude;
-        this.latitude = latitude;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public long getVat() {
         return vat;
@@ -230,39 +203,39 @@ public class Stores implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Clients> getClientsCollection() {
+    public Collection<Client> getClientsCollection() {
         return clientsCollection;
     }
 
-    public void setClientsCollection(Collection<Clients> clientsCollection) {
+    public void setClientsCollection(Collection<Client> clientsCollection) {
         this.clientsCollection = clientsCollection;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Paymenttypes> getPaymenttypesCollection() {
+    public Collection<PaymentType> getPaymenttypesCollection() {
         return paymenttypesCollection;
     }
 
-    public void setPaymenttypesCollection(Collection<Paymenttypes> paymenttypesCollection) {
+    public void setPaymenttypesCollection(Collection<PaymentType> paymenttypesCollection) {
         this.paymenttypesCollection = paymenttypesCollection;
     }
 
-    public Appusers getAppusers() {
+    public AppUser getAppusers() {
         return appusers;
     }
 
-    public void setAppusers(Appusers appusers) {
+    public void setAppusers(AppUser appusers) {
         this.appusers = appusers;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<StoresExtras> getStoresExtrasCollection() {
+    public Collection<StoreExtra> getStoresExtrasCollection() {
         return storesExtrasCollection;
     }
 
-    public void setStoresExtrasCollection(Collection<StoresExtras> storesExtrasCollection) {
+    public void setStoresExtrasCollection(Collection<StoreExtra> storesExtrasCollection) {
         this.storesExtrasCollection = storesExtrasCollection;
     }
 
@@ -278,57 +251,33 @@ public class Stores implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<StoresProducts> getStoresProductsCollection() {
+    public Collection<StoreProduct> getStoresProductsCollection() {
         return storesProductsCollection;
     }
 
-    public void setStoresProductsCollection(Collection<StoresProducts> storesProductsCollection) {
+    public void setStoresProductsCollection(Collection<StoreProduct> storesProductsCollection) {
         this.storesProductsCollection = storesProductsCollection;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Ratings> getRatingsCollection() {
+    public Collection<Rating> getRatingsCollection() {
         return ratingsCollection;
     }
 
-    public void setRatingsCollection(Collection<Ratings> ratingsCollection) {
+    public void setRatingsCollection(Collection<Rating> ratingsCollection) {
         this.ratingsCollection = ratingsCollection;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Orders> getOrdersCollection() {
+    public Collection<AppOrder> getOrdersCollection() {
         return ordersCollection;
     }
 
-    public void setOrdersCollection(Collection<Orders> ordersCollection) {
+    public void setOrdersCollection(Collection<AppOrder> ordersCollection) {
         this.ordersCollection = ordersCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Stores)) {
-            return false;
-        }
-        Stores other = (Stores) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.ateamforce.coffeenow.model.Stores[ id=" + id + " ]";
-    }
-    
+   
 }

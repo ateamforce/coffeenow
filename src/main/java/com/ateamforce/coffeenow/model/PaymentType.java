@@ -8,7 +8,6 @@ package com.ateamforce.coffeenow.model;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,14 +30,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
-@Table(name = "extras")
+@Table(name = "paymenttypes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Extras.findAll", query = "SELECT e FROM Extras e")
-    , @NamedQuery(name = "Extras.findById", query = "SELECT e FROM Extras e WHERE e.id = :id")
-    , @NamedQuery(name = "Extras.findByTitle", query = "SELECT e FROM Extras e WHERE e.title = :title")
-    , @NamedQuery(name = "Extras.findByImage", query = "SELECT e FROM Extras e WHERE e.image = :image")})
-public class Extras implements Serializable {
+    @NamedQuery(name = "PaymentType.findAll", query = "SELECT p FROM PaymentType p")
+    , @NamedQuery(name = "PaymentType.findById", query = "SELECT p FROM PaymentType p WHERE p.id = :id")
+    , @NamedQuery(name = "PaymentType.findByTitle", query = "SELECT p FROM PaymentType p WHERE p.title = :title")
+    , @NamedQuery(name = "PaymentType.findByImage", query = "SELECT p FROM PaymentType p WHERE p.image = :image")})
+public class PaymentType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,32 +47,28 @@ public class Extras implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 50)
     @Column(name = "image")
     private String image;
-    @JoinTable(name = "extrascategories_extras", joinColumns = {
-        @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "categoryid", referencedColumnName = "id")})
+    @JoinTable(name = "stores_paymenttypes", joinColumns = {
+        @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "storeid", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Extrascategories> extrascategoriesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "extras")
-    private Collection<StoresExtras> storesExtrasCollection;
-    @OneToMany(mappedBy = "extraid")
-    private Collection<OrdersProducts> ordersProductsCollection;
+    private Collection<Store> storesCollection;
 
-    public Extras() {
+    public PaymentType() {
     }
 
-    public Extras(Integer id) {
+    public PaymentType(Integer id) {
         this.id = id;
     }
 
-    public Extras(Integer id, String title, String image) {
+    public PaymentType(Integer id, String title, String image) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -106,32 +100,12 @@ public class Extras implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Extrascategories> getExtrascategoriesCollection() {
-        return extrascategoriesCollection;
+    public Collection<Store> getStoresCollection() {
+        return storesCollection;
     }
 
-    public void setExtrascategoriesCollection(Collection<Extrascategories> extrascategoriesCollection) {
-        this.extrascategoriesCollection = extrascategoriesCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<StoresExtras> getStoresExtrasCollection() {
-        return storesExtrasCollection;
-    }
-
-    public void setStoresExtrasCollection(Collection<StoresExtras> storesExtrasCollection) {
-        this.storesExtrasCollection = storesExtrasCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<OrdersProducts> getOrdersProductsCollection() {
-        return ordersProductsCollection;
-    }
-
-    public void setOrdersProductsCollection(Collection<OrdersProducts> ordersProductsCollection) {
-        this.ordersProductsCollection = ordersProductsCollection;
+    public void setStoresCollection(Collection<Store> storesCollection) {
+        this.storesCollection = storesCollection;
     }
 
     @Override
@@ -144,10 +118,10 @@ public class Extras implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Extras)) {
+        if (!(object instanceof PaymentType)) {
             return false;
         }
-        Extras other = (Extras) object;
+        PaymentType other = (PaymentType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -156,7 +130,7 @@ public class Extras implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Paymenttypes[ id=" + id + " ]";
     }
     
 }

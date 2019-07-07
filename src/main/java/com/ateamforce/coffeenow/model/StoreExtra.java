@@ -26,48 +26,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "stores_extras")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "StoresExtras.findAll", query = "SELECT s FROM StoresExtras s")
-    , @NamedQuery(name = "StoresExtras.findByStoreid", query = "SELECT s FROM StoresExtras s WHERE s.storesExtrasPK.storeid = :storeid")
-    , @NamedQuery(name = "StoresExtras.findByExtraid", query = "SELECT s FROM StoresExtras s WHERE s.storesExtrasPK.extraid = :extraid")
-    , @NamedQuery(name = "StoresExtras.findByPrice", query = "SELECT s FROM StoresExtras s WHERE s.price = :price")})
-public class StoresExtras implements Serializable {
+    @NamedQuery(name = "StoreExtra.findAll", query = "SELECT s FROM StoreExtra s")
+    , @NamedQuery(name = "StoreExtra.findByStoreid", query = "SELECT s FROM StoreExtra s WHERE s.storeExtraPK.storeid = :storeid")
+    , @NamedQuery(name = "StoreExtra.findByExtraid", query = "SELECT s FROM StoreExtra s WHERE s.storeExtraPK.extraid = :extraid")
+    , @NamedQuery(name = "StoreExtra.findByPrice", query = "SELECT s FROM StoreExtra s WHERE s.price = :price")})
+public class StoreExtra implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected StoresExtrasPK storesExtrasPK;
+    protected StoreExtraPK storeExtraPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "price")
     private float price;
     @JoinColumn(name = "extraid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Extras extras;
+    private Extra extras;
     @JoinColumn(name = "storeid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Stores stores;
+    private Store stores;
 
-    public StoresExtras() {
+    public StoreExtra() {
     }
 
-    public StoresExtras(StoresExtrasPK storesExtrasPK) {
-        this.storesExtrasPK = storesExtrasPK;
+    public StoreExtra(StoreExtraPK storeExtraPK) {
+        this.storeExtraPK = storeExtraPK;
     }
 
-    public StoresExtras(StoresExtrasPK storesExtrasPK, float price) {
-        this.storesExtrasPK = storesExtrasPK;
+    public StoreExtra(StoreExtraPK storeExtraPK, float price) {
+        this.storeExtraPK = storeExtraPK;
         this.price = price;
     }
 
-    public StoresExtras(int storeid, int extraid) {
-        this.storesExtrasPK = new StoresExtrasPK(storeid, extraid);
+    public StoreExtra(int storeid, int extraid) {
+        this.storeExtraPK = new StoreExtraPK(storeid, extraid);
     }
 
-    public StoresExtrasPK getStoresExtrasPK() {
-        return storesExtrasPK;
+    public StoreExtraPK getStoreExtraPK() {
+        return storeExtraPK;
     }
 
-    public void setStoresExtrasPK(StoresExtrasPK storesExtrasPK) {
-        this.storesExtrasPK = storesExtrasPK;
+    public void setStoreExtraPK(StoreExtraPK storeExtraPK) {
+        this.storeExtraPK = storeExtraPK;
     }
 
     public float getPrice() {
@@ -78,37 +78,37 @@ public class StoresExtras implements Serializable {
         this.price = price;
     }
 
-    public Extras getExtras() {
+    public Extra getExtras() {
         return extras;
     }
 
-    public void setExtras(Extras extras) {
+    public void setExtras(Extra extras) {
         this.extras = extras;
     }
 
-    public Stores getStores() {
+    public Store getStores() {
         return stores;
     }
 
-    public void setStores(Stores stores) {
+    public void setStores(Store stores) {
         this.stores = stores;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (storesExtrasPK != null ? storesExtrasPK.hashCode() : 0);
+        hash += (storeExtraPK != null ? storeExtraPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof StoresExtras)) {
+        if (!(object instanceof StoreExtra)) {
             return false;
         }
-        StoresExtras other = (StoresExtras) object;
-        if ((this.storesExtrasPK == null && other.storesExtrasPK != null) || (this.storesExtrasPK != null && !this.storesExtrasPK.equals(other.storesExtrasPK))) {
+        StoreExtra other = (StoreExtra) object;
+        if ((this.storeExtraPK == null && other.storeExtraPK != null) || (this.storeExtraPK != null && !this.storeExtraPK.equals(other.storeExtraPK))) {
             return false;
         }
         return true;
@@ -116,7 +116,7 @@ public class StoresExtras implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.StoresExtras[ storesExtrasPK=" + storesExtrasPK + " ]";
+        return "com.ateamforce.coffeenow.model.StoresExtra[ storeExtraPK=" + storeExtraPK + " ]";
     }
     
 }

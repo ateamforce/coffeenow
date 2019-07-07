@@ -9,10 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -25,17 +28,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author alexa
  */
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
+@DiscriminatorColumn(name = "role")
 @Table(name = "appusers")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Appusers.findAll", query = "SELECT a FROM Appusers a")
-    , @NamedQuery(name = "Appusers.findById", query = "SELECT a FROM Appusers a WHERE a.id = :id")
-    , @NamedQuery(name = "Appusers.findByEmail", query = "SELECT a FROM Appusers a WHERE a.email = :email")
-    , @NamedQuery(name = "Appusers.findByPassword", query = "SELECT a FROM Appusers a WHERE a.password = :password")
-    , @NamedQuery(name = "Appusers.findByKey", query = "SELECT a FROM Appusers a WHERE a.key = :key")
-    , @NamedQuery(name = "Appusers.findByRole", query = "SELECT a FROM Appusers a WHERE a.role = :role")})
-public class Appusers implements Serializable {
+    @NamedQuery(name = "AppUser.findAll", query = "SELECT a FROM AppUser a")
+    , @NamedQuery(name = "AppUser.findById", query = "SELECT a FROM AppUser a WHERE a.id = :id")
+    , @NamedQuery(name = "AppUser.findByEmail", query = "SELECT a FROM AppUser a WHERE a.email = :email")
+    , @NamedQuery(name = "AppUser.findByPassword", query = "SELECT a FROM AppUser a WHERE a.password = :password")
+    , @NamedQuery(name = "AppUser.findByKey", query = "SELECT a FROM AppUser a WHERE a.key = :key")
+    , @NamedQuery(name = "AppUser.findByRole", query = "SELECT a FROM AppUser a WHERE a.role = :role")})
+public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,18 +70,18 @@ public class Appusers implements Serializable {
     @Column(name = "role")
     private String role;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "appusers")
-    private Clients clients;
+    private Client clients;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "appusers")
-    private Stores stores;
+    private Store stores;
 
-    public Appusers() {
+    public AppUser() {
     }
 
-    public Appusers(Integer id) {
+    public AppUser(Integer id) {
         this.id = id;
     }
 
-    public Appusers(Integer id, String email, String password, String key, String role) {
+    public AppUser(Integer id, String email, String password, String key, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -124,19 +129,19 @@ public class Appusers implements Serializable {
         this.role = role;
     }
 
-    public Clients getClients() {
+    public Client getClients() {
         return clients;
     }
 
-    public void setClients(Clients clients) {
+    public void setClients(Client clients) {
         this.clients = clients;
     }
 
-    public Stores getStores() {
+    public Store getStores() {
         return stores;
     }
 
-    public void setStores(Stores stores) {
+    public void setStores(Store stores) {
         this.stores = stores;
     }
 
@@ -150,10 +155,10 @@ public class Appusers implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Appusers)) {
+        if (!(object instanceof AppUser)) {
             return false;
         }
-        Appusers other = (Appusers) object;
+        AppUser other = (AppUser) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

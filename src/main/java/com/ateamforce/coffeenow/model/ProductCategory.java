@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -30,15 +28,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
-@Table(name = "extrascategories")
+@Table(name = "productcategories")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Extrascategories.findAll", query = "SELECT e FROM Extrascategories e")
-    , @NamedQuery(name = "Extrascategories.findById", query = "SELECT e FROM Extrascategories e WHERE e.id = :id")
-    , @NamedQuery(name = "Extrascategories.findByTitle", query = "SELECT e FROM Extrascategories e WHERE e.title = :title")
-    , @NamedQuery(name = "Extrascategories.findByParent", query = "SELECT e FROM Extrascategories e WHERE e.parent = :parent")
-    , @NamedQuery(name = "Extrascategories.findByImage", query = "SELECT e FROM Extrascategories e WHERE e.image = :image")})
-public class Extrascategories implements Serializable {
+    @NamedQuery(name = "ProductCategory.findAll", query = "SELECT p FROM ProductCategory p")
+    , @NamedQuery(name = "ProductCategory.findById", query = "SELECT p FROM ProductCategory p WHERE p.id = :id")
+    , @NamedQuery(name = "ProductCategory.findByTitle", query = "SELECT p FROM ProductCategory p WHERE p.title = :title")
+    , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")
+    , @NamedQuery(name = "ProductCategory.findByImage", query = "SELECT p FROM ProductCategory p WHERE p.image = :image")})
+public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,22 +58,19 @@ public class Extrascategories implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @ManyToMany(mappedBy = "extrascategoriesCollection")
-    private Collection<Extras> extrasCollection;
-    @JoinTable(name = "extras_products", joinColumns = {
-        @JoinColumn(name = "extracategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Productcategories> productcategoriesCollection;
+    @ManyToMany(mappedBy = "productcategoriesCollection")
+    private Collection<Product> productsCollection;
+    @ManyToMany(mappedBy = "productcategoriesCollection")
+    private Collection<ExtraCategory> extrascategoriesCollection;
 
-    public Extrascategories() {
+    public ProductCategory() {
     }
 
-    public Extrascategories(Integer id) {
+    public ProductCategory(Integer id) {
         this.id = id;
     }
 
-    public Extrascategories(Integer id, String title, int parent, String image) {
+    public ProductCategory(Integer id, String title, int parent, String image) {
         this.id = id;
         this.title = title;
         this.parent = parent;
@@ -116,22 +111,22 @@ public class Extrascategories implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Extras> getExtrasCollection() {
-        return extrasCollection;
+    public Collection<Product> getProductsCollection() {
+        return productsCollection;
     }
 
-    public void setExtrasCollection(Collection<Extras> extrasCollection) {
-        this.extrasCollection = extrasCollection;
+    public void setProductsCollection(Collection<Product> productsCollection) {
+        this.productsCollection = productsCollection;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Productcategories> getProductcategoriesCollection() {
-        return productcategoriesCollection;
+    public Collection<ExtraCategory> getExtrascategoriesCollection() {
+        return extrascategoriesCollection;
     }
 
-    public void setProductcategoriesCollection(Collection<Productcategories> productcategoriesCollection) {
-        this.productcategoriesCollection = productcategoriesCollection;
+    public void setExtrascategoriesCollection(Collection<ExtraCategory> extrascategoriesCollection) {
+        this.extrascategoriesCollection = extrascategoriesCollection;
     }
 
     @Override
@@ -144,10 +139,10 @@ public class Extrascategories implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Extrascategories)) {
+        if (!(object instanceof ProductCategory)) {
             return false;
         }
-        Extrascategories other = (Extrascategories) object;
+        ProductCategory other = (ProductCategory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -156,7 +151,7 @@ public class Extrascategories implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Productcategories[ id=" + id + " ]";
     }
     
 }

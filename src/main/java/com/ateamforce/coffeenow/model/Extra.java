@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,14 +32,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
-@Table(name = "products")
+@Table(name = "extras")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Products.findAll", query = "SELECT p FROM Products p")
-    , @NamedQuery(name = "Products.findById", query = "SELECT p FROM Products p WHERE p.id = :id")
-    , @NamedQuery(name = "Products.findByTitle", query = "SELECT p FROM Products p WHERE p.title = :title")
-    , @NamedQuery(name = "Products.findByImage", query = "SELECT p FROM Products p WHERE p.image = :image")})
-public class Products implements Serializable {
+    @NamedQuery(name = "Extra.findAll", query = "SELECT e FROM Extra e")
+    , @NamedQuery(name = "Extra.findById", query = "SELECT e FROM Extra e WHERE e.id = :id")
+    , @NamedQuery(name = "Extra.findByTitle", query = "SELECT e FROM Extra e WHERE e.title = :title")
+    , @NamedQuery(name = "Extra.findByImage", query = "SELECT e FROM Extra e WHERE e.image = :image")})
+public class Extra implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,38 +54,29 @@ public class Products implements Serializable {
     private String title;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "description")
-    private String description;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @ManyToMany(mappedBy = "productsCollection")
-    private Collection<Clients> clientsCollection;
-    @JoinTable(name = "productcategories_products", joinColumns = {
-        @JoinColumn(name = "productid", referencedColumnName = "id")}, inverseJoinColumns = {
+    @JoinTable(name = "extrascategories_extras", joinColumns = {
+        @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Productcategories> productcategoriesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
-    private Collection<OrdersProducts> ordersProductsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
-    private Collection<StoresProducts> storesProductsCollection;
+    private Collection<ExtraCategory> extrascategoriesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "extras")
+    private Collection<StoreExtra> storesExtrasCollection;
+    @OneToMany(mappedBy = "extraid")
+    private Collection<OrderProduct> ordersProductsCollection;
 
-    public Products() {
+    public Extra() {
     }
 
-    public Products(Integer id) {
+    public Extra(Integer id) {
         this.id = id;
     }
 
-    public Products(Integer id, String title, String description, String image) {
+    public Extra(Integer id, String title, String image) {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.image = image;
     }
 
@@ -106,14 +96,6 @@ public class Products implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImage() {
         return image;
     }
@@ -124,42 +106,32 @@ public class Products implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Clients> getClientsCollection() {
-        return clientsCollection;
+    public Collection<ExtraCategory> getExtrascategoriesCollection() {
+        return extrascategoriesCollection;
     }
 
-    public void setClientsCollection(Collection<Clients> clientsCollection) {
-        this.clientsCollection = clientsCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Productcategories> getProductcategoriesCollection() {
-        return productcategoriesCollection;
-    }
-
-    public void setProductcategoriesCollection(Collection<Productcategories> productcategoriesCollection) {
-        this.productcategoriesCollection = productcategoriesCollection;
+    public void setExtrascategoriesCollection(Collection<ExtraCategory> extrascategoriesCollection) {
+        this.extrascategoriesCollection = extrascategoriesCollection;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<OrdersProducts> getOrdersProductsCollection() {
+    public Collection<StoreExtra> getStoresExtrasCollection() {
+        return storesExtrasCollection;
+    }
+
+    public void setStoresExtrasCollection(Collection<StoreExtra> storesExtrasCollection) {
+        this.storesExtrasCollection = storesExtrasCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<OrderProduct> getOrdersProductsCollection() {
         return ordersProductsCollection;
     }
 
-    public void setOrdersProductsCollection(Collection<OrdersProducts> ordersProductsCollection) {
+    public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
         this.ordersProductsCollection = ordersProductsCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<StoresProducts> getStoresProductsCollection() {
-        return storesProductsCollection;
-    }
-
-    public void setStoresProductsCollection(Collection<StoresProducts> storesProductsCollection) {
-        this.storesProductsCollection = storesProductsCollection;
     }
 
     @Override
@@ -172,10 +144,10 @@ public class Products implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Products)) {
+        if (!(object instanceof Extra)) {
             return false;
         }
-        Products other = (Products) object;
+        Extra other = (Extra) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -184,7 +156,7 @@ public class Products implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Products[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + " ]";
     }
     
 }
