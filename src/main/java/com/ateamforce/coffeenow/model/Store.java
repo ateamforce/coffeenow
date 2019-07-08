@@ -45,7 +45,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Store.findByState", query = "SELECT s FROM Store s WHERE s.state = :state")
     , @NamedQuery(name = "Store.findByZip", query = "SELECT s FROM Store s WHERE s.zip = :zip")
     , @NamedQuery(name = "Store.findByLongitude", query = "SELECT s FROM Store s WHERE s.longitude = :longitude")
-    , @NamedQuery(name = "Store.findByLatitude", query = "SELECT s FROM Stores s WHERE s.latitude = :latitude")})
+    , @NamedQuery(name = "Store.findByLatitude", query = "SELECT s FROM Store s WHERE s.latitude = :latitude")})
 public class Store extends AppUser {
 
     private static final long serialVersionUID = 1L;

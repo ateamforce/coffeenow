@@ -29,9 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "clientmedia")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Clientmedia.findAll", query = "SELECT c FROM Clientmedia c")
-    , @NamedQuery(name = "Clientmedia.findById", query = "SELECT c FROM Clientmedia c WHERE c.id = :id")
-    , @NamedQuery(name = "Clientmedia.findByFilename", query = "SELECT c FROM Clientmedia c WHERE c.filename = :filename")})
+    @NamedQuery(name = "ClientMedia.findAll", query = "SELECT c FROM ClientMedia c")
+    , @NamedQuery(name = "ClientMedia.findById", query = "SELECT c FROM ClientMedia c WHERE c.id = :id")
+    , @NamedQuery(name = "ClientMedia.findByFilename", query = "SELECT c FROM ClientMedia c WHERE c.filename = :filename")})
 public class ClientMedia implements Serializable {
 
     private static final long serialVersionUID = 1L;
