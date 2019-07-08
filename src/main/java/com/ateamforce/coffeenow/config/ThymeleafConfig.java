@@ -1,6 +1,5 @@
 package com.ateamforce.coffeenow.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +38,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
     resolver.setViewClass(ThymeleafView.class);
     resolver.setTemplateEngine(templateEngine());
     resolver.setCharacterEncoding("UTF-8");
-    resolver.setOrder(-3);
+    resolver.setOrder(-2);
     return resolver;
   }
 
