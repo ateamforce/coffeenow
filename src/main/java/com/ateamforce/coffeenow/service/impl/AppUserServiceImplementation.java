@@ -33,7 +33,7 @@ public class AppUserServiceImplementation implements AppUserService {
 
     @Override
     public AppUser getUserByEmail(String email) {
-        return appUserRepository.findfindByEmail(email);
+        return appUserRepository.findByEmail(email);
     }
 
 }
