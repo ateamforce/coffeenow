@@ -20,6 +20,9 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
 
 	@Autowired
 	private TilesConfig tilesConfig;
+        
+        @Autowired
+	private ThymeleafConfig thymeleafConfig;
 
 	@Bean
 	public FlowDefinitionRegistry flowRegistry() {
@@ -58,6 +61,7 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
 		MvcViewFactoryCreator view = new MvcViewFactoryCreator();
 		ArrayList<ViewResolver> list = new ArrayList<ViewResolver>();
 		list.add(tilesConfig.viewResolver());
+                list.add(thymeleafConfig.viewResolver());
 		view.setViewResolvers(list);
 		return view;
 	}

@@ -29,6 +29,8 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+        
+        
 
 	// enable messages.properties
 	@Bean
