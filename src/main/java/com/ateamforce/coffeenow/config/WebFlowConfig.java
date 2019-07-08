@@ -17,9 +17,9 @@ import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 
 @Configuration
 public class WebFlowConfig extends AbstractFlowConfiguration {
-
-	@Autowired
-	private TilesConfig tilesConfig;
+        
+        @Autowired
+	private ThymeleafConfig thymeleafConfig;
 
 	@Bean
 	public FlowDefinitionRegistry flowRegistry() {
@@ -57,7 +57,7 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
 	public ViewFactoryCreator mvcViewFactoryCreator() {
 		MvcViewFactoryCreator view = new MvcViewFactoryCreator();
 		ArrayList<ViewResolver> list = new ArrayList<ViewResolver>();
-		list.add(tilesConfig.viewResolver());
+                list.add(thymeleafConfig.viewResolver());
 		view.setViewResolvers(list);
 		return view;
 	}
