@@ -14,7 +14,7 @@ public class HomeController {
 	public String home(Model model) {
 		model.addAttribute("greeting", "Welcome to Web Store!");
 		model.addAttribute("tagline", "The one and only amazing web store");
-		return "front/home";
+		return "front/login";
 	}
 
 //  SAME AS ABOVE (not good cause of tight coupling with InternalResourceView)
