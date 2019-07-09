@@ -6,7 +6,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -19,18 +18,26 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.ateamforce.coffeenow")
-@Import({ ThymeleafConfig.class })
 public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
         
-        
+        @Bean
+	public InternalResourceViewResolver getInternalResourceViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setViewClass(JstlView.class);
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
+	}
 
 	// enable messages.properties
 	@Bean
