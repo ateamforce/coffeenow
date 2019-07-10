@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.security.test.context.support.WithMockUser;
 
 
 /**
@@ -29,28 +29,27 @@ public class WebSecurityTest {
  
     @Test
     public void testIfRegularHomePageIsSecured() throws Exception {
-        final ResultActions resultActions = mockMvc.perform(get("/regular/home"));
+        final ResultActions resultActions = mockMvc.perform(get("/"));
         resultActions
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/regular/login"));
+                .andExpect(status().isOk());
     }
  
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    @WithMockUser(username="admin",roles={"client","admin"})
     public void testIfLoggedUserHasAccessToRegularHomePage() throws Exception {
-        final ResultActions resultActions = mockMvc.perform(get("/regular/home"));
+        final ResultActions resultActions = mockMvc.perform(get("/administrator/dashboard"));
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(view().name("regular/home"));
+                .andExpect(view().name("administrator/dashboard"));
     }
  
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    @WithMockUser(username="admin",roles={"user","admin"})
     public void testIfLoggedUserHasAccessToSpecialHomePage() throws Exception {
-        final ResultActions resultActions = mockMvc.perform(get("/special/home"));
+        final ResultActions resultActions = mockMvc.perform(get("/store/dashboard"));
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(view().name("special/home"));
+                .andExpect(view().name("store/dashboard"));
     }
  
 }
