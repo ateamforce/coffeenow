@@ -68,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Order(1)
         public static class ExtraSecurityConfig extends WebSecurityConfigurerAdapter {
         
+            @Override
             protected void configure(HttpSecurity http) throws Exception {
             
                 http
