@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.context.annotation.Bean; 
 import org.springframework.context.annotation.Configuration; 
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder; 
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity; 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity; 
@@ -25,7 +26,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
  */ 
 @Configuration 
 @EnableWebSecurity 
-@EnableGlobalMethodSecurity(securedEnabled = true) 
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig1 extends WebSecurityConfigurerAdapter { 
  
      
@@ -47,39 +48,61 @@ public class WebSecurityConfig1 extends WebSecurityConfigurerAdapter {
  
             // Setting Service to find User in the database. 
             auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); 
-            System.out.println(userDetailsService); 
+
         } 
  
         @Override 
-        protected void configure(HttpSecurity http) throws Exception { 
- 
-            http 
-                    .csrf().disable() 
-                    .authorizeRequests().antMatchers("/", "/admin", "back_admin/login").permitAll(); 
- 
-            http.authorizeRequests().antMatchers("back_admin/dashboard/**").hasAuthority("admin"); 
- 
-            //http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403"); 
-            http.authorizeRequests().and().formLogin()// 
-                    // Submit URL of login page. 
-                    .loginProcessingUrl("/admin_login") // Submit URL 
-                    .loginPage("/back_admin/login")// 
-                    .defaultSuccessUrl("/admin/dashboard")// 
-                    .failureUrl("/loginform?error=true")// 
-                    .usernameParameter("username")// 
-                    .passwordParameter("password"); 
-            // Config for Logout Page 
-            //.and().logout().logoutUrl("/logout").logoutSuccessUrl("/home"); 
+        protected void configure(HttpSecurity http) throws Exception {
+            
+            http.csrf().disable() 
+                        .authorizeRequests().antMatchers("/", "/admin","/store").permitAll(); 
  
             http.authorizeRequests().and() // 
                     .rememberMe().tokenRepository(this.persistentTokenRepository()) // 
                     .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h 
-        } 
+        }
  
         @Bean 
         public PersistentTokenRepository persistentTokenRepository() { 
             InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); 
             return memory; 
         } 
+        
+        @Configuration
+        @Order(1)
+        public static class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter{
+            
+            @Override 
+            protected void configure(HttpSecurity http) throws Exception { 
+
+                http.authorizeRequests().antMatchers("/admin/**").hasAuthority("admin").and().formLogin()
+                        .loginProcessingUrl("/admin")
+                        .loginPage("/admin")
+                        .defaultSuccessUrl("/admin/dashboard")
+                        .failureUrl("/admin?error=true")
+                        .usernameParameter("username")
+                        .passwordParameter("password"); 
+
+            }
+            
+        }
+        
+        @Configuration
+        @Order(2)
+        public static class StoreWebSecurityConfig extends WebSecurityConfigurerAdapter{
+            
+            @Override 
+            protected void configure(HttpSecurity http) throws Exception { 
+
+                http.authorizeRequests().antMatchers("/store/**").hasAuthority("client").and().formLogin()
+                        .loginProcessingUrl("/store")
+                        .loginPage("/store")
+                        .defaultSuccessUrl("/store/dashboard")
+                        .failureUrl("/store?error=true")
+                        .usernameParameter("username")
+                        .passwordParameter("password"); 
+            }
+            
+        }
  
     } 
