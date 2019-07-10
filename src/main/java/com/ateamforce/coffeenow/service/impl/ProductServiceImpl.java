@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author alexa
  */
 @Service
-public class ProductServiceImplementation implements ProductService {
+public class ProductServiceImpl implements ProductService {
     
     @Autowired
     ProductRepository productRepository;

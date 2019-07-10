@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author alexa
  */
 @Service
-public class ExtraCategoryServiceImplementation implements ExtraCategoryService {
+public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author alexa
  */
 @Service
-public class PaymentTypeServiceImplementation implements PaymentTypeService {
+public class PaymentTypeServiceImpl implements PaymentTypeService {
     
     @Autowired
     PaymentTypeRepository paymentTypeRepository;

@@ -6,12 +6,14 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.AppUser;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author alexa
  */
-public interface AppUserService {
+public interface AppUserService extends UserDetailsService {
     
     void addAppUser(AppUser appUser);
     
@@ -19,4 +21,6 @@ public interface AppUserService {
     
     AppUser getUserByEmail(String email);
     
+    @Override
+    UserDetails loadUserByUsername(String email);
 }
