@@ -56,22 +56,6 @@ public class WebSecurityConfig1 extends WebSecurityConfigurerAdapter {
             
             http.csrf().disable() 
                         .authorizeRequests().antMatchers("/", "/admin","/store").permitAll(); 
-
-            http.authorizeRequests().antMatchers("/admin/**").hasAuthority("admin").and().formLogin()
-            .loginProcessingUrl("/admin")
-            .loginPage("/admin")
-            .defaultSuccessUrl("/admin/dashboard")
-            .failureUrl("/admin?error=true")
-            .usernameParameter("username")
-            .passwordParameter("password");
-            
-            http.authorizeRequests().antMatchers("/store/**").hasAuthority("store").and().formLogin()
-            .loginProcessingUrl("/store")
-            .loginPage("/store")
-            .defaultSuccessUrl("/store/dashboard")
-            .failureUrl("/store?error=true")
-            .usernameParameter("username")
-            .passwordParameter("password");
  
             http.authorizeRequests().and() // 
                     .rememberMe().tokenRepository(this.persistentTokenRepository()) // 
@@ -82,6 +66,43 @@ public class WebSecurityConfig1 extends WebSecurityConfigurerAdapter {
         public PersistentTokenRepository persistentTokenRepository() { 
             InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); 
             return memory; 
+        } 
+        
+        @Configuration
+        @Order(1)
+        public static class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter{
+            
+            @Override 
+            protected void configure(HttpSecurity http) throws Exception { 
+
+                http.authorizeRequests().antMatchers("/admin/**").hasAuthority("admin").and().formLogin()
+                        .loginProcessingUrl("/admin")
+                        .loginPage("/admin")
+                        .defaultSuccessUrl("/admin/dashboard")
+                        .failureUrl("/admin?error=true")
+                        .usernameParameter("username")
+                        .passwordParameter("password"); 
+
+            }
+            
+        }
+        
+        @Configuration
+        @Order(2)
+        public static class StoreWebSecurityConfig extends WebSecurityConfigurerAdapter{
+            
+            @Override 
+            protected void configure(HttpSecurity http) throws Exception { 
+
+                http.authorizeRequests().antMatchers("/store/**").hasAuthority("client").and().formLogin()
+                        .loginProcessingUrl("/store")
+                        .loginPage("/store")
+                        .defaultSuccessUrl("/store/dashboard")
+                        .failureUrl("/store?error=true")
+                        .usernameParameter("username")
+                        .passwordParameter("password"); 
+            }
+            
         }
  
     } 
