@@ -15,7 +15,7 @@ public class HomeController {
     }
 
     // No spring security locking needed
-    @RequestMapping("/admin")
+    @RequestMapping("/adminlogin")
     public String admin_login() {
             return "back_admin/login";
     }
@@ -27,7 +27,7 @@ public class HomeController {
     }
 
     // No spring security locking needed
-    @RequestMapping("/store")
+    @RequestMapping("/storelogin")
     public String store_login() {
             return "back_store/login";
     }

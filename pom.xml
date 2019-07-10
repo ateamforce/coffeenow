@@ -23,7 +23,7 @@
         <spring.webflow.version>2.4.2.RELEASE</spring.webflow.version>
         
 	<hibernate.em.version>4.3.8.Final</hibernate.em.version>
-        <mysql.connector.version>5.1.38</mysql.connector.version>
+        <mysql.connector.version>8.0.15</mysql.connector.version>
         
         <jquery.version>3.4.1</jquery.version>
         <bootstrap.version>4.3.1</bootstrap.version>
