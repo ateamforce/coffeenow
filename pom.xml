@@ -16,6 +16,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         
+<!--        removed this-->
+<!--	<hibernate.em.version>5.0.12.Final</hibernate.em.version>-->
+        <mysql.connector.version>8.0.15</mysql.connector.version>
+        
         <jquery.version>3.4.1</jquery.version>
         <bootstrap.version>4.3.1</bootstrap.version>
         <angularjs.version>1.7.7</angularjs.version>
@@ -52,8 +56,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <!--removed those-->
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.8.Final</version>
@@ -75,7 +81,7 @@
                     <artifactId>javassist</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -264,11 +270,11 @@
 		
         <!-- needed for JSR-303 validation -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-        <dependency>
+        <!--        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.16.Final</version>
-        </dependency>
+            <version>5.0.12.Final</version>
+        </dependency>-->
 		
         <!-- needed for unit testing -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
@@ -348,11 +354,21 @@
             <artifactId>spring-boot</artifactId>
             <version>2.1.6.RELEASE</version>
         </dependency>
+   
+        
+<!--        added this for hibernate                 -->
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.0.17.Final</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-java8</artifactId>
+            <version>5.1.0.Final</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>5.0.12.Final</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

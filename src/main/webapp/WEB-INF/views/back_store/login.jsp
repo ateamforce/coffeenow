@@ -11,7 +11,7 @@
 					</div>
 					<div class="panel-body">
 						<c:url var="loginUrl" value="/login" />
-						<form action="${loginUrl}" method="post" class="form-horizontal">
+						<form action="store" method="post" class="form-horizontal">
 							<c:if test="${param.error != null}">
 								<div class="alert alert-danger">
 									<p>Invalid username and password.</p>

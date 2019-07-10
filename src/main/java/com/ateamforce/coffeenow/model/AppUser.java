@@ -7,7 +7,6 @@ package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -16,9 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,16 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@DiscriminatorColumn(name = "role")
+@DiscriminatorColumn(name = "approle")
 @Table(name = "appusers")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AppUser.findAll", query = "SELECT a FROM AppUser a")
     , @NamedQuery(name = "AppUser.findById", query = "SELECT a FROM AppUser a WHERE a.id = :id")
     , @NamedQuery(name = "AppUser.findByEmail", query = "SELECT a FROM AppUser a WHERE a.email = :email")
-    , @NamedQuery(name = "AppUser.findByPassword", query = "SELECT a FROM AppUser a WHERE a.password = :password")
-    , @NamedQuery(name = "AppUser.findByKey", query = "SELECT a FROM AppUser a WHERE a.key = :key")
-    , @NamedQuery(name = "AppUser.findByRole", query = "SELECT a FROM AppUser a WHERE a.role = :role")})
+    , @NamedQuery(name = "AppUser.findByPassword", query = "SELECT a FROM AppUser a WHERE a.password = :password")})
 public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,20 +57,9 @@ public class AppUser implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "key")
-    private String key;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "role")
-    private String role;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "appusers")
-    private Client clients;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "appusers")
-    private Store stores;
+    @JoinColumn(name = "approle", referencedColumnName = "approle", insertable = false, updatable = false)
+    @ManyToOne
+    private AppRole approle;
 
     public AppUser() {
     }
@@ -81,12 +68,10 @@ public class AppUser implements Serializable {
         this.id = id;
     }
 
-    public AppUser(Integer id, String email, String password, String key, String role) {
+    public AppUser(Integer id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.key = key;
-        this.role = role;
     }
 
     public Integer getId() {
@@ -113,36 +98,12 @@ public class AppUser implements Serializable {
         this.password = password;
     }
 
-    public String getKey() {
-        return key;
+    public AppRole getApprole() {
+        return approle;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Client getClients() {
-        return clients;
-    }
-
-    public void setClients(Client clients) {
-        this.clients = clients;
-    }
-
-    public Store getStores() {
-        return stores;
-    }
-
-    public void setStores(Store stores) {
-        this.stores = stores;
+    public void setApprole(AppRole approle) {
+        this.approle = approle;
     }
 
     @Override
@@ -167,7 +128,7 @@ public class AppUser implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Appusers[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.AppUsers[ id=" + id + " ]";
     }
     
 }
