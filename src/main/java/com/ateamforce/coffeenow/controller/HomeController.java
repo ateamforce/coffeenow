@@ -15,13 +15,13 @@ public class HomeController {
     }
 
     // No spring security locking needed
-    @RequestMapping("/admin")
+    @RequestMapping("/administrator")
     public String admin_login() {
             return "back_admin/login";
     }
 
     // secure this
-    @RequestMapping("/admin/dashboard")
+    @RequestMapping("/administrator/dashboard")
     public String admin_dashboard() {
             return "back_admin/dashboard/index";
     }

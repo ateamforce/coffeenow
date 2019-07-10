@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author alexa
  */
 @Service
-public class ClientMediaServiceImplementation implements ClientMediaService {
+public class ClientMediaServiceImpl implements ClientMediaService {
     
     @Autowired
     ClientMediaRepository clientMediaRepository;
