@@ -15,15 +15,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-		
-        <spring.version>4.1.7.RELEASE</spring.version>
-        <spring.data.version>1.9.0.RELEASE</spring.data.version>
-        <spring.security.version>4.1.1.RELEASE</spring.security.version>
-        <spring.boot.starter.data.jpa.version>2.1.6.RELEASE</spring.boot.starter.data.jpa.version>
-        <spring.webflow.version>2.4.2.RELEASE</spring.webflow.version>
-        
-	<hibernate.em.version>4.3.8.Final</hibernate.em.version>
-        <mysql.connector.version>5.1.38</mysql.connector.version>
         
         <jquery.version>3.4.1</jquery.version>
         <bootstrap.version>4.3.1</bootstrap.version>
@@ -65,7 +56,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.em.version}</version>
+            <version>4.3.8.Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.hibernate</groupId>
@@ -89,7 +80,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.version}</version>
+            <version>5.1.38</version>
         </dependency>
 
         <!-- needed for spring mvc -->
@@ -104,12 +95,18 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.security.version}</version>
+            <version>5.1.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring.security.version}</version>
+            <version>5.1.5.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -120,7 +117,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-ldap</artifactId>
-            <version>${spring.security.version}</version>
+            <version>5.1.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.1.6.RELEASE</version>
         </dependency>
 		
         <!-- JSTL -->
@@ -167,7 +176,7 @@
         <dependency>
             <groupId>org.springframework.webflow</groupId>
             <artifactId>spring-webflow</artifactId>
-            <version>${spring.webflow.version}</version>
+            <version>2.4.2.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -224,7 +233,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
-            <version>${spring.version}</version>
+            <version>4.1.7.RELEASE</version>
         </dependency>
         <!-- needed for json views. to convert model objects into JSON, 
         Spring MVC will use jackson-mapper-asl.jar and jackson-databind.jar -->
@@ -283,6 +292,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+		
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>5.1.5.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
@@ -300,7 +317,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring.boot.starter.data.jpa.version}</version>
+            <version>2.1.6.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
