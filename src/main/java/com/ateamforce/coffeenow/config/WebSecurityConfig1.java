@@ -25,62 +25,29 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig1 extends WebSecurityConfigurerAdapter {
+	@Autowired
+	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("john").password("pa55word").roles("USER");
+		auth.inMemoryAuthentication().withUser("admin").password("root123").roles("USER", "ADMIN");
+	}
 
-    
+	@Override
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        @Autowired
-        private UserDetailsServiceImplementation userDetailsService;
+		// redirect users to the login page if authentication is required, and set
+		// parameters
+		httpSecurity.formLogin().loginPage("/login").usernameParameter("userId").passwordParameter("password");
 
-        @Autowired
-        private DataSource dataSource;
+		// The request parameters (after ?) we are setting here, should match the
+		// parameter names that we are checking in the login.jsp
+		httpSecurity.formLogin().defaultSuccessUrl("/market/products/add").failureUrl("/login?error");
+		httpSecurity.logout().logoutSuccessUrl("/login?logout");
+		httpSecurity.exceptionHandling().accessDeniedPage("/login?accessDenied");
 
-        @Bean
-        public BCryptPasswordEncoder passwordEncoder() {
-            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-            return bCryptPasswordEncoder;
-        }
-
-        @Override
-        public void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-            // Setting Service to find User in the database.
-            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-            System.out.println(userDetailsService);
-        }
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-
-            http
-                    .csrf().disable()
-                    .authorizeRequests().antMatchers("/", "/admin", "back_admin/login").permitAll();
-
-            http.authorizeRequests().antMatchers("back_admin/dashboard/**").hasAuthority("admin");
-
-            //http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-            http.authorizeRequests().and().formLogin()//
-                    // Submit URL of login page.
-                    .loginProcessingUrl("/admin_login") // Submit URL
-                    .loginPage("back_admin/login")//
-                    .defaultSuccessUrl("/admin/dashboard")//
-                    .failureUrl("/loginform?error=true")//
-                    .usernameParameter("username")//
-                    .passwordParameter("password");
-            // Config for Logout Page
-            //.and().logout().logoutUrl("/logout").logoutSuccessUrl("/home");
-
-            http.authorizeRequests().and() //
-                    .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                    .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
-        }
-
-        @Bean
-        public PersistentTokenRepository persistentTokenRepository() {
-            InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
-            return memory;
-        }
-
-    }
+		httpSecurity.authorizeRequests().antMatchers("/").permitAll().antMatchers("/**/add").access("hasRole('ADMIN')")
+				.antMatchers("/**/market/**").access("hasRole('USER')");
+		httpSecurity.csrf().disable();
+	}
+}
 
