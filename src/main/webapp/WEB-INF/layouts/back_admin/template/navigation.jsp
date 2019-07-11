@@ -5,9 +5,9 @@
 <div class="jumbotron">
 	<div class="header">
 		<ul class="nav nav-pills pull-right">
-			<li><a href="<spring:url value="/"/>">Home</a></li>
-			<li><a href="<spring:url value="/admin//"/>">Admin</a></li>
-			<li><a href="<spring:url value="/store/"/>">Store</a></li>
+			<li><a href='<spring:url value="/"/>'>Home</a></li>
+			<li><a href='<spring:url value="/administrator/"/>' class="active">Admin</a></li>
+			<li><a href='<spring:url value="/store/"/>'>Store</a></li>
 		</ul>
 	</div>
 </div>
