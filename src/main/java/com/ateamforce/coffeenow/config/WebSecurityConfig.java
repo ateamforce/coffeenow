@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatcher("/store/*") 
                         .authorizeRequests()
                         .anyRequest()
-                        .hasRole("client")
+                        .hasRole("store")
                         .and() 
                     .formLogin() 
                         .loginPage("/store") 

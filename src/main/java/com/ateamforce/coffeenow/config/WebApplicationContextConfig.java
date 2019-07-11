@@ -30,6 +30,8 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 		configurer.enable();
 	}
         
+        
+        
         @Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -53,32 +55,52 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
 	// the root directory during build)
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// front images
+                
+                // COMMON IMAGES
+                // Common boilerplate (template) images (uploaded manually)
+                registry.addResourceHandler("/img/common/**").addResourceLocations("/resources/common/images/boilerplate/");
+                // COMMON CSS
+                registry.addResourceHandler("/css/common/**").addResourceLocations("/resources/common/css/");
+                // COMMON JS
+                registry.addResourceHandler("/js/common/**").addResourceLocations("/resources/common/js/");
+            
+		// FRONT IMAGES
+                // front boilerplate (template) images (uploaded manually)
+                registry.addResourceHandler("/img/front/**").addResourceLocations("/resources/front/images/boilerplate/");
+                // User specific images (uploaded by clients, saved as /resources/front/images/clients/clientId/imageId-filename )
 		registry.addResourceHandler("/img/user/**").addResourceLocations("/resources/front/images/clients/");
+                // Exras Categories images (uploaded by admin - saved as /resources/front/images/extras/categories/extraCatId-filename)
                 registry.addResourceHandler("/img/extra/category/**").addResourceLocations("/resources/front/images/extras/categories/");
+                // Extras Items images (uploaded by admin - saved as /resources/front/images/extras/items/extraId-filename)
                 registry.addResourceHandler("/img/extra/**").addResourceLocations("/resources/front/images/extras/items/");
+                // Payment types images (uploaded by admin - saved as /resources/front/images/paymenttypes/paymentId-filename)
                 registry.addResourceHandler("/img/payment/**").addResourceLocations("/resources/front/images/paymenttypes/");
+                // Product Categories images (uploaded by admin - saved as /resources/front/images/products/categories/productCatId-filename)
                 registry.addResourceHandler("/img/product/category/**").addResourceLocations("/resources/front/images/products/categories/");
+                // Product Items images (uploaded by admin - saved as /resources/front/images/products/items/productId-filename)
                 registry.addResourceHandler("/img/product/**").addResourceLocations("/resources/front/images/products/items/");
+                // Store specific images (uploaded by stores - saved as /resources/front/images/stores/storeId-filename)
                 registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/front/images/stores/");
+                // FRONT CSS
+                registry.addResourceHandler("/css/front/**").addResourceLocations("/resources/front/css/");
+                // FRONT JS
+                registry.addResourceHandler("/js/front/**").addResourceLocations("/resources/front/js/");
                 
-                // front css
-                registry.addResourceHandler("/css/**").addResourceLocations("/resources/front/css/");
+                // BACK_ADMIN IMAGES
+                // back_admin boilerplate (template) images (uploaded manually)
+                registry.addResourceHandler("/img/administrator/**").addResourceLocations("/resources/back_admin/images/boilerplate/");
+                // BACK_ADMIN CSS
+                registry.addResourceHandler("/css/administrator/**").addResourceLocations("/resources/back_admin/css/");
+                // BACK_ADMIN JS
+                registry.addResourceHandler("/js/administrator/**").addResourceLocations("/resources/back_admin/js/");
                 
-                // front js
-                registry.addResourceHandler("/js/**").addResourceLocations("/resources/front/js/");
-                
-                // admin css
-                registry.addResourceHandler("/admin/css/**").addResourceLocations("/resources/back_admin/css/");
-                
-                // admin js
-                registry.addResourceHandler("/admin/js/**").addResourceLocations("/resources/back_admin/js/");
-                
-                // store dashboard css
-                registry.addResourceHandler("/store/css/**").addResourceLocations("/resources/back_store/css/");
-                
-                // store dashboard js
-                registry.addResourceHandler("/store/js/**").addResourceLocations("/resources/back_store/js/");
+                // BACK_STORE IMAGES
+                // back_store boilerplate (template) images (uploaded manually)
+                registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/back_store/images/boilerplate/");
+                // BACK_STORE css
+                registry.addResourceHandler("/css/store/**").addResourceLocations("/resources/back_store/css/");
+                // BACK_STORE js
+                registry.addResourceHandler("/js/store/**").addResourceLocations("/resources/back_store/js/");
                 
 	}
 

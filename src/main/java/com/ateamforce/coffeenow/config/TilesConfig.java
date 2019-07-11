@@ -28,7 +28,10 @@ public class TilesConfig {
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
 		TilesConfigurer tilesConfigurer = new TilesConfigurer();
-		tilesConfigurer.setDefinitions("/WEB-INF/layouts/definitions/tiles.xml");
+		tilesConfigurer.setDefinitions(
+                        "/WEB-INF/layouts/back_admin/definitions/tiles.xml",
+                        "/WEB-INF/layouts/back_store/definitions/tiles.xml",
+                        "/WEB-INF/layouts/front/definitions/tiles.xml");
 		tilesConfigurer.setCheckRefresh(true);
 		return tilesConfigurer;
 	}
