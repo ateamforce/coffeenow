@@ -86,7 +86,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <version>${mysql.connector.version}</version>
         </dependency>
 
         <!-- needed for spring mvc -->
@@ -356,7 +356,7 @@
         </dependency>
    
         
-<!--        added this for hibernate                 -->
+        <!--        added this for hibernate                 -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-java8</artifactId>

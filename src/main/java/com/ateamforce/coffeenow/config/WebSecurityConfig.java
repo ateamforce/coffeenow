@@ -43,16 +43,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .antMatcher("/administrator/*")
                 .authorizeRequests()
-                .antMatchers("/administrator/*")
+                .anyRequest()
                 .hasAuthority("admin")
                 .and()
                 .formLogin()
                 .loginPage("/administrator")
-                .loginProcessingUrl("/administrator")
+                .loginProcessingUrl("/administrator/check")
                 .failureUrl("/administrator?error=true")
                 .defaultSuccessUrl("/administrator/dashboard")
-                .usernameParameter("userId")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
                 .logout()
@@ -60,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/administrator")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/403")
+                .accessDeniedPage("/administrator?accessDenied=true")
                 .and()
                 .csrf().disable();
 
@@ -76,14 +77,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatcher("/store/*")
                     .authorizeRequests()
                     .anyRequest()
-                    .hasAuthority("client")
+                    .hasAuthority("store")
                     .and()
                     .formLogin()
                     .loginPage("/store")
-                    .loginProcessingUrl("/store")
+                    .loginProcessingUrl("/store/check")
                     .failureUrl("/store?error=true")
                     .defaultSuccessUrl("/store/dashboard")
-                    .usernameParameter("userId")
+                    .usernameParameter("username")
                     .passwordParameter("password")
                     .and()
                     .logout()
@@ -91,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/store")
                     .and()
                     .exceptionHandling()
-                    .accessDeniedPage("/403")
+                    .accessDeniedPage("/store?accessDenied=true")
                     .and()
                     .csrf().disable();
 
