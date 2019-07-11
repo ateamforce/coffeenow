@@ -27,7 +27,7 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
         this.webJarAssetLocator = webJarAssetLocator;
     }
 
-    @Bean
+    @Override
     protected Resource resolveResourceInternal(@Nullable HttpServletRequest request, String requestPath,
             List<? extends Resource> locations, ResourceResolverChain chain) {
 
@@ -41,7 +41,7 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
         return resolved;
     }
 
-    @Bean
+    @Override
     protected String resolveUrlPathInternal(String resourceUrlPath,
             List<? extends Resource> locations, ResourceResolverChain chain) {
 
@@ -56,7 +56,6 @@ public class WebJarsResourceResolver extends AbstractResourceResolver {
     }
 
     @Nullable
-    @Bean
     protected String findWebJarResourcePath(String path) {
         int startOffset = (path.startsWith("/") ? 1 : 0);
         int endOffset = path.indexOf('/', 1);
