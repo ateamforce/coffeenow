@@ -18,8 +18,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
             WebApplicationContextConfig.class,
             TilesConfig.class,
             WebFlowConfig.class,
-            WebSecurityConfig.class,
-            WebJarsResourceResolver.class
+            WebSecurityConfig.class
         };
     }
 
