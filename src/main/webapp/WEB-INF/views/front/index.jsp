@@ -4,9 +4,12 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-	<div id="imgD"></div>
-	<div class="container" id="parentDiv">
-		<div class="row">
+		<div id="bgD"></div>
+
+	<a href=""><img id="logo" src="/src/main/webapp/resources/front/images/extras/loginPage/logo.JPG" alt="Click logo to go to home page"></a>
+
+	<div class="container">
+		<div class="row" id="cssToDiv">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -44,6 +47,7 @@
 							<div class="form-actions">
 								<input type="submit"
 									class="btn btn-block btn-primary btn-default" value="Log in">
+									<input id="reset" type="button" value="Reset">
 							</div>
 						</form>
 					</div>
