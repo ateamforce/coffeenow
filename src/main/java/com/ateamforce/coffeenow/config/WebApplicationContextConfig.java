@@ -15,120 +15,151 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.ateamforce.coffeenow")
-public class WebApplicationContextConfig extends WebMvcConfigurerAdapter {
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
-        
-        @Bean
-	public InternalResourceViewResolver getInternalResourceViewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setViewClass(JstlView.class);
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		return resolver;
-	}
+public class WebApplicationContextConfig implements WebMvcConfigurer {
 
-	// enable messages.properties
-	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
-		resource.setDefaultEncoding("UTF-8");
-		resource.setBasename("messages");
-		return resource;
-	}
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
-	// serve static resources. In this case serve images, on /img/* request, from
-	// the src/main/webapp/resources/images/ (spring MVC copies webapp contents to
-	// the root directory during build)
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// front images
-		registry.addResourceHandler("/img/user/**").addResourceLocations("/resources/front/images/clients/");
-                registry.addResourceHandler("/img/extra/category/**").addResourceLocations("/resources/front/images/extras/categories/");
-                registry.addResourceHandler("/img/extra/**").addResourceLocations("/resources/front/images/extras/items/");
-                registry.addResourceHandler("/img/payment/**").addResourceLocations("/resources/front/images/paymenttypes/");
-                registry.addResourceHandler("/img/product/category/**").addResourceLocations("/resources/front/images/products/categories/");
-                registry.addResourceHandler("/img/product/**").addResourceLocations("/resources/front/images/products/items/");
-                registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/front/images/stores/");
-                
-                // front css
-                registry.addResourceHandler("/css/**").addResourceLocations("/resources/front/css/");
-                
-                // front js
-                registry.addResourceHandler("/js/**").addResourceLocations("/resources/front/js/");
-                
-                // admin css
-                registry.addResourceHandler("/admin/css/**").addResourceLocations("/resources/back_admin/css/");
-                
-                // admin js
-                registry.addResourceHandler("/admin/js/**").addResourceLocations("/resources/back_admin/js/");
-                
-                // store dashboard css
-                registry.addResourceHandler("/store/css/**").addResourceLocations("/resources/back_store/css/");
-                
-                // store dashboard js
-                registry.addResourceHandler("/store/js/**").addResourceLocations("/resources/back_store/js/");
-                
-	}
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        registry.viewResolver(viewResolver);
+    }
 
-	// enable file uploading
-	@Bean
-	public CommonsMultipartResolver multipartResolver() {
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setDefaultEncoding("utf-8");
-		resolver.setMaxUploadSize(10240000);
-		return resolver;
-	}
-        
-	// add interceptors
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
+    @Bean
+    public InternalResourceViewResolver getInternalResourceViewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setViewClass(JstlView.class);
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
 
-		// for Locale change
-		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("language");
-		registry.addInterceptor(localeChangeInterceptor);
+    // enable messages.properties
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
+        resource.setDefaultEncoding("UTF-8");
+        resource.setBasename("messages");
+        return resource;
+    }
 
-	}
+    // serve static resources. In this case serve images, on /img/* request, from
+    // the src/main/webapp/resources/images/ (spring MVC copies webapp contents to
+    // the root directory during build)
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-	// setting default Locale
-	@Bean
-	public LocaleResolver localeResolver() {
-		SessionLocaleResolver resolver = new SessionLocaleResolver();
-		resolver.setDefaultLocale(new Locale("gr"));
-		return resolver;
-	}
+        // COMMON IMAGES
+        // Common boilerplate (template) images (uploaded manually)
+        registry.addResourceHandler("/img/common/**").addResourceLocations("/resources/common/images/boilerplate/");
+        // COMMON CSS
+        registry.addResourceHandler("/css/common/**").addResourceLocations("/resources/common/css/");
+        // COMMON JS
+        registry.addResourceHandler("/js/common/**").addResourceLocations("/resources/common/js/");
 
-	// enable JSR-303 validation and set message source
-	// Java Bean Validation (JSR-303) is a Java specification that allows us to
-	// express validation
-	// constraints on objects via annotations. It allows the APIs to validate and
-	// report violations.
-	// Hibernate Validator is the reference implementation of the Bean Validation
-	// specification.
-	@Bean(name = "validator")
-	public LocalValidatorFactoryBean validator() {
-		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-		bean.setValidationMessageSource(messageSource());
-		return bean;
-	}
+        // FRONT IMAGES
+        // front boilerplate (template) images (uploaded manually)
+        registry.addResourceHandler("/img/front/**").addResourceLocations("/resources/front/images/boilerplate/");
+        // User specific images (uploaded by clients, saved as /resources/front/images/clients/clientId/imageId-filename )
+        registry.addResourceHandler("/img/user/**").addResourceLocations("/resources/front/images/clients/");
+        // Exras Categories images (uploaded by admin - saved as /resources/front/images/extras/categories/extraCatId-filename)
+        registry.addResourceHandler("/img/extra/category/**").addResourceLocations("/resources/front/images/extras/categories/");
+        // Extras Items images (uploaded by admin - saved as /resources/front/images/extras/items/extraId-filename)
+        registry.addResourceHandler("/img/extra/**").addResourceLocations("/resources/front/images/extras/items/");
+        // Payment types images (uploaded by admin - saved as /resources/front/images/paymenttypes/paymentId-filename)
+        registry.addResourceHandler("/img/payment/**").addResourceLocations("/resources/front/images/paymenttypes/");
+        // Product Categories images (uploaded by admin - saved as /resources/front/images/products/categories/productCatId-filename)
+        registry.addResourceHandler("/img/product/category/**").addResourceLocations("/resources/front/images/products/categories/");
+        // Product Items images (uploaded by admin - saved as /resources/front/images/products/items/productId-filename)
+        registry.addResourceHandler("/img/product/**").addResourceLocations("/resources/front/images/products/items/");
+        // Store specific images (uploaded by stores - saved as /resources/front/images/stores/storeId-filename)
+        registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/front/images/stores/");
+        // FRONT CSS
+        registry.addResourceHandler("/css/front/**").addResourceLocations("/resources/front/css/");
+        // FRONT JS
+        registry.addResourceHandler("/js/front/**").addResourceLocations("/resources/front/js/");
 
-	// needed in order to introduce validator bean to Spring MVC
-	@Override
-	public Validator getValidator() {
-		return validator();
-	}
+        // BACK_ADMIN IMAGES
+        // back_admin boilerplate (template) images (uploaded manually)
+        registry.addResourceHandler("/img/administrator/**").addResourceLocations("/resources/back_admin/images/boilerplate/");
+        // BACK_ADMIN CSS
+        registry.addResourceHandler("/css/administrator/**").addResourceLocations("/resources/back_admin/css/");
+        // BACK_ADMIN JS
+        registry.addResourceHandler("/js/administrator/**").addResourceLocations("/resources/back_admin/js/");
 
+        // BACK_STORE IMAGES
+        // back_store boilerplate (template) images (uploaded manually)
+        registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/back_store/images/boilerplate/");
+        // BACK_STORE css
+        registry.addResourceHandler("/css/store/**").addResourceLocations("/resources/back_store/css/");
+        // BACK_STORE js
+        registry.addResourceHandler("/js/store/**").addResourceLocations("/resources/back_store/js/");
+
+        // WEBJARS
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").resourceChain(false);
+
+    }
+
+    // enable file uploading
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("utf-8");
+        resolver.setMaxUploadSize(10240000);
+        return resolver;
+    }
+
+    // add interceptors
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        // for Locale change
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("language");
+        registry.addInterceptor(localeChangeInterceptor);
+
+    }
+
+    // setting default Locale
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(new Locale("gr"));
+        return resolver;
+    }
+
+    // enable JSR-303 validation and set message source
+    // Java Bean Validation (JSR-303) is a Java specification that allows us to
+    // express validation
+    // constraints on objects via annotations. It allows the APIs to validate and
+    // report violations.
+    // Hibernate Validator is the reference implementation of the Bean Validation
+    // specification.
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
+
+    // needed in order to introduce validator bean to Spring MVC
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
 
 }

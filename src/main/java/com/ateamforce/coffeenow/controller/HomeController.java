@@ -12,13 +12,13 @@ public class HomeController {
     // No spring security locking needed
     @RequestMapping
     public String home(Model model) {
-        return "front/login";
+        return "front/index";
     }
 
     // No spring security locking needed
     @RequestMapping("/administrator")
     public String admin_login() {
-            return "back_admin/login";
+            return "back_admin/index";
     }
 
     // secure this
@@ -30,7 +30,7 @@ public class HomeController {
     // No spring security locking needed
     @RequestMapping("/store")
     public String store_login() {
-            return "back_store/login";
+            return "back_store/index";
     }
 
     // secure this

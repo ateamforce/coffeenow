@@ -17,48 +17,48 @@ import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 
 @Configuration
 public class WebFlowConfig extends AbstractFlowConfiguration {
-        
-        @Autowired
-	private TilesConfig tilesConfig;
 
-	@Bean
-	public FlowDefinitionRegistry flowRegistry() {
-		return getFlowDefinitionRegistryBuilder(flowBuilderServices()).setBasePath("/WEB-INF/flows")
-				.addFlowLocationPattern("/**/*-flow.xml").build();
-	}
+    @Autowired
+    private TilesConfig tilesConfig;
 
-	@Bean
-	public FlowExecutor flowExecutor() {
-		return getFlowExecutorBuilder(flowRegistry()).build();
-	}
+    @Bean
+    public FlowDefinitionRegistry flowRegistry() {
+        return getFlowDefinitionRegistryBuilder(flowBuilderServices()).setBasePath("/WEB-INF/flows")
+                .addFlowLocationPattern("/**/*-flow.xml").build();
+    }
 
-	@Bean
-	public FlowHandlerMapping flowHandlerMapping() {
-		FlowHandlerMapping handlerMapping = new FlowHandlerMapping();
-		handlerMapping.setOrder(-1);
-		handlerMapping.setFlowRegistry(flowRegistry());
-		return handlerMapping;
-	}
+    @Bean
+    public FlowExecutor flowExecutor() {
+        return getFlowExecutorBuilder(flowRegistry()).build();
+    }
 
-	@Bean
-	public FlowHandlerAdapter flowHandlerAdapter() {
-		FlowHandlerAdapter handlerAdapter = new FlowHandlerAdapter();
-		handlerAdapter.setFlowExecutor(flowExecutor());
-		handlerAdapter.setSaveOutputToFlashScopeOnRedirect(true);
-		return handlerAdapter;
-	}
+    @Bean
+    public FlowHandlerMapping flowHandlerMapping() {
+        FlowHandlerMapping handlerMapping = new FlowHandlerMapping();
+        handlerMapping.setOrder(-1);
+        handlerMapping.setFlowRegistry(flowRegistry());
+        return handlerMapping;
+    }
 
-	@Bean
-	public FlowBuilderServices flowBuilderServices() {
-		return getFlowBuilderServicesBuilder().setViewFactoryCreator(mvcViewFactoryCreator()).build();
-	}
+    @Bean
+    public FlowHandlerAdapter flowHandlerAdapter() {
+        FlowHandlerAdapter handlerAdapter = new FlowHandlerAdapter();
+        handlerAdapter.setFlowExecutor(flowExecutor());
+        handlerAdapter.setSaveOutputToFlashScopeOnRedirect(true);
+        return handlerAdapter;
+    }
 
-	@Bean
-	public ViewFactoryCreator mvcViewFactoryCreator() {
-		MvcViewFactoryCreator view = new MvcViewFactoryCreator();
-		ArrayList<ViewResolver> list = new ArrayList<ViewResolver>();
-                list.add(tilesConfig.viewResolver());
-		view.setViewResolvers(list);
-		return view;
-	}
+    @Bean
+    public FlowBuilderServices flowBuilderServices() {
+        return getFlowBuilderServicesBuilder().setViewFactoryCreator(mvcViewFactoryCreator()).build();
+    }
+
+    @Bean
+    public ViewFactoryCreator mvcViewFactoryCreator() {
+        MvcViewFactoryCreator view = new MvcViewFactoryCreator();
+        ArrayList<ViewResolver> list = new ArrayList<ViewResolver>();
+        list.add(tilesConfig.viewResolver());
+        view.setViewResolvers(list);
+        return view;
+    }
 }
