@@ -97,6 +97,9 @@ public class Store extends AppUser {
     @NotNull
     @Column(name = "latitude")
     private double latitude;
+    
+    // Decide cascedetype an fecth
+    
 //    @ManyToMany(mappedBy = "storesCollection")
 //    private Collection<Client> clientsCollection;
 //    @ManyToMany(mappedBy = "storesCollection")
