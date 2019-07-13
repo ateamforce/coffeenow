@@ -5,7 +5,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 <tiles-definitions>
 
 	<!-- template definition -->
-	<definition name="baseLayout" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
+	<definition name="baseLayout_store" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
 		<put-attribute name="ogImageUrl" value="/img/common/fb-logo.jpg" />
 		<put-attribute name="ogImageWidth" value="250" />
 		<put-attribute name="ogImageHeight" value="250" />
@@ -18,14 +18,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	</definition>
 	
 	<!-- definition name = request mapping return string | all attributes can change, except the name="content" one -->
-	<definition name="back_store/index" extends="baseLayout">
+	<definition name="back_store/index" extends="baseLayout_store">
 		<put-attribute name="title" value="Store Login | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/store" />
 		
 		<put-attribute name="content" value="/WEB-INF/views/back_store/index.jsp" />
 	</definition>
 	
-	<definition name="back_store/dashboard/index" extends="baseLayout">
+	<definition name="back_store/dashboard/index" extends="baseLayout_store">
 		<put-attribute name="title" value="Store Dashboard | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/store/dashboard" />
 		

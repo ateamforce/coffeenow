@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib 
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+  
+    <display-name>CoffeeNow Custom JSP Tags</display-name>
+    <tlib-version>1.0</tlib-version>  
+    <jsp-version>1.2</jsp-version>  
+    <short-name>CoffeeNowCustomTags</short-name>  
+    <uri>/WEB-INF/coffeenowcustomtags.tld</uri>  
+    <info>A custom tag library for CoffeeNow application</info>
+        
+        <function>
+            <name>bust</name>
+            <function-class>com.ateamforce.coffeenow.util.CacheBuster</function-class>
+            <function-signature>java.lang.String bust(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+            <description>Returns a css link tag or a js script tag with the url prepended by the file modified integer, in order to bust client's caching based on file modification</description>
+        </function>
+	
+</taglib>  

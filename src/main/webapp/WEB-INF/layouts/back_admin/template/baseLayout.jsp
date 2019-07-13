@@ -1,12 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="cache" uri="/WEB-INF/coffeenowcustomtags.tld"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <c:set var="req" value="${pageContext.request}" />
 <c:set var="url">${req.requestURL}</c:set>
 <c:set var="uri" value="${req.requestURI}" />
+
+<c:set var="realPath"><%= getServletContext().getRealPath("/") %></c:set>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +34,9 @@
 		
 		<link href="https://fonts.googleapis.com/css?family=DM+Serif+Display|GFS+Neohellenic|Montserrat|Roboto+Slab&display=swap&subset=greek,greek-ext" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/font-awesome.css">
-		<link rel="stylesheet" type="text/css" href="css/common/style.css">
-		<link rel="stylesheet" type="text/css" href="css/administrator/style.css">
+		<link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/all.css">
+                ${cache:bust("css/common/style.css", "css", realPath)}
+                ${cache:bust("css/administrator/style.css", "css", realPath)}
 		
 		<link rel="apple-touch-icon" sizes="57x57" href="img/common/apple-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="img/common/apple-icon-60x60.png">
@@ -65,7 +68,7 @@
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/common/script.js"></script>
-	<script src="js/administrator/script.js"></script>
+        ${cache:bust("js/common/script.js", "js", realPath)}
+        ${cache:bust("js/administrator/script.js", "js", realPath)}
 	
 </html>
