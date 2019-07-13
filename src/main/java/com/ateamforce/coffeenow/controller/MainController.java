@@ -7,36 +7,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class MainController {
     
-    private final static Logger LOGGER = Logger.getLogger(HomeController.class);
+    private final static Logger LOGGER = Logger.getLogger(MainController.class);
 
-    // No spring security locking needed
+    // Home Page
     @RequestMapping
     public String home(Model model) {
         return "front/index";
     }
 
-    // No spring security locking needed
+    // Administrator Backend Login Page
     @RequestMapping("/administrator")
     public String admin_login() {
         LOGGER.info("test");
         return "back_admin/index";
     }
 
-    // secure this
-    @RequestMapping("/administrator/dashboard")
-    public String admin_dashboard() {
-        return "back_admin/dashboard/index";
-    }
-
-    // No spring security locking needed
+    // Store Backend Login Page
     @RequestMapping("/store")
     public String store_login() {
         return "back_store/index";
     }
 
-    // secure this
+    // TODO : Move this to the store controller, when it is created (like in AdministratorController)
     @RequestMapping("/store/dashboard")
     public String store_dashboard() {
         return "back_store/dashboard/index";
