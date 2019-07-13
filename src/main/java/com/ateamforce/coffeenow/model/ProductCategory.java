@@ -7,6 +7,7 @@ package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,7 +60,7 @@ public class ProductCategory implements Serializable {
     @Column(name = "image")
     private String image;
     @ManyToMany(mappedBy = "productcategoriesCollection")
-    private Collection<Product> productsCollection;
+    private List<Product> productsList;
     @ManyToMany(mappedBy = "productcategoriesCollection")
     private Collection<ExtraCategory> extrascategoriesCollection;
 
@@ -111,12 +112,12 @@ public class ProductCategory implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Product> getProductsCollection() {
-        return productsCollection;
+    public List<Product> getProductsList() {
+        return productsList;
     }
 
-    public void setProductsCollection(Collection<Product> productsCollection) {
-        this.productsCollection = productsCollection;
+    public void setProductsCollection(List<Product> productsCollection) {
+        this.productsList = productsList;
     }
 
     @XmlTransient

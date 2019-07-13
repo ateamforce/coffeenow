@@ -26,4 +26,8 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     @Query(value = "SELECT*from products p where id not in(select productid from productcategories_products where categoryid=?1)",
             nativeQuery = true)
     public List<Product> findRemainigProductsByProductCategoryId(int categoryid);
+    
+    @Query(value = "SELECT*from productcategories pc where id not in(select categoryid from productcategories_products where productid=?1)",
+            nativeQuery = true)
+    public List<Product> findRemainigProductCategoriesByProductId(int productId);
 }

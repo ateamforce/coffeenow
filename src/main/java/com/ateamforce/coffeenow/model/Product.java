@@ -7,6 +7,7 @@ package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -70,7 +71,7 @@ public class Product implements Serializable {
         @JoinColumn(name = "productid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<ProductCategory> productcategoriesCollection;
+    private List<ProductCategory> productcategoriesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
     private Collection<OrderProduct> ordersProductsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
@@ -134,12 +135,12 @@ public class Product implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<ProductCategory> getProductcategoriesCollection() {
-        return productcategoriesCollection;
+    public List<ProductCategory> getProductcategoriesList() {
+        return productcategoriesList;
     }
 
-    public void setProductcategoriesCollection(Collection<ProductCategory> productcategoriesCollection) {
-        this.productcategoriesCollection = productcategoriesCollection;
+    public void setProductcategoriesList(List<ProductCategory> productcategoriesList) {
+        this.productcategoriesList = productcategoriesList;
     }
 
     @XmlTransient
