@@ -35,8 +35,8 @@
 		<link href="https://fonts.googleapis.com/css?family=DM+Serif+Display|GFS+Neohellenic|Montserrat|Roboto+Slab&display=swap&subset=greek,greek-ext" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/all.css">
-                ${cache:bust("css/common/style.css", "css", "${realPath}")}
-                ${cache:bust("css/administrator/style.css", "css", "${realPath}")}
+                ${cache:bust("css/common/style.css", "css", realPath)}
+                ${cache:bust("css/administrator/style.css", "css", realPath)}
 		
 		<link rel="apple-touch-icon" sizes="57x57" href="img/common/apple-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="img/common/apple-icon-60x60.png">
@@ -68,7 +68,7 @@
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
-        ${cache:bust("js/common/script.js", "js", "${realPath}")}
-        ${cache:bust("js/administrator/script.js", "js", "${realPath}")}
+        ${cache:bust("js/common/script.js", "js", realPath)}
+        ${cache:bust("js/administrator/script.js", "js", realPath)}
 	
 </html>

@@ -5,7 +5,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 <tiles-definitions>
 
 	<!-- template definition -->
-	<definition name="baseLayout" template="/WEB-INF/layouts/front/template/baseLayout.jsp">
+	<definition name="baseLayout_front" template="/WEB-INF/layouts/front/template/baseLayout.jsp">
 		<put-attribute name="ogImageUrl" value="/img/common/fb-logo.jpg" />
 		<put-attribute name="ogImageWidth" value="250" />
 		<put-attribute name="ogImageHeight" value="250" />
@@ -18,7 +18,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	</definition>
 	
 	<!-- definition name = request mapping return string | all attributes can change, except the name="content" one -->
-	<definition name="front/index" extends="baseLayout">
+	<definition name="front/index" extends="baseLayout_front">
 		<put-attribute name="title" value="HomePage | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/" />
 		

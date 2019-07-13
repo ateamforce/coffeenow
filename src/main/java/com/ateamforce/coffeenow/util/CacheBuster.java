@@ -14,11 +14,9 @@ public class CacheBuster {
         if ( type.equals("css") || type.equals("js") ) {
             
             String v;
-            v = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(path, "/"), "/");
-            System.out.println(realPath);
-            System.out.println(v);
-            File file = new File(realPath + v);
-
+            v = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(path, "/"), "/").replace("administrator", "admin");
+            File file = new File(realPath + "resources/" + ((v.equals("admin") || v.equals("store")) ? "back_".concat(v) : v) + "/" + type + "/" + StringUtils.substringAfterLast(path, "/"));
+            
             switch (type) {
                 case "css":
                     return buildStyle(path + "?" + file.lastModified());
