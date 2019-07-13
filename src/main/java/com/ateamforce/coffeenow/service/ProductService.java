@@ -6,14 +6,21 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.Product;
+import java.util.List;
 
 /**
  *
  * @author alexa
  */
 public interface ProductService {
-    
+
     void addProduct(Product product);
+
+    void deleteProductByid(int productId);
+
+    void updateProduct(Product updatedProduct);
     
-    void deleteProduct(Product product);
+    Product getProductById(int productId);
+
+    List<Product> getAllProducts();
 }

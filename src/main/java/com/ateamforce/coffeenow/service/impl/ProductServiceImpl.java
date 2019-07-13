@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.repository.ProductRepository;
 import com.ateamforce.coffeenow.service.ProductService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-    
+
     @Autowired
     ProductRepository productRepository;
 
@@ -27,9 +28,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        productRepository.delete(product);
+    public void deleteProductByid(int productId) {
+        productRepository.deleteById(productId);
     }
-    
-    
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAllProducts();
+    }
+
+    @Override
+    public Product getProductById(int productId) {
+        return productRepository.findProductById(productId);
+    }
+
+    @Override
+    public void updateProduct(Product updatedProduct) {
+        productRepository.save(updatedProduct);
+    }
+
 }

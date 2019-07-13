@@ -31,8 +31,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "productcategories")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ProductCategory.findAll", query = "SELECT p FROM ProductCategory p")
-    , @NamedQuery(name = "ProductCategory.findById", query = "SELECT p FROM ProductCategory p WHERE p.id = :id")
+    @NamedQuery(name = "ProductCategory.findAllProductCategories", query = "SELECT p FROM ProductCategory p")
+    , @NamedQuery(name = "ProductCategory.findProductCategoryById", query = "SELECT p FROM ProductCategory p WHERE p.id = :categoryid")
     , @NamedQuery(name = "ProductCategory.findByTitle", query = "SELECT p FROM ProductCategory p WHERE p.title = :title")
     , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")
     , @NamedQuery(name = "ProductCategory.findByImage", query = "SELECT p FROM ProductCategory p WHERE p.image = :image")})
