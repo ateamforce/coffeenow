@@ -33,4 +33,20 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
 	</definition>
 	
+	<definition name="back_admin/dashboard/products" extends="baseLayout_admin">
+		<put-attribute name="title" value="Products | Administrator Dashboard | CoffeeNow" />
+		<put-attribute name="ogUrl" value="/administrator/dashboard/products" />
+		
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/products.jsp" />
+		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
+	</definition>
+	
+	<definition name="back_admin/dashboard/product_categories" extends="baseLayout_admin">
+		<put-attribute name="title" value="Product Categories | Administrator Dashboard | CoffeeNow" />
+		<put-attribute name="ogUrl" value="/administrator/dashboard/productcategories" />
+		
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/product_categories.jsp" />
+		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
+	</definition>
+	
 </tiles-definitions>
