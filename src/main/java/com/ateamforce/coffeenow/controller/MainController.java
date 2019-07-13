@@ -1,6 +1,10 @@
 package com.ateamforce.coffeenow.controller;
 
+import com.ateamforce.coffeenow.model.Administrator;
+import com.ateamforce.coffeenow.model.AppRole;
+import com.ateamforce.coffeenow.service.impl.AppUserServiceImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    
-    private final static Logger LOGGER = Logger.getLogger(MainController.class);
 
     // Home Page
     @RequestMapping
@@ -20,7 +22,6 @@ public class MainController {
     // Administrator Backend Login Page
     @RequestMapping("/administrator")
     public String admin_login() {
-        LOGGER.info("test");
         return "back_admin/index";
     }
 
