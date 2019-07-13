@@ -10,6 +10,8 @@ import com.ateamforce.coffeenow.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -33,20 +35,32 @@ public class AdminController {
         return "back_admin/dashboard/index";
     }
 
-    //Gets all products to display them in products page
-    //Go to administrator products page
+    // Gets all products to display them in products page
+    // Go to administrator products page
     @RequestMapping("/products")
     public String admin_dashboard_products(ModelMap modelmap) {
         modelmap.addAttribute("products", productService.getAllProducts());
         return "back_admin/dashboard/products";
     }
 
-    //Gets all productcaregories to display them in productcategories page
-    //Go to administrator productcategories page
+    // Gets all productcaregories to display them in productcategories page
+    // Go to administrator productcategories page
     @RequestMapping("/productcategories")
     public String admin_dashboard_productcategories(ModelMap modelmap) {
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
         return "back_admin/dashboard/product_categories";
+    }
+    
+    // allowed fields for form data binding (if needed), and for any other request parameter we need to pass
+    @InitBinder
+    public void initialiseBinder(WebDataBinder binder) {
+
+            // adding custom spring validator AND reenabling JSR-303 validations that were
+            // disabled because of spring validator
+            // binder.setValidator(productValidator);
+
+            // setting allowed fields. add more as needed
+            binder.setAllowedFields("language");
     }
     
     

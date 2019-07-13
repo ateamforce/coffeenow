@@ -32,10 +32,11 @@
 		
 		<link href="img/common/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 		
-		<link href="https://fonts.googleapis.com/css?family=DM+Serif+Display|GFS+Neohellenic|Montserrat|Roboto+Slab&display=swap&subset=greek,greek-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/all.css">
                 ${cache:bust("css/common/style.css", "css", realPath)}
+				${cache:bust("css/administrator/sb-admin-2.css", "css", realPath)}
                 ${cache:bust("css/administrator/style.css", "css", realPath)}
 		
 		<link rel="apple-touch-icon" sizes="57x57" href="img/common/apple-icon-57x57.png">
@@ -57,18 +58,16 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	
-	<body>
-		<div class="container">
-			<tiles:insertAttribute name="navigation" />
-			<tiles:insertAttribute name="content" />
-			<tiles:insertAttribute name="leftsidebar" />
-			<tiles:insertAttribute name="footer" />
-		</div>
-	</body>
+	<tiles:insertAttribute name="navigation" />
+	<tiles:insertAttribute name="content" />
+	<tiles:insertAttribute name="leftsidebar" />
+	<tiles:insertAttribute name="footer" />
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery-easing/jquery.easing.min.js"></script>
         ${cache:bust("js/common/script.js", "js", realPath)}
+		${cache:bust("js/administrator/sb-admin-2.js", "js", realPath)}
         ${cache:bust("js/administrator/script.js", "js", realPath)}
 	
 </html>

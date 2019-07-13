@@ -4,11 +4,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<!-- template definition -->
+	<!-- Admin template definition -->
 	<definition name="baseLayout_admin" template="/WEB-INF/layouts/back_admin/template/baseLayout.jsp">
-		<put-attribute name="ogImageUrl" value="/img/common/fb-logo.jpg" />
-		<put-attribute name="ogImageWidth" value="250" />
-		<put-attribute name="ogImageHeight" value="250" />
+		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
+		<put-attribute name="ogImageWidth" value="400" />
+		<put-attribute name="ogImageHeight" value="400" />
 		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
 	
 		<put-attribute name="navigation" value="/WEB-INF/layouts/back_admin/template/navigation.jsp" />
@@ -17,14 +17,17 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="footer" value="/WEB-INF/layouts/back_admin/template/footer.jsp" />
 	</definition>
 	
-	<!-- definition name = request mapping return string | all attributes can change, except the name="content" one -->
+	<!-- Admin Login Page -->
 	<definition name="back_admin/index" extends="baseLayout_admin">
 		<put-attribute name="title" value="Administrator Login | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/administrator" />
 		
+		<put-attribute name="navigation" value="" />
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/index.jsp" />
+		<put-attribute name="footer" value="" />
 	</definition>
 	
+	<!-- Admin Dashboard Page -->
 	<definition name="back_admin/dashboard/index" extends="baseLayout_admin">
 		<put-attribute name="title" value="Administrator Dashboard | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/administrator/dashboard" />
@@ -33,6 +36,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
 	</definition>
 	
+	<!-- Admin Products Page -->
 	<definition name="back_admin/dashboard/products" extends="baseLayout_admin">
 		<put-attribute name="title" value="Products | Administrator Dashboard | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/administrator/dashboard/products" />
@@ -41,6 +45,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
 	</definition>
 	
+	<!-- Admin Product Categories Page -->
 	<definition name="back_admin/dashboard/product_categories" extends="baseLayout_admin">
 		<put-attribute name="title" value="Product Categories | Administrator Dashboard | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/administrator/dashboard/productcategories" />

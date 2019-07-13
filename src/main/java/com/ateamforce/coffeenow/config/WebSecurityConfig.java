@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
+    @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder());
 
@@ -42,13 +43,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.headers().cacheControl();
+        
         http
-                .antMatcher("/administrator/*")
+            .antMatcher("/administrator/*")
                 .authorizeRequests()
                 .anyRequest()
                 .hasAuthority("admin")
                 .and()
-                .formLogin()
+            .formLogin()
                 .loginPage("/administrator")
                 .loginProcessingUrl("/administrator/check")
                 .failureUrl("/administrator?error=true")
@@ -56,14 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
-                .logout()
+            .logout()
                 .logoutUrl("/administrator/logout")
                 .logoutSuccessUrl("/administrator")
                 .and()
-                .exceptionHandling()
+            .exceptionHandling()
                 .accessDeniedPage("/administrator?accessDenied=true")
                 .and()
-                .csrf().disable();
+        .csrf().disable();
 
     }
 
@@ -74,12 +77,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
 
             http
-                    .antMatcher("/store/*")
+                .antMatcher("/store/*")
                     .authorizeRequests()
                     .anyRequest()
                     .hasAuthority("store")
                     .and()
-                    .formLogin()
+                .formLogin()
                     .loginPage("/store")
                     .loginProcessingUrl("/store/check")
                     .failureUrl("/store?error=true")
@@ -87,14 +90,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .and()
-                    .logout()
+                .logout()
                     .logoutUrl("/store/logout")
                     .logoutSuccessUrl("/store")
                     .and()
-                    .exceptionHandling()
+                .exceptionHandling()
                     .accessDeniedPage("/store?accessDenied=true")
                     .and()
-                    .csrf().disable();
+            .csrf().disable();
 
         }
 
