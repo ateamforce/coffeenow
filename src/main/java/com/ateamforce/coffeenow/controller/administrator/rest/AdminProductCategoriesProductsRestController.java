@@ -69,8 +69,8 @@ public class AdminProductCategoriesProductsRestController {
         List<ProductCategory> notBelongingProductCategories = new ArrayList(productCategoryService
                 .getRemainigProductCategoriesByProductId(productId));
         Map<String, List<ProductCategory>> productcategories = new HashMap();
-        productcategories.put("belongingProducts", belongingProductCategories);
-        productcategories.put("notBelongingProducts", notBelongingProductCategories);
+        productcategories.put("belongingProductCategories", belongingProductCategories);
+        productcategories.put("notBelongingProductCategories", notBelongingProductCategories);
         return productcategories;
     }
 
