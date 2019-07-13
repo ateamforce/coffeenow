@@ -5,8 +5,11 @@
  */
 package com.ateamforce.coffeenow.model.repository;
 
+import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +17,13 @@ import org.springframework.stereotype.Repository;
  * @author alexa
  */
 @Repository
-public interface ProductCategoryRepository extends  JpaRepository<ProductCategory,Integer> {
-    
+public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
+
+    List<ProductCategory> findAllProductCategories();
+
+    ProductCategory findProductCategoryById(int categoryid);
+
+    @Query(value = "SELECT*from products p where id not in(select productid from productcategories_products where categoryid=?1)",
+            nativeQuery = true)
+    public List<Product> findRemainigProductsByProductCategoryId(int categoryid);
 }

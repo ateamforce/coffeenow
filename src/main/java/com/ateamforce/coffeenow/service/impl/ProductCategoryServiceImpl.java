@@ -5,9 +5,11 @@
  */
 package com.ateamforce.coffeenow.service.impl;
 
+import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
-    
+
     @Autowired
     ProductCategoryRepository productCategoryRepository;
 
@@ -27,9 +29,28 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public void deleteProductCategory(ProductCategory productCategory) {
-        productCategoryRepository.delete(productCategory);
+    public void deleteProductCategoryById(int productCategoryId) {
+        productCategoryRepository.deleteById(productCategoryId);
     }
-    
-    
+
+    @Override
+    public void updateProductCategory(ProductCategory updatedProductCategory) {
+        productCategoryRepository.save(updatedProductCategory);
+    }
+
+    @Override
+    public List<ProductCategory> getAllProductCategories() {
+        return productCategoryRepository.findAllProductCategories();
+    }
+
+    @Override
+    public ProductCategory getProductCategoryById(int categoryid) {
+        return productCategoryRepository.findProductCategoryById(categoryid);
+    }
+
+    @Override
+    public List<Product> getRemainigProductsByProductCategoryId(int categoryid) {
+        return productCategoryRepository.findRemainigProductsByProductCategoryId(categoryid);
+    }
+
 }

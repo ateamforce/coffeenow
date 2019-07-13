@@ -36,8 +36,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "products")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
-    , @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id")
+    @NamedQuery(name = "Product.findAllProducts", query = "SELECT p FROM Product p")
+    , @NamedQuery(name = "Product.findProductById", query = "SELECT p FROM Product p WHERE p.id = :productId")
     , @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.title = :title")
     , @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image")})
 public class Product implements Serializable {
