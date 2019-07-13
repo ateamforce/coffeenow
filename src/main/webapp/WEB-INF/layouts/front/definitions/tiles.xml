@@ -6,9 +6,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
 	<!-- template definition -->
 	<definition name="baseLayout_front" template="/WEB-INF/layouts/front/template/baseLayout.jsp">
-		<put-attribute name="ogImageUrl" value="/img/common/fb-logo.jpg" />
-		<put-attribute name="ogImageWidth" value="250" />
-		<put-attribute name="ogImageHeight" value="250" />
+		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
+		<put-attribute name="ogImageWidth" value="400" />
+		<put-attribute name="ogImageHeight" value="400" />
 		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
 	
 		<put-attribute name="navigation" value="/WEB-INF/layouts/front/template/navigation.jsp" />

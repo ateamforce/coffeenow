@@ -6,9 +6,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
 	<!-- template definition -->
 	<definition name="baseLayout_store" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
-		<put-attribute name="ogImageUrl" value="/img/common/fb-logo.jpg" />
-		<put-attribute name="ogImageWidth" value="250" />
-		<put-attribute name="ogImageHeight" value="250" />
+		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
+		<put-attribute name="ogImageWidth" value="400" />
+		<put-attribute name="ogImageHeight" value="400" />
 		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
 	
 		<put-attribute name="navigation" value="/WEB-INF/layouts/back_store/template/navigation.jsp" />
@@ -22,7 +22,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="title" value="Store Login | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/store" />
 		
+		<put-attribute name="navigation" value="" />
 		<put-attribute name="content" value="/WEB-INF/views/back_store/index.jsp" />
+		<put-attribute name="footer" value="" />
 	</definition>
 	
 	<definition name="back_store/dashboard/index" extends="baseLayout_store">
