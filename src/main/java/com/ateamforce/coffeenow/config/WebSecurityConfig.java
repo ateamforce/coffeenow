@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,11 +40,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder());
 
     }
+    
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/img/**", "/css/**", "/js/**");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.headers().cacheControl();
         
         http
             .antMatcher("/administrator/*")
@@ -73,9 +77,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Configuration
     @Order(1)
     public static class ExtraSecurityConfig extends WebSecurityConfigurerAdapter {
+        
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            // TODO: spring security sets no-cache headers for static resources, and this code is supposed to fix that, but it's not working.
+            // check https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#headers
+            // and https://stackoverflow.com/questions/24164014/how-to-enable-http-response-caching-in-spring-boot
+            web.ignoring().antMatchers("/img/**", "/css/**", "/js/**");
+        }
 
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
-
+            
             http
                 .antMatcher("/store/*")
                     .authorizeRequests()

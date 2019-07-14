@@ -63,14 +63,14 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     // the root directory during build)
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+        
         // COMMON IMAGES
         // Common boilerplate (template) images (uploaded manually)
         registry.addResourceHandler("/img/common/**").addResourceLocations("/resources/common/images/boilerplate/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // COMMON CSS
         registry.addResourceHandler("/css/common/**").addResourceLocations("/resources/common/css/")
-                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS)).setCachePeriod(604800);
+                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // COMMON JS
         registry.addResourceHandler("/js/common/**").addResourceLocations("/resources/common/js/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
@@ -129,7 +129,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/store/**").addResourceLocations("/resources/back_store/js/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
-        // WEBJARS
+        // WEBJARS (resourceChain(false) enables version agnostic linking)
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS))
                 .resourceChain(false);
