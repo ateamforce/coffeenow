@@ -58,24 +58,12 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	
-	<body id="page-top">
-
-		<!-- Page Wrapper -->
-		<div id="wrapper">
-			<tiles:insertAttribute name="leftsidebar" />
-			<tiles:insertAttribute name="content" />
-		</div>
-		<!-- End of Page Wrapper -->
-		
-		<tiles:insertAttribute name="footer" />
-		
-	</body>
+	<tiles:insertAttribute name="content" />
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
 	<script src="webjars/jquery-easing/jquery.easing.min.js"></script>
         ${cache:bust("js/common/script.js", "js", realPath)}
 		${cache:bust("js/administrator/sb-admin-2.js", "js", realPath)}
-        ${cache:bust("js/administrator/script.js", "js", realPath)}
 	
 </html>
