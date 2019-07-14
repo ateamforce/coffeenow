@@ -59,7 +59,7 @@ public class ProductCategory implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @ManyToMany(mappedBy = "productcategoriesCollection")
+    @ManyToMany(mappedBy = "productcategoriesList")
     private List<Product> productsList;
     @ManyToMany(mappedBy = "productcategoriesCollection")
     private Collection<ExtraCategory> extrascategoriesCollection;
