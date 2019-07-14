@@ -7,6 +7,7 @@ package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,8 +34,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "extrascategories")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ExtraCategory.findAll", query = "SELECT e FROM ExtraCategory e")
-    , @NamedQuery(name = "ExtraCategory.findById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :id")
+    @NamedQuery(name = "ExtraCategory.findAllExtraCategories", query = "SELECT e FROM ExtraCategory e")
+    , @NamedQuery(name = "ExtraCategory.findExtraCategoryById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :categoryId")
     , @NamedQuery(name = "ExtraCategory.findByTitle", query = "SELECT e FROM ExtraCategory e WHERE e.title = :title")
     , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")
     , @NamedQuery(name = "ExtraCategory.findByImage", query = "SELECT e FROM ExtraCategory e WHERE e.image = :image")})
@@ -60,8 +61,8 @@ public class ExtraCategory implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "image")
     private String image;
-    @ManyToMany(mappedBy = "extrascategoriesCollection")
-    private Collection<Extra> extrasCollection;
+    @ManyToMany(mappedBy = "extracategoriesList")
+    private List<Extra> extrasList;
     @JoinTable(name = "extras_products", joinColumns = {
         @JoinColumn(name = "extracategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
@@ -116,12 +117,12 @@ public class ExtraCategory implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Extra> getExtrasCollection() {
-        return extrasCollection;
+    public List<Extra> getExtrasList() {
+        return extrasList;
     }
 
-    public void setExtrasCollection(Collection<Extra> extrasCollection) {
-        this.extrasCollection = extrasCollection;
+    public void setExtrasList(List<Extra> extrasList) {
+        this.extrasList = extrasList;
     }
 
     @XmlTransient

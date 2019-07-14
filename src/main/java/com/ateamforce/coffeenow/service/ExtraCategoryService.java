@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.ExtraCategory;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,13 @@ public interface ExtraCategoryService {
 
     void addExtraCategory(ExtraCategory extraCategory);
 
-    void deleteExtraCategory(ExtraCategory extraCategory);
+    void deleteExtraCategoryById(int extraCategoryId);
+    
+    void updateExtraCategory(ExtraCategory updatedExtraCategory);
+    
+    List<ExtraCategory>getAllExtraCategories();
+    
+    ExtraCategory getExtraCategoryById(int categoryId);
+    
+    List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId);
 }

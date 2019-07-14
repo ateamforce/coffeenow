@@ -34,7 +34,7 @@ public class AdminProductCategoriesProductsRestController {
     ProductCategoryService productCategoryService;
 
     @Autowired
-    ProductService productService;
+    ProductService productService ;
 
     // return a json object containing two named lists of products of this productCategory
     @GetMapping("/products/{productCategoryId}")
@@ -42,7 +42,7 @@ public class AdminProductCategoriesProductsRestController {
         List<Product> belongingProducts = new ArrayList(productCategoryService
                 .getProductCategoryById(productCategoryId)
                 .getProductsList());
-        List<Product> notBelongingProducts = new ArrayList(productCategoryService
+        List<Product> notBelongingProducts = new ArrayList(productService
                 .getRemainigProductsByProductCategoryId(productCategoryId));
         Map<String, List<Product>> products = new HashMap();
         products.put("belongingProducts", belongingProducts);

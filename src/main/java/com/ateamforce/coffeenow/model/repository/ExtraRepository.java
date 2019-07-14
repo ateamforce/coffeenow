@@ -6,7 +6,9 @@
 package com.ateamforce.coffeenow.model.repository;
 
 import com.ateamforce.coffeenow.model.Extra;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +17,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ExtraRepository extends JpaRepository<Extra,Integer> {
+    
+    List<Extra> findAllExtras();
+    
+    Extra findExtraById(int extraId);
+    
+    @Query(value = "SELECT*from extras e where id not in(select extraid from extrascategories_extras where categoryid=?1)",
+            nativeQuery = true)
+    public List<Extra> findRemainigExtrasByExtraCategoryId(int categoryid);
     
 }

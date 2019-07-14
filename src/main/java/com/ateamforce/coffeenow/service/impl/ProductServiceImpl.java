@@ -46,5 +46,10 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct(Product updatedProduct) {
         productRepository.save(updatedProduct);
     }
+    
+    @Override
+    public List<Product> getRemainigProductsByProductCategoryId(int categoryid) {
+        return productRepository.findRemainigProductsByProductCategoryId(categoryid);
+    }
 
 }
