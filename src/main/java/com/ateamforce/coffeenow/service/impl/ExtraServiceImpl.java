@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.Extra;
 import com.ateamforce.coffeenow.model.repository.ExtraRepository;
 import com.ateamforce.coffeenow.service.ExtraService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Service;
  * @author alexa
  */
 @Service
-public class ExtraServiceImpl implements ExtraService{
-    
+public class ExtraServiceImpl implements ExtraService {
+
     @Autowired
     ExtraRepository extraRepository;
 
@@ -27,8 +28,28 @@ public class ExtraServiceImpl implements ExtraService{
     }
 
     @Override
-    public void deleteExtra(Extra extra) {
-        extraRepository.delete(extra);
+    public void deleteExtraById(int extraId) {
+        extraRepository.deleteById(extraId);
     }
-    
+
+    @Override
+    public void updateExtra(Extra updatedExtra) {
+        extraRepository.save(updatedExtra);
+    }
+
+    @Override
+    public Extra getExtraById(int extraId) {
+        return extraRepository.findExtraById(extraId);
+    }
+
+    @Override
+    public List<Extra> getAllExtras() {
+        return extraRepository.findAllExtras();
+    }
+
+    @Override
+    public List<Extra> getRemainigExtrasByExtraCategoryId(int categoryid) {
+        return extraRepository.findRemainigExtrasByExtraCategoryId(categoryid);
+    }
+
 }

@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.Extra;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,13 @@ public interface ExtraService {
 
     void addExtra(Extra extra);
 
-    void deleteExtra(Extra extra);
+    void deleteExtraById(int extraId);
+    
+    void updateExtra(Extra updatedExtra);
+    
+    Extra getExtraById(int extraId);
+
+    List<Extra> getAllExtras();
+    
+    List<Extra>getRemainigExtrasByExtraCategoryId(int categoryid);
 }

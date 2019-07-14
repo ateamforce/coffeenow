@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.model.repository.ExtraCategoryRepository;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ExtraCategoryServiceImpl implements ExtraCategoryService {
-    
+
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;
 
@@ -27,8 +28,28 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     }
 
     @Override
-    public void deleteExtraCategory(ExtraCategory extraCategory) {
-        extraCategoryRepository.delete(extraCategory);
+    public void deleteExtraCategoryById(int extraCategoryId) {
+        extraCategoryRepository.deleteById(extraCategoryId);
     }
-    
+
+    @Override
+    public void updateExtraCategory(ExtraCategory updatedExtraCategory) {
+        extraCategoryRepository.save(updatedExtraCategory);
+    }
+
+    @Override
+    public List<ExtraCategory> getAllExtraCategories() {
+        return extraCategoryRepository.findAllExtraCategories();
+    }
+
+    @Override
+    public ExtraCategory getExtraCategoryById(int categoryId) {
+        return extraCategoryRepository.findExtraCategoryById(categoryId);
+    }
+
+    @Override
+    public List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId) {
+        return extraCategoryRepository.findRemainigExtraCategoriesByExtraId(extraId);
+    }
+
 }

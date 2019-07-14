@@ -23,9 +23,7 @@ public interface ProductCategoryService {
     
     List<ProductCategory>getAllProductCategories();
     
-    ProductCategory getProductCategoryById(int categoryid);
-    
-    List<Product>getRemainigProductsByProductCategoryId(int categoryid);
+    ProductCategory getProductCategoryById(int categoryId);
     
     List<ProductCategory> getRemainigProductCategoriesByProductId(int productId);
 }
