@@ -54,7 +54,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public List<Product> getRemainigProductCategoriesByProductId(int productId) {
+    public List<ProductCategory> getRemainigProductCategoriesByProductId(int productId) {
         return productCategoryRepository.findRemainigProductCategoriesByProductId(productId);
     }
 
