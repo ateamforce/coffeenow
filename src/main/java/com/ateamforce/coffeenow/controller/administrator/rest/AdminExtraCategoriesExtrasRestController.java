@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -34,6 +35,7 @@ public class AdminExtraCategoriesExtrasRestController {
     @Autowired
     ExtraService extraService;
 
+    // get all extras of this category
     @GetMapping("/extras/{extraCategoryId}")
     public Map<String, List<Extra>> admin_dashboard_extraCategory_getextras(@PathVariable int extraCategoryId) {
         List<Extra> belongingExtras = new ArrayList(extraCategoryService
@@ -47,17 +49,20 @@ public class AdminExtraCategoriesExtrasRestController {
         return extras;
     }
 
+    // update all extras of this category (remove all existing, add all new ones)
+    @PostMapping("/extras/update/{extraCategoryId}")
     public void admin_dashboard_extraCategory_removeaddextras(@PathVariable int extraCategoryId, @RequestBody List<Extra> extrasToAdd) {
         ExtraCategory extraCategory = extraCategoryService.getExtraCategoryById(extraCategoryId);
         extraCategory.getExtrasList().clear();
         extraCategory.getExtrasList().addAll(extrasToAdd);
     }
 
+    // get all categories of this extra
     @GetMapping("/extracategories/{extraId}")
     public Map<String, List<ExtraCategory>> admin_dashboard_extra_getextraCategories(@PathVariable int extraId) {
         List<ExtraCategory> belongingExtraCategories = new ArrayList(extraService
                 .getExtraById(extraId)
-                .getExtracategoriesList());
+                .getExtraCategoriesList());
         List<ExtraCategory> notBelongingExtraCategories = new ArrayList(extraCategoryService
                 .getRemainigExtraCategoriesByExtraId(extraId));
         Map<String, List<ExtraCategory>> extracategories = new HashMap();
@@ -65,4 +70,14 @@ public class AdminExtraCategoriesExtrasRestController {
         extracategories.put("notBelongingExtraCategories", notBelongingExtraCategories);
         return extracategories;
     }
+    
+    //  update all extracategories of this extra (remove all existing, add all new ones)
+    @PostMapping("/extracategories/update/{extraId}")
+    public void admin_dashboard_product_removeaddextraCategories(@PathVariable int extraId, @RequestBody List<ExtraCategory> categoriesToAdd) {
+        Extra extra = extraService.getExtraById(extraId);
+        extra.getExtraCategoriesList().clear();
+        extra.getExtraCategoriesList().addAll(categoriesToAdd);
+    }
+    
+    
 }

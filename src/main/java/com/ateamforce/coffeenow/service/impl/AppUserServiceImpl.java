@@ -52,26 +52,26 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //Get the User
-        AppUser appuser = getUserByEmail(email);
-        System.out.println(appuser);
-        
+        AppUser appuser = appUserRepository.findByEmail(email);
         
         if (appuser == null) {
-            System.out.println("User not found! " + email);
-            throw new UsernameNotFoundException("User " + email + " was not found in the database");
+            throw new UsernameNotFoundException(email);
         }
         
         //Add all roles to grantList
-        String roleName=appuser.getApprole().getApprole();
+        String roleName = appuser.getApprole().getApprole();
         
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
 
-                GrantedAuthority authority = new SimpleGrantedAuthority(roleName);
-                grantList.add(authority);
+        GrantedAuthority authority = new SimpleGrantedAuthority(roleName);
+        grantList.add(authority);
 
         
-        UserDetails userDetails = (UserDetails) new User(appuser.getEmail(),
-                appuser.getPassword(), grantList);
+        UserDetails userDetails = (UserDetails) new User(
+                appuser.getEmail(), 
+                appuser.getPassword(), 
+                grantList
+        );
 
         return userDetails;
         

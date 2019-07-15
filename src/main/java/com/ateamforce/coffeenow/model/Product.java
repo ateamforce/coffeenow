@@ -135,7 +135,7 @@ public class Product implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public List<ProductCategory> getProductcategoriesList() {
+    public List<ProductCategory> getProductCategoriesList() {
         return productcategoriesList;
     }
 

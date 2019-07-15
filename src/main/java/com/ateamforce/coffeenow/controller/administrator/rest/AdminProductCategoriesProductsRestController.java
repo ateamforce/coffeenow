@@ -65,7 +65,7 @@ public class AdminProductCategoriesProductsRestController {
     public Map<String, List<ProductCategory>> admin_dashboard_product_getproductCategories(@PathVariable int productId) {
         List<ProductCategory> belongingProductCategories = new ArrayList(productService
                 .getProductById(productId)
-                .getProductcategoriesList());
+                .getProductCategoriesList());
         List<ProductCategory> notBelongingProductCategories = new ArrayList(productCategoryService
                 .getRemainigProductCategoriesByProductId(productId));
         Map<String, List<ProductCategory>> productcategories = new HashMap();
@@ -78,8 +78,8 @@ public class AdminProductCategoriesProductsRestController {
     @PostMapping("/productcategories/update/{productId}")
     public void admin_dashboard_product_removeaddproductCategories(@PathVariable int productId, @RequestBody List<ProductCategory> categoriesToAdd) {
         Product product = productService.getProductById(productId);
-        product.getProductcategoriesList().clear();
-        product.getProductcategoriesList().addAll(categoriesToAdd);
+        product.getProductCategoriesList().clear();
+        product.getProductCategoriesList().addAll(categoriesToAdd);
     }
 
 }

@@ -36,7 +36,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
 	
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
+		<put-attribute name="navbar" value="/WEB-INF/layouts/back_admin/template/navbar.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/layouts/back_admin/template/footer.jsp" />
+		<put-attribute name="utils" value="/WEB-INF/layouts/back_admin/template/utils.jsp" />
 	</definition>
 	
 	<!-- Admin Dashboard Page -->
@@ -61,6 +63,22 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="ogUrl" value="/administrator/dashboard/productcategories" />
 		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/product_categories.jsp" />
+	</definition>
+	
+	<!-- Admin Extras Page -->
+	<definition name="back_admin/dashboard/extras" extends="baseLayout_admin">
+		<put-attribute name="title" value="Extras | Administrator Dashboard | CoffeeNow" />
+		<put-attribute name="ogUrl" value="/administrator/dashboard/extras" />
+		
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extras.jsp" />
+	</definition>
+	
+	<!-- Admin Extras Categories Page -->
+	<definition name="back_admin/dashboard/extra_categories" extends="baseLayout_admin">
+		<put-attribute name="title" value="Extras Categories | Administrator Dashboard | CoffeeNow" />
+		<put-attribute name="ogUrl" value="/administrator/dashboard/extracategories" />
+		
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extra_categories.jsp" />
 	</definition>
 	
 	

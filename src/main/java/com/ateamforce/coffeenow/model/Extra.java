@@ -107,7 +107,7 @@ public class Extra implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public List<ExtraCategory> getExtracategoriesList() {
+    public List<ExtraCategory> getExtraCategoriesList() {
         return extracategoriesList;
     }
 
