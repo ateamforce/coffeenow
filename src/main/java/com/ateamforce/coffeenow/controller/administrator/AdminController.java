@@ -5,12 +5,14 @@
  */
 package com.ateamforce.coffeenow.controller.administrator;
 
+import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
-import org.apache.log4j.Logger;
+import java.security.Principal;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/administrator/dashboard")
 public class AdminController {
-    
-    private final static Logger LOGGER = Logger.getLogger(AdminController.class);
 
     @Autowired
     ProductService productService;
@@ -46,9 +46,13 @@ public class AdminController {
     // TODO : Gets what?
     // Go to administrator dashboard page
     @RequestMapping
-    public String admin_dashboard(ModelMap modelmap) {
+    public String admin_dashboard(ModelMap modelmap, Principal principal, HttpSession session) {
         
-        // add variable to indicate active sidebar menu
+        // add user
+        Administrator admin = (Administrator) appUserService.getUserByEmail(principal.getName());
+        session.setAttribute("currentUser", admin);
+        
+        // add variable to indicate active sidebar
         modelmap.addAttribute("dashboardIsActive", "active");
         
         return "back_admin/dashboard/index";
@@ -75,11 +79,6 @@ public class AdminController {
         
         // add product categories
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
-        
-        // add connected user
-        LOGGER.info("");
-        // Administrator admin = (Administrator)appUserService.getUserByEmail(authentication.getPrincipal().toString());
-        // modelmap.addAttribute("user", admin);
         
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productcategoriesIsActive", "active");
