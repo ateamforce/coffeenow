@@ -26,17 +26,17 @@
                   <form action=${loginUrl} method="post" class="user">
 					<c:if test="${param.error != null}">
 						<div class="alert alert-danger">
-							<p><spring:message code="admin.login.invalid"/></p>
+							<spring:message code="admin.login.invalid"/>
 						</div>
 					</c:if>
 					<c:if test="${param.logout != null}">
 						<div class="alert alert-success">
-							<p><spring:message code="admin.login.loggedout"/></p>
+							<spring:message code="admin.login.loggedout"/>
 						</div>
 					</c:if>
 					<c:if test="${param.accessDenied != null}">
 						<div class="alert alert-danger">
-							<p><spring:message code="admin.login.denied"/></p>
+							<spring:message code="admin.login.denied"/>
 						</div>
 					</c:if>
                     <div class="form-group">
