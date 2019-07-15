@@ -1,17 +1,15 @@
-<%-- 
-    Document   : index.jsp
-    Created on : Jul 12, 2019, 8:48:18 PM
-    Author     : alexa
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>products</h1>
-    </body>
-</html>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<h1 class="h3 mb-4 text-gray-800"><spring:message code="admin.menu.products"/></h1>
+	
+	<!-- WRITE HERE -->
+
+</div>
+<!-- /.container-fluid -->

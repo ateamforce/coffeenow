@@ -8,7 +8,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{
             RootApplicationContextConfig.class,
-            JpaConfig.class
+            JpaConfig.class,
+            WebSecurityConfig.class
         };
     }
 
@@ -17,8 +18,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         return new Class[]{
             WebApplicationContextConfig.class,
             TilesConfig.class,
-            WebFlowConfig.class,
-            WebSecurityConfig.class
+            WebFlowConfig.class
         };
     }
 
