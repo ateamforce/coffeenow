@@ -1,5 +1,9 @@
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
+import com.ateamforce.coffeenow.dto.ProductCategoryDto;
+import com.ateamforce.coffeenow.dto.ProductDto;
+import com.ateamforce.coffeenow.dto.service.ProductCategoryDtoService;
+import com.ateamforce.coffeenow.dto.service.ProductDtoService;
 import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
@@ -34,17 +38,23 @@ public class AdminProductCategoriesProductsRestController {
     ProductCategoryService productCategoryService;
 
     @Autowired
-    ProductService productService ;
+    ProductCategoryDtoService productCategoryDtoService;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    ProductDtoService productDtoService;
 
     // return a json object containing two named lists of products of this productCategory
+    // return a json object containing two named lists of products of this productCategory
     @GetMapping("/products/{productCategoryId}")
-    public Map<String, List<Product>> admin_dashboard_productCategory_getproducts(@PathVariable int productCategoryId) {
-        List<Product> belongingProducts = new ArrayList(productCategoryService
-                .getProductCategoryById(productCategoryId)
-                .getProductsList());
-        List<Product> notBelongingProducts = new ArrayList(productService
+    public Map<String, List<ProductDto>> admin_dashboard_productCategory_getproducts(@PathVariable int productCategoryId) {
+        List<ProductDto> belongingProducts = new ArrayList(productDtoService
+                .getAllProductsByProductCategoryId(productCategoryId));
+        List<ProductDto> notBelongingProducts = new ArrayList(productDtoService
                 .getRemainigProductsByProductCategoryId(productCategoryId));
-        Map<String, List<Product>> products = new HashMap();
+        Map<String, List<ProductDto>> products = new HashMap();
         products.put("belongingProducts", belongingProducts);
         products.put("notBelongingProducts", notBelongingProducts);
         return products;
@@ -62,18 +72,17 @@ public class AdminProductCategoriesProductsRestController {
 
     // return a json object containing two named lists of productCategories of this product
     @GetMapping("/productcategories/{productId}")
-    public Map<String, List<ProductCategory>> admin_dashboard_product_getproductCategories(@PathVariable int productId) {
-        List<ProductCategory> belongingProductCategories = new ArrayList(productService
-                .getProductById(productId)
-                .getProductCategoriesList());
-        List<ProductCategory> notBelongingProductCategories = new ArrayList(productCategoryService
+    public Map<String, List<ProductCategoryDto>> admin_dashboard_product_getproductCategories(@PathVariable int productId) {
+        List<ProductCategoryDto> belongingProductCategories = new ArrayList(productCategoryDtoService
+                .getAllProductCategoriesByProductId(productId));
+        List<ProductCategoryDto> notBelongingProductCategories = new ArrayList(productCategoryDtoService
                 .getRemainigProductCategoriesByProductId(productId));
-        Map<String, List<ProductCategory>> productcategories = new HashMap();
+        Map<String, List<ProductCategoryDto>> productcategories = new HashMap();
         productcategories.put("belongingProductCategories", belongingProductCategories);
         productcategories.put("notBelongingProductCategories", notBelongingProductCategories);
         return productcategories;
     }
-
+    
     // update (as above) the productCategories of this product
     @PostMapping("/productcategories/update/{productId}")
     public void admin_dashboard_product_removeaddproductCategories(@PathVariable int productId, @RequestBody List<ProductCategory> categoriesToAdd) {
@@ -81,5 +90,4 @@ public class AdminProductCategoriesProductsRestController {
         product.getProductCategoriesList().clear();
         product.getProductCategoriesList().addAll(categoriesToAdd);
     }
-
 }
