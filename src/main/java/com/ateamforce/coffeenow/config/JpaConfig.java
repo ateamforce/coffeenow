@@ -40,7 +40,7 @@ public class JpaConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.ateamforce.coffeenow.model");
+        em.setPackagesToScan("com.ateamforce.coffeenow.model","com.ateamforce.coffeenow.dto");
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());
 

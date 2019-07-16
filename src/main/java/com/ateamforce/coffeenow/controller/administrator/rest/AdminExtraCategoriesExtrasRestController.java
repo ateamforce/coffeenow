@@ -5,6 +5,10 @@
  */
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
+import com.ateamforce.coffeenow.dto.ExtraCategoryDto;
+import com.ateamforce.coffeenow.dto.ExtraDto;
+import com.ateamforce.coffeenow.dto.service.ExtraCategoryDtoService;
+import com.ateamforce.coffeenow.dto.service.ExtraDtoService;
 import com.ateamforce.coffeenow.model.Extra;
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
@@ -35,15 +39,20 @@ public class AdminExtraCategoriesExtrasRestController {
     @Autowired
     ExtraService extraService;
 
+    @Autowired
+    ExtraCategoryDtoService extraCategoryDtoService;
+
+    @Autowired
+    ExtraDtoService extraDtoService;
+
     // get all extras of this category
     @GetMapping("/extras/{extraCategoryId}")
-    public Map<String, List<Extra>> admin_dashboard_extraCategory_getextras(@PathVariable int extraCategoryId) {
-        List<Extra> belongingExtras = new ArrayList(extraCategoryService
-                .getExtraCategoryById(extraCategoryId)
-                .getExtrasList());
-        List<Extra> notBelongingExtras = new ArrayList(extraService
+    public Map<String, List<ExtraDto>> admin_dashboard_extraCategory_getextras(@PathVariable int extraCategoryId) {
+        List<ExtraDto> belongingExtras = new ArrayList(extraDtoService
+                .getAllExtrasByExtraCategoryId(extraCategoryId));
+        List<ExtraDto> notBelongingExtras = new ArrayList(extraDtoService
                 .getRemainigExtrasByExtraCategoryId(extraCategoryId));
-        Map<String, List<Extra>> extras = new HashMap();
+        Map<String, List<ExtraDto>> extras = new HashMap();
         extras.put("belongingExtras", belongingExtras);
         extras.put("notBelongingExtras", notBelongingExtras);
         return extras;
@@ -59,18 +68,17 @@ public class AdminExtraCategoriesExtrasRestController {
 
     // get all categories of this extra
     @GetMapping("/extracategories/{extraId}")
-    public Map<String, List<ExtraCategory>> admin_dashboard_extra_getextraCategories(@PathVariable int extraId) {
-        List<ExtraCategory> belongingExtraCategories = new ArrayList(extraService
-                .getExtraById(extraId)
-                .getExtraCategoriesList());
-        List<ExtraCategory> notBelongingExtraCategories = new ArrayList(extraCategoryService
+    public Map<String, List<ExtraCategoryDto>> admin_dashboard_extra_getextraCategories(@PathVariable int extraId) {
+        List<ExtraCategoryDto> belongingExtraCategories = new ArrayList(extraCategoryDtoService
+                .getAllExtraCategoriesByExtraId(extraId));
+        List<ExtraCategoryDto> notBelongingExtraCategories = new ArrayList(extraCategoryDtoService
                 .getRemainigExtraCategoriesByExtraId(extraId));
-        Map<String, List<ExtraCategory>> extracategories = new HashMap();
+        Map<String, List<ExtraCategoryDto>> extracategories = new HashMap();
         extracategories.put("belongingExtraCategories", belongingExtraCategories);
         extracategories.put("notBelongingExtraCategories", notBelongingExtraCategories);
         return extracategories;
     }
-    
+
     //  update all extracategories of this extra (remove all existing, add all new ones)
     @PostMapping("/extracategories/update/{extraId}")
     public void admin_dashboard_product_removeaddextraCategories(@PathVariable int extraId, @RequestBody List<ExtraCategory> categoriesToAdd) {
@@ -78,6 +86,5 @@ public class AdminExtraCategoriesExtrasRestController {
         extra.getExtraCategoriesList().clear();
         extra.getExtraCategoriesList().addAll(categoriesToAdd);
     }
-    
-    
+
 }
