@@ -36,6 +36,7 @@ public class MainController {
         return "back_store/dashboard/index";
     }
     
+    // TODO: FOR TESTING PURPOSES - TO BE REMOVED
     @Autowired
     AppUserServiceImpl ausimp;
     
@@ -62,5 +63,6 @@ public class MainController {
         ausimp.addAppUser(appUser);
     return "front/login";
     }
+    /////////////////////////////////////////////////////////
 
 }

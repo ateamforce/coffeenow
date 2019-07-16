@@ -12,16 +12,16 @@
 	
 	<!-- Topbar Language Switch -->
 	
-	<div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+	<div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search languages">
 		<div class="input-group">
 			<c:choose>
 				<c:when test="${pageContext.response.locale == 'en'}">
-					<a href="administrator/dashboard?language=el" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Ελληνικά</a>
+					<a onclick="event.preventDefault(); languageUri('?language=el');" href="administrator/dashboard?language=el" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Ελληνικά</a>
 					<a class="d-none d-sm-inline-block btn btn-sm disabled">English</a>
 				</c:when>    
 				<c:otherwise>
 					<a class="d-none d-sm-inline-block btn btn-sm disabled">Ελληνικά</a>
-					<a href="administrator/dashboard?language=en" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">English</a>
+					<a onclick="event.preventDefault(); languageUri('?language=en');" href="administrator/dashboard?language=en" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">English</a>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -36,7 +36,7 @@
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="mr-2 d-none d-lg-inline text-gray-600 small">${currentUser.name}</span>
-				<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+				<img class="img-profile rounded-circle" src="https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png">
 			</a>
 			<!-- Dropdown - User Information -->
 			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

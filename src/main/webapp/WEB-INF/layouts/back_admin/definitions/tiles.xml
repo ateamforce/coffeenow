@@ -14,6 +14,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="ogImageWidth" value="400" />
 		<put-attribute name="ogImageHeight" value="400" />
 		<put-attribute name="pageDescription" value="coffeenow.gr - Admin Login" />
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/sb-admin-2.js" />
 	</definition>
 	
 	<!-- Admin Login Page -->
@@ -34,6 +36,8 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="ogImageWidth" value="400" />
 		<put-attribute name="ogImageHeight" value="400" />
 		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/sb-admin-2.js,js/administrator/script.js" />
 	
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
 		<put-attribute name="navbar" value="/WEB-INF/layouts/back_admin/template/navbar.jsp" />
@@ -61,6 +65,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<definition name="back_admin/dashboard/product_categories" extends="baseLayout_admin">
 		<put-attribute name="title" value="Product Categories | Administrator Dashboard | CoffeeNow" />
 		<put-attribute name="ogUrl" value="/administrator/dashboard/productcategories" />
+		
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/dataTables.bootstrap4.css,css/administrator/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/sb-admin-2.js,js/administrator/jquery.dataTables.js,js/administrator/dataTables.bootstrap4.js,js/administrator/script.js" />
 		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/product_categories.jsp" />
 	</definition>
