@@ -20,7 +20,7 @@
 			<div class="modal-body"><spring:message code="admin.modal.logout.info"/></div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal"><spring:message code="cancel"/></button>
-				<a class="btn btn-primary" href="administrator/logout"><spring:message code="logout"/></a>
+				<a class="btn btn-primary" href="administrator/dashboard/logout"><spring:message code="logout"/></a>
 			</div>
 		</div>
 	</div>

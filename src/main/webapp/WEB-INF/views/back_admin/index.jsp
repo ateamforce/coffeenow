@@ -22,7 +22,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4"><spring:message code="admin.login.welcome"/></h1>
                   </div>
-				  <spring:url value="administrator/check" var="loginUrl"/>
+				  <spring:url value="administrator/dashboard/check" var="loginUrl"/>
                   <form action=${loginUrl} method="post" class="user">
 					<c:if test="${param.error != null}">
 						<div class="alert alert-danger">
