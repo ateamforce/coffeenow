@@ -6,14 +6,21 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.PaymentType;
+import java.util.List;
 
 /**
  *
  * @author alexa
  */
 public interface PaymentTypeService {
-    
+
     void addPaymentType(PaymentType paymentType);
-    
-    void deletePaymentType(PaymentType paymentType);
+
+    void deletePaymentTypeById(int paymentTypeId);
+
+    void updatePaymentType(PaymentType paymentType);
+
+    PaymentType getPaymentTypeById(int paymentTypeId);
+
+    List<PaymentType> getAllPaymentTypes();
 }

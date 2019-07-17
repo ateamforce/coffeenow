@@ -27,4 +27,8 @@ public interface ExtraCategoryDtoService {
     List<ExtraCategoryDto> getRemainigExtraCategoriesByExtraId(int extraId);
 
     List<ExtraCategoryDto> getAllExtraCategoriesByExtraId(int extraId);
+
+    List<ExtraCategoryDto> getAllExtraCategoriesByProductCategoryId(int productCategoryId);
+
+    List<ExtraCategoryDto> getRemainigExtraCategoriesByProductCategoryId(int productCategoryId);
 }

@@ -33,8 +33,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "paymenttypes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PaymentType.findAll", query = "SELECT p FROM PaymentType p")
-    , @NamedQuery(name = "PaymentType.findById", query = "SELECT p FROM PaymentType p WHERE p.id = :id")
+    @NamedQuery(name = "PaymentType.findAllPaymentTypes", query = "SELECT p FROM PaymentType p")
+    , @NamedQuery(name = "PaymentType.findPaymentTypeById", query = "SELECT p FROM PaymentType p WHERE p.id = :paymentTypeId")
     , @NamedQuery(name = "PaymentType.findByTitle", query = "SELECT p FROM PaymentType p WHERE p.title = :title")
     , @NamedQuery(name = "PaymentType.findByImage", query = "SELECT p FROM PaymentType p WHERE p.image = :image")})
 public class PaymentType implements Serializable {
@@ -132,5 +132,5 @@ public class PaymentType implements Serializable {
     public String toString() {
         return "com.ateamforce.coffeenow.model.Paymenttypes[ id=" + id + " ]";
     }
-    
+
 }

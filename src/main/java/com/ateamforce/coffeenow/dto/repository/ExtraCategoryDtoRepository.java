@@ -29,4 +29,12 @@ public interface ExtraCategoryDtoRepository extends JpaRepository<ExtraCategoryD
      @Query(value = "SELECT*from extrascategories ec where id in(select categoryid from extrascategories_extras where extraid=?1)",
             nativeQuery = true)
     public List<ExtraCategoryDto> findAllExtraCategoriesByExtraId(int extraId);
+
+     @Query(value = "SELECT*from extrascategories ec where id in(select extracategoryid from extras_products where productcategoryid=?1)",
+            nativeQuery = true)
+    public List<ExtraCategoryDto> findAllExtraCategoriesByProductCategoryId(int productCategoryId);
+    
+     @Query(value = "SELECT*from extrascategories ec where id not in(select extracategoryid from extras_products where productcategoryid=?1)",
+            nativeQuery = true)
+    public List<ExtraCategoryDto> findRemainigExtraCategoriesByProductCategoryId(int productCategoryId);
 }
