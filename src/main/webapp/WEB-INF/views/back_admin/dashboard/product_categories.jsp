@@ -8,22 +8,23 @@
 
 	<!-- Page Heading -->
 	<h1 class="h3 mb-4 text-gray-800"><spring:message code="admin.menu.productcategories"/></h1>
-	<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+	<p class="mb-4"><spring:message code="admin.menu.productcategories.desc"/></p>
 	
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary"><spring:message code="admin.menu.productcategories.help"/></h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered dataTableCFN" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
 					  <th>Id</th>
                       <th>Parent</th>
                       <th>Title</th>
-                      <th>image</th>
+                      <th>Image</th>
+					  <th><spring:message code="options"/></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -31,16 +32,18 @@
                       <th>Id</th>
                       <th>Parent</th>
                       <th>Title</th>
-                      <th>image</th>
+					  <th>Image</th>
+                      <th><spring:message code="options"/></th>
                     </tr>
                   </tfoot>
                   <tbody>
 					<c:forEach var="productCategory" items="${productcategories}">
 						<tr>
-							<td>${productCategory.id}</td>
+							<td class="rowIdCFN">${productCategory.id}</td>
 							<td>${productCategory.parent}</td>
 							<td>${productCategory.title}</td>
 							<td>${productCategory.image}</td>
+							<td class="optionsCFN"></td>
 						</tr>
 					</c:forEach>
                   </tbody>

@@ -12,7 +12,7 @@
 	
 	<!-- Topbar Language Switch -->
 	
-	<div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search languages">
+	<div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="languagesCFN" data-cfn-locale="${pageContext.response.locale}">
 		<div class="input-group">
 			<c:choose>
 				<c:when test="${pageContext.response.locale == 'en'}">
@@ -51,3 +51,4 @@
 
 </nav>
 <!-- End of Topbar -->
+
