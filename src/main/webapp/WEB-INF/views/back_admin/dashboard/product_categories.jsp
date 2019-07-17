@@ -17,14 +17,13 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered responsive no-wrap dataTableCFN" id="mainTableCFN" width="100%" cellspacing="0">
                   <thead>
                     <tr>
 					  <th>Id</th>
                       <th>Parent</th>
-                      <th>Title</th>
+                      <th class="titleHeaderCFN">Title</th>
                       <th>Image</th>
-					  <th><spring:message code="options"/></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -33,7 +32,6 @@
                       <th>Parent</th>
                       <th>Title</th>
 					  <th>Image</th>
-                      <th><spring:message code="options"/></th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -42,8 +40,7 @@
 							<td class="rowIdCFN">${productCategory.id}</td>
 							<td>${productCategory.parent}</td>
 							<td>${productCategory.title}</td>
-							<td>${productCategory.image}</td>
-							<td class="optionsCFN"></td>
+							<td><img src="/img/product/category/${productCategory.image}" /></td>
 						</tr>
 					</c:forEach>
                   </tbody>

@@ -55,6 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
+        http.sessionManagement()
+            .sessionAuthenticationErrorUrl("/administrator?sessionExpired=true")
+            .invalidSessionUrl("/administrator?sessionExpired=true");
+        
         http
             .antMatcher("/administrator/dashboard/**")
                 .authorizeRequests()
@@ -94,6 +98,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            
+            http.sessionManagement()
+                .sessionAuthenticationErrorUrl("/store?sessionExpired=true")
+                .invalidSessionUrl("/store?sessionExpired=true");
             
             http
                 .antMatcher("/store/dashboard/**")

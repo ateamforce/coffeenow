@@ -24,21 +24,28 @@
                   </div>
 				  <spring:url value="administrator/dashboard/check" var="loginUrl"/>
                   <form action=${loginUrl} method="post" class="user">
-					<c:if test="${param.error != null}">
-						<div class="alert alert-danger">
-							<spring:message code="admin.login.invalid"/>
-						</div>
-					</c:if>
-					<c:if test="${param.logout != null}">
-						<div class="alert alert-success">
-							<spring:message code="admin.login.loggedout"/>
-						</div>
-					</c:if>
-					<c:if test="${param.accessDenied != null}">
-						<div class="alert alert-danger">
-							<spring:message code="admin.login.denied"/>
-						</div>
-					</c:if>
+					<c:choose>
+						<c:when test="${param.error != null}">
+							<div class="alert alert-danger">
+								<spring:message code="admin.login.invalid"/>
+							</div>
+						</c:when>
+						<c:when test="${param.logout != null}">
+							<div class="alert alert-success">
+								<spring:message code="admin.login.loggedout"/>
+							</div>
+						</c:when>
+						<c:when test="${param.accessDenied != null}">
+							<div class="alert alert-danger">
+								<spring:message code="admin.login.denied"/>
+							</div>
+						</c:when>
+						<c:when test="${param.sessionExpired != null}">
+							<div class="alert alert-danger">
+								<spring:message code="admin.login.sessionexpired"/>
+							</div>
+						</c:when>
+					</c:choose>
                     <div class="form-group">
 					  <spring:message code="enterEmailAddress" var="enterEmailAddress"/>
                       <input type="email" class="form-control form-control-user" id="userId" aria-describedby="emailHelp" placeholder="${enterEmailAddress}" name="username" required>
