@@ -57,4 +57,14 @@ public class ProductCategoryDtoServiceImpl implements ProductCategoryDtoService 
         return productCategoryDtoRepository.findAllProductCategoriesByProductId(productId);
     }
 
+    @Override
+    public List<ProductCategoryDto> getAllProductCategoriesByExtraCategoryId(int extracategoryId) {
+        return productCategoryDtoRepository.findAllProductCategoriesByExtraCategoryId(extracategoryId);
+    }
+
+    @Override
+    public List<ProductCategoryDto> getRemainigProductCategoriesByExtraCategoryId(int extracategoryId) {
+        return productCategoryDtoRepository.findRemainigProductCategoriesByExtraCategoryId(extracategoryId);
+    }
+
 }

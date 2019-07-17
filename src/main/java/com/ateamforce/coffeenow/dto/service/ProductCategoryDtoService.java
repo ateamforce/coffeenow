@@ -13,18 +13,22 @@ import java.util.List;
  * @author alexa
  */
 public interface ProductCategoryDtoService {
-    
+
     void addProductCategory(ProductCategoryDto productCategory);
-    
+
     void deleteProductCategoryById(int productCategoryId);
-    
+
     void updateProductCategory(ProductCategoryDto updatedProductCategory);
-    
-    List<ProductCategoryDto>getAllProductCategories();
-    
+
+    List<ProductCategoryDto> getAllProductCategories();
+
     ProductCategoryDto getProductCategoryById(int categoryId);
-    
+
     List<ProductCategoryDto> getRemainigProductCategoriesByProductId(int productId);
-    
+
     List<ProductCategoryDto> getAllProductCategoriesByProductId(int productId);
+
+    List<ProductCategoryDto> getAllProductCategoriesByExtraCategoryId(int extracategoryId);
+
+    List<ProductCategoryDto> getRemainigProductCategoriesByExtraCategoryId(int extracategoryId);
 }

@@ -29,4 +29,12 @@ public interface ProductCategoryDtoRepository extends JpaRepository<ProductCateg
     @Query(value = "SELECT*from productcategories pc where id in(select categoryid from productcategories_products where productid=?1)",
             nativeQuery = true)
     public List<ProductCategoryDto> findAllProductCategoriesByProductId(int productId);
+    
+    @Query(value = "SELECT*from productcategories pc where id in(select productcategoryid from extras_products where extracategoryid=?1)",
+            nativeQuery = true)
+    public List<ProductCategoryDto> findAllProductCategoriesByExtraCategoryId(int extracategoryId);
+    
+    @Query(value = "SELECT*from productcategories pc where id not in(select productcategoryid from extras_products where extracategoryid=?1)",
+            nativeQuery = true)
+    public List<ProductCategoryDto> findRemainigProductCategoriesByExtraCategoryId(int extracategoryId);
 }

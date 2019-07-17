@@ -3,20 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.model.repository;
+package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.AppRole;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author alexa
  */
-@Repository
-public interface AppRoleRepository extends  JpaRepository<AppRole, String> {
+public interface AppRoleService {
+
+    void addAppRole(AppRole appRole);
+
+    void deleteAppRole(AppRole appRole);
     
-    List<AppRole> findAllAppRoles();
-    
+    void updateAppRole(AppRole appRole);
+
+    List<AppRole> getAllAppRoles();
+
 }

@@ -67,7 +67,7 @@ public class ExtraCategory implements Serializable {
         @JoinColumn(name = "extracategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<ProductCategory> productcategoriesCollection;
+    private List<ProductCategory> productcategoriesList;
 
     public ExtraCategory() {
     }
@@ -127,12 +127,12 @@ public class ExtraCategory implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<ProductCategory> getProductcategoriesCollection() {
-        return productcategoriesCollection;
+    public List<ProductCategory> getProductcategoriesList() {
+        return productcategoriesList;
     }
 
-    public void setProductcategoriesCollection(Collection<ProductCategory> productcategoriesCollection) {
-        this.productcategoriesCollection = productcategoriesCollection;
+    public void setProductcategoriesList(List<ProductCategory> productcategoriesList) {
+        this.productcategoriesList = productcategoriesList;
     }
 
     @Override

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "approles")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AppRole.findAll", query = "SELECT a FROM AppRole a")
+    @NamedQuery(name = "AppRole.findAllAppRoles", query = "SELECT a FROM AppRole a")
     , @NamedQuery(name = "AppRole.findByApprole", query = "SELECT a FROM AppRole a WHERE a.approle = :approle")})
 public class AppRole implements Serializable {
 
