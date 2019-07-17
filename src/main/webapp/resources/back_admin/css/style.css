@@ -1,2 +1,15 @@
-.languages a { font-weight: bold; }
-.languages a.disabled { color: #000; }
+/* custom */
+form {
+	line-height: 1;
+	text-align: center;
+}
+#languagesCFN a { font-weight: bold; }
+#languagesCFN a.disabled { color: #000; }
+.yesNoFormCFN button {margin: 0 5px;}
+.hiddenCFN { display: none; }
+
+/* overrides */
+.btn-sm, .btn-group-sm > .btn {
+	line-height: 1;
+	border: none;
+}
