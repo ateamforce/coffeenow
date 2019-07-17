@@ -5,3 +5,6 @@ form {
 }
 #languagesCFN a { font-weight: bold; }
 #languagesCFN a.disabled { color: #000; }
+
+/* overrides */
+.btn.disabled, .btn:disabled { cursor: not-allowed; }

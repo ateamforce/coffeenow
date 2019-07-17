@@ -24,7 +24,7 @@ public class AdminProductCategoriesRestController {
 
     // return a json object containing all the product categories
     @GetMapping("/administrator/dashboard/productcategories/get")
-    public List<ProductCategoryDto> admin_dashboard_product_getproductCategories() {
+    public List<ProductCategoryDto> admin_getAllProductGategories_as_json() {
         return new ArrayList(productCategoryDtoService.getAllProductCategories());
         
     }
