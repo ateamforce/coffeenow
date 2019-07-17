@@ -5,11 +5,3 @@ form {
 }
 #languagesCFN a { font-weight: bold; }
 #languagesCFN a.disabled { color: #000; }
-.yesNoFormCFN button {margin: 0 5px;}
-.hiddenCFN { display: none; }
-
-/* overrides */
-.btn-sm, .btn-group-sm > .btn {
-	line-height: 1;
-	border: none;
-}
