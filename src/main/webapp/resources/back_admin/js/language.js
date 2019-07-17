@@ -6,7 +6,8 @@ var language_JSON = {
 		"logoutAsk":"Θέλεις να βγείς από το coffeenow;",
 		"logoutInfo":"Επίλεξε το \"Έξοδος\" όταν έισαι έτοιμος/η να βγείς",
 		"cancel":"Άκυρο",
-		"logout":"Έξοδος"
+		"logout":"Έξοδος",
+		"deleteInform":"Επίλεξες διαγραφή"
 	},
 	"en":{
 		"yes":"Yes",
@@ -15,7 +16,8 @@ var language_JSON = {
 		"logoutAsk":"Ready to Leave\?",
 		"logoutInfo":"Select \"Logout\" below if you are ready to end your current session",
 		"cancel":"Cancel",
-		"logout":"Logout"
+		"logout":"Logout",
+		"deleteInform":"You chose delete"
 	}
 };
 var locale = document.getElementById("languagesCFN").getAttribute("data-cfn-locale");
