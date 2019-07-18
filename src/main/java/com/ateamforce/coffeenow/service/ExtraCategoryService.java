@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ExtraCategoryService {
 
-    void addExtraCategory(ExtraCategory extraCategory);
+    ExtraCategory addExtraCategory(ExtraCategory extraCategory);
 
     void deleteExtraCategoryById(int extraCategoryId);
     

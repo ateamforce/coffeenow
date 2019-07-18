@@ -15,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ExtraCategoryDto.findAllExtraCategories", query = "SELECT e FROM ExtraCategoryDto e")
     , @NamedQuery(name = "ExtraCategoryDto.findExtraCategoryById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :categoryId")
     , @NamedQuery(name = "ExtraCategoryDto.findByTitle", query = "SELECT e FROM ExtraCategoryDto e WHERE e.title = :title")
-    , @NamedQuery(name = "ExtraCategoryDto.findByParent", query = "SELECT e FROM ExtraCategoryDto e WHERE e.parent = :parent")
-    , @NamedQuery(name = "ExtraCategoryDto.findByImage", query = "SELECT e FROM ExtraCategoryDto e WHERE e.image = :image")})
+    , @NamedQuery(name = "ExtraCategoryDto.findByParent", query = "SELECT e FROM ExtraCategoryDto e WHERE e.parent = :parent")})
 public class ExtraCategoryDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +52,11 @@ public class ExtraCategoryDto implements Serializable {
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes extraCategoryImage from json view of the product
+    private MultipartFile extraCategoryImage;
 
     public ExtraCategoryDto() {
     }
@@ -82,12 +85,12 @@ public class ExtraCategoryDto implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getExtraCategoryImage() {
+        return extraCategoryImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setExtraCategoryImage(MultipartFile extraCategoryImage) {
+        this.extraCategoryImage = extraCategoryImage;
     }
 
 }

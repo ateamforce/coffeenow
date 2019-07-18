@@ -7,7 +7,11 @@ package com.ateamforce.coffeenow.controller.administrator;
 
 import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
+import com.ateamforce.coffeenow.model.Extra;
+import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.model.PaymentType;
+import com.ateamforce.coffeenow.model.Product;
+import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.AppRoleService;
 import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
@@ -25,6 +29,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,9 +82,10 @@ public class AdminController {
     }
 
     // Gets all products to display them in products page
+    // prepares add new product form
     // Go to administrator products page
     @RequestMapping("/products")
-    public String admin_dashboard_products(ModelMap modelmap) {
+    public String admin_dashboard_products(ModelMap modelmap, @ModelAttribute("newProduct") Product newProduct) {
 
         // add products
         modelmap.addAttribute("products", productService.getAllProducts());
@@ -91,9 +97,10 @@ public class AdminController {
     }
 
     // Gets all productcaregories to display them in productcategories page
+    // prepares add new product category form
     // Go to administrator productcategories page
     @RequestMapping("/productcategories")
-    public String admin_dashboard_productcategories(ModelMap modelmap) {
+    public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("newProductCategory") ProductCategory newProductCategory) {
 
         // add product categories
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
@@ -105,9 +112,10 @@ public class AdminController {
     }
 
     // Gets all products to display them in products page
+    // prepares add new extra form
     // Go to administrator products page
     @RequestMapping("/extras")
-    public String admin_dashboard_extras(ModelMap modelmap) {
+    public String admin_dashboard_extras(ModelMap modelmap, @ModelAttribute("newExtra") Extra newExtra) {
 
         // add extras
         modelmap.addAttribute("extras", extraService.getAllExtras());
@@ -119,9 +127,10 @@ public class AdminController {
     }
 
     // Gets all productcaregories to display them in productcategories page
+    // prepares add new extra category form
     // Go to administrator productcategories page
     @RequestMapping("/extracategories")
-    public String admin_dashboard_extrascategories(ModelMap modelmap) {
+    public String admin_dashboard_extrascategories(ModelMap modelmap, @ModelAttribute("newExtraCategory") ExtraCategory newExtraCategory) {
 
         // add extras categories
         modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
@@ -176,17 +185,6 @@ public class AdminController {
         PaymentType updatedPaymentType = mapper.readValue(updatedPaymentTypeJson, PaymentType.class);
         paymentTypeService.updatePaymentType(updatedPaymentType);
         return "redirect:/administrator/dashboard";
-    }
-
-    // allowed fields for form data binding (if needed), and for any other request parameter we need to pass
-    @InitBinder
-    public void initialiseBinder(WebDataBinder binder) {
-
-        // adding custom spring validator AND reenabling JSR-303 validations that were
-        // disabled because of spring validator
-        // binder.setValidator(productValidator);
-        // setting allowed fields. add more as needed
-        binder.setAllowedFields("language");
     }
 
 }

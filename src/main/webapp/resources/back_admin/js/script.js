@@ -3,6 +3,9 @@ var currentUrl = window.location.href;
 // main modal for messages
 var mainModal = $("#logoutModal");
 
+// add new category hidden form
+var addCategoryForm = $("#newCategoryFormCFN");
+
 // edit buttons for datatables
 var editButton = $("#editMainTableRowCFN"),
 	deleteButton = $("#deleteMainTableRowCFN"),
@@ -66,16 +69,23 @@ $(document).on("click", "#yesNoFormCFN .no", function(e){
 });
 
 // injecting logout form in modal on click
-$(document).on("click", "#userMenuCNF", function(){
+$(document).on("click", "#userMenuLogoutCNF", function(e){
 	
-	yesNo("administrator/dashboard/logout", 
-			false, 
-			language_JSON[locale]["logoutAsk"],
-			language_JSON[locale]["logoutInfo"],
-			language_JSON[locale]["logout"],
-			language_JSON[locale]["cancel"]
-		)
+	e.preventDefault;
+	yesNo(
+		$(this).attr("href"), 
+		false, 
+		language_JSON[locale]["logoutAsk"],
+		language_JSON[locale]["logoutInfo"],
+		language_JSON[locale]["logout"],
+		language_JSON[locale]["cancel"]
+	)
 	
+});
+
+// handling form injection for new category button click
+newButton.on("click", function(){
+	addCategoryForm.removeClass("hidden");
 });
 
 $(document).ready(function() {
@@ -85,7 +95,7 @@ $(document).ready(function() {
 	// 2. parent id
 	// 3. title
 	// anything else after that
-	var table = $('.dataTableCFN').DataTable({
+	var table = $('#mainTableCFN').DataTable({
 		orderFixed: [1, 'asc'],
 		select: {
 			style: 'single'
@@ -108,7 +118,16 @@ $(document).ready(function() {
             dataSrc: 1
         },
 		columnDefs: [
-			{ responsivePriority: 1, targets: "titleHeaderCFN" }
+			{ 
+				responsivePriority: 1, 
+				targets: "titleHeaderCFN" ,
+				
+			},
+			{
+				"targets": [ 1 ],
+				"visible": false,
+				"searchable": false
+			}
 		]
 	});
 	
@@ -117,7 +136,10 @@ $(document).ready(function() {
 		
 		let selectedRow = table[ type ]( indexes ).nodes().to$();
 		
+		addCategoryForm.addClass("hidden");
+		
 		editButton.removeAttr("disabled");
+		editButton.attr("onclick","");
 		
 		deleteButton.removeAttr("disabled");
 		deleteButton.attr("onclick", "yesNo('administrator/dashboard/productcategories/delete/"+ selectedRow.find(".rowIdCFN").html() +"', true, '"+language_JSON[locale]["deleteInform"]+"')");
@@ -129,7 +151,10 @@ $(document).ready(function() {
 	// ON DATATABLE ROW DESELECT
 	table.on( 'deselect', function( event, data, type, indexes ) {
 		
+		addCategoryForm.addClass("hidden");
+		
 		editButton.attr("disabled","");
+		editButton.removeAttr("onclick");
 		
 		deleteButton.attr("disabled","");
 		deleteButton.removeAttr("onclick");

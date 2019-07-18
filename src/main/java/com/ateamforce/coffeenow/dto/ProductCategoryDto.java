@@ -15,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ProductCategoryDto.findAllProductCategories", query = "SELECT p FROM ProductCategoryDto p")
     , @NamedQuery(name = "ProductCategoryDto.findProductCategoryDtoById", query = "SELECT p FROM ProductCategoryDto p WHERE p.id = :categoryId")
     , @NamedQuery(name = "ProductCategoryDto.findByTitle", query = "SELECT p FROM ProductCategoryDto p WHERE p.title = :title")
-    , @NamedQuery(name = "ProductCategoryDto.findByParent", query = "SELECT p FROM ProductCategoryDto p WHERE p.parent = :parent")
-    , @NamedQuery(name = "ProductCategoryDto.findByImage", query = "SELECT p FROM ProductCategoryDto p WHERE p.image = :image")})
+    , @NamedQuery(name = "ProductCategoryDto.findByParent", query = "SELECT p FROM ProductCategoryDto p WHERE p.parent = :parent")})
 public class ProductCategoryDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +52,11 @@ public class ProductCategoryDto implements Serializable {
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes productCategoryImage from json view of the product
+    private MultipartFile productCategoryImage;
 
     public ProductCategoryDto() {
     }
@@ -82,12 +85,12 @@ public class ProductCategoryDto implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getProductCategoryImage() {
+        return productCategoryImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setProductCategoryImage(MultipartFile productCategoryImage) {
+        this.productCategoryImage = productCategoryImage;
     }
 
 }

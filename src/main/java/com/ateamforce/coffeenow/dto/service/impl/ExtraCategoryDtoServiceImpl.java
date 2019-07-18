@@ -23,8 +23,8 @@ public class ExtraCategoryDtoServiceImpl implements ExtraCategoryDtoService {
     ExtraCategoryDtoRepository extraCategoryDtoRepository;
 
     @Override
-    public void addExtraCategory(ExtraCategoryDto extraCategory) {
-        extraCategoryDtoRepository.save(extraCategory);
+    public ExtraCategoryDto addExtraCategory(ExtraCategoryDto extraCategory) {
+        return extraCategoryDtoRepository.save(extraCategory);
     }
 
     @Override

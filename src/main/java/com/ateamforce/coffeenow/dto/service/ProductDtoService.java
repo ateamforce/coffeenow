@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ProductDtoService {
 
-    void addProduct(ProductDto product);
+    ProductDto addProduct(ProductDto product);
 
     void deleteProductByid(int productId);
 

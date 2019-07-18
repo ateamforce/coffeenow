@@ -16,9 +16,13 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ProductDto.findAllProducts", query = "SELECT p FROM ProductDto p")
     , @NamedQuery(name = "ProductDto.findProductById", query = "SELECT p FROM ProductDto p WHERE p.id = :productId")
-    , @NamedQuery(name = "ProductDto.findByTitle", query = "SELECT p FROM ProductDto p WHERE p.title = :title")
-    , @NamedQuery(name = "ProductDto.findByImage", query = "SELECT p FROM ProductDto p WHERE p.image = :image")})
+    , @NamedQuery(name = "ProductDto.findByTitle", query = "SELECT p FROM ProductDto p WHERE p.title = :title")})
 public class ProductDto implements Serializable {
    
 
@@ -52,25 +55,23 @@ public class ProductDto implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes productImage from json view of the product
+    private MultipartFile productImage;
 
     public ProductDto() {
     }
-    
 
     public ProductDto(Integer id) {
         this.id = id;
     }
 
-    public ProductDto(Integer id, String title, String description, String image) {
+    public ProductDto(Integer id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.image = image;
     }
 
     public Integer getId() {
@@ -97,14 +98,13 @@ public class ProductDto implements Serializable {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getProductImage() {
+        return productImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setProductImage(MultipartFile productImage) {
+        this.productImage = productImage;
     }
-    
     
     
 }

@@ -7,7 +7,7 @@
 	<i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
+<!-- Main Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">

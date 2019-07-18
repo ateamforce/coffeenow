@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ExtraDtoService {
 
-    void addExtra(ExtraDto extra);
+    ExtraDto addExtra(ExtraDto extra);
 
     void deleteExtraById(int extraId);
 

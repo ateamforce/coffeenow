@@ -22,11 +22,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -38,8 +40,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Extra.findAllExtras", query = "SELECT e FROM Extra e")
     , @NamedQuery(name = "Extra.findExtraById", query = "SELECT e FROM Extra e WHERE e.id = :extraId")
-    , @NamedQuery(name = "Extra.findByTitle", query = "SELECT e FROM Extra e WHERE e.title = :title")
-    , @NamedQuery(name = "Extra.findByImage", query = "SELECT e FROM Extra e WHERE e.image = :image")})
+    , @NamedQuery(name = "Extra.findByTitle", query = "SELECT e FROM Extra e WHERE e.title = :title")})
 public class Extra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,14 +51,9 @@ public class Extra implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @JoinTable(name = "extracategories_extras", joinColumns = {
         @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
@@ -67,6 +63,11 @@ public class Extra implements Serializable {
     private Collection<StoreExtra> storesExtrasCollection;
     @OneToMany(mappedBy = "extraid")
     private Collection<OrderProduct> ordersProductsCollection;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes extraImage from json view of the product
+    private MultipartFile extraImage;
 
     public Extra() {
     }
@@ -75,10 +76,15 @@ public class Extra implements Serializable {
         this.id = id;
     }
 
-    public Extra(Integer id, String title, String image) {
+    public Extra(Integer id, String title) {
         this.id = id;
         this.title = title;
-        this.image = image;
+    }
+    
+    public Extra(Integer id, String title, MultipartFile extraImage) {
+        this.id = id;
+        this.title = title;
+        this.extraImage = extraImage;
     }
 
     public Integer getId() {
@@ -97,12 +103,12 @@ public class Extra implements Serializable {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getExtraImage() {
+        return extraImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setExtraImage(MultipartFile extraImage) {
+        this.extraImage = extraImage;
     }
 
     @XmlTransient

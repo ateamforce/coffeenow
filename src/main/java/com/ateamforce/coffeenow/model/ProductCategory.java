@@ -17,11 +17,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,8 +36,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "ProductCategory.findAllProductCategories", query = "SELECT p FROM ProductCategory p")
     , @NamedQuery(name = "ProductCategory.findProductCategoryById", query = "SELECT p FROM ProductCategory p WHERE p.id = :categoryId")
     , @NamedQuery(name = "ProductCategory.findByTitle", query = "SELECT p FROM ProductCategory p WHERE p.title = :title")
-    , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")
-    , @NamedQuery(name = "ProductCategory.findByImage", query = "SELECT p FROM ProductCategory p WHERE p.image = :image")})
+    , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")})
 public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,22 +47,22 @@ public class ProductCategory implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 3, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @ManyToMany(mappedBy = "productcategoriesList")
     private List<Product> productsList;
     @ManyToMany(mappedBy = "productcategoriesList")
     private List<ExtraCategory> extrascategoriesList;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes productCategoryImage from json view of the product
+    private MultipartFile productCategoryImage;
 
     public ProductCategory() {
     }
@@ -70,11 +71,17 @@ public class ProductCategory implements Serializable {
         this.id = id;
     }
 
-    public ProductCategory(Integer id, String title, int parent, String image) {
+    public ProductCategory(Integer id, String title, int parent) {
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.image = image;
+    }
+    
+    public ProductCategory(Integer id, String title, int parent, MultipartFile productCategoryImage) {
+        this.id = id;
+        this.title = title;
+        this.parent = parent;
+        this.productCategoryImage = productCategoryImage;
     }
 
     public Integer getId() {
@@ -101,12 +108,12 @@ public class ProductCategory implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getProductCategoryImage() {
+        return productCategoryImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setProductCategoryImage(MultipartFile productCategoryImage) {
+        this.productCategoryImage = productCategoryImage;
     }
 
     @XmlTransient
@@ -116,7 +123,7 @@ public class ProductCategory implements Serializable {
     }
 
     public void setProductsList(List<Product> productsCollection) {
-        this.productsList = productsList;
+        this.productsList = productsCollection;
     }
 
     @XmlTransient

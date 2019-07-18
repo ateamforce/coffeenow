@@ -20,11 +20,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -37,8 +39,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "ExtraCategory.findAllExtraCategories", query = "SELECT e FROM ExtraCategory e")
     , @NamedQuery(name = "ExtraCategory.findExtraCategoryById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :categoryId")
     , @NamedQuery(name = "ExtraCategory.findByTitle", query = "SELECT e FROM ExtraCategory e WHERE e.title = :title")
-    , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")
-    , @NamedQuery(name = "ExtraCategory.findByImage", query = "SELECT e FROM ExtraCategory e WHERE e.image = :image")})
+    , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")})
 public class ExtraCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,18 +50,13 @@ public class ExtraCategory implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @ManyToMany(mappedBy = "extracategoriesList")
     private List<Extra> extrasList;
     @JoinTable(name = "extras_products", joinColumns = {
@@ -68,6 +64,11 @@ public class ExtraCategory implements Serializable {
         @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
     @ManyToMany
     private List<ProductCategory> productcategoriesList;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes extraCategoryImage from json view of the product
+    private MultipartFile extraCategoryImage;
 
     public ExtraCategory() {
     }
@@ -76,11 +77,17 @@ public class ExtraCategory implements Serializable {
         this.id = id;
     }
 
-    public ExtraCategory(Integer id, String title, int parent, String image) {
+    public ExtraCategory(Integer id, String title, int parent) {
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.image = image;
+    }
+    
+    public ExtraCategory(Integer id, String title, int parent, MultipartFile extraCategoryImage) {
+        this.id = id;
+        this.title = title;
+        this.parent = parent;
+        this.extraCategoryImage = extraCategoryImage;
     }
 
     public Integer getId() {
@@ -107,12 +114,12 @@ public class ExtraCategory implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getExtraCategoryImage() {
+        return extraCategoryImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setExtraCategoryImage(MultipartFile extraCategoryImage) {
+        this.extraCategoryImage = extraCategoryImage;
     }
 
     @XmlTransient

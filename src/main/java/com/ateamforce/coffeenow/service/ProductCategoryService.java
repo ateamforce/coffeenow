@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ProductCategoryService {
     
-    void addProductCategory(ProductCategory productCategory);
+    ProductCategory addProductCategory(ProductCategory productCategory);
     
     void deleteProductCategoryById(int productCategoryId);
     

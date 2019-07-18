@@ -23,8 +23,8 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     ExtraCategoryRepository extraCategoryRepository;
 
     @Override
-    public void addExtraCategory(ExtraCategory extraCategory) {
-        extraCategoryRepository.save(extraCategory);
+    public ExtraCategory addExtraCategory(ExtraCategory extraCategory) {
+        return extraCategoryRepository.save(extraCategory);
     }
 
     @Override

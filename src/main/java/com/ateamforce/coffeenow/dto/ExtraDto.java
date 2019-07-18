@@ -15,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -29,8 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ExtraDto.findAllExtras", query = "SELECT e FROM ExtraDto e")
     , @NamedQuery(name = "ExtraDto.findExtraById", query = "SELECT e FROM ExtraDto e WHERE e.id = :extraId")
-    , @NamedQuery(name = "ExtraDto.findByTitle", query = "SELECT e FROM ExtraDto e WHERE e.title = :title")
-    , @NamedQuery(name = "ExtraDto.findByImage", query = "SELECT e FROM ExtraDto e WHERE e.image = :image")})
+    , @NamedQuery(name = "ExtraDto.findByTitle", query = "SELECT e FROM ExtraDto e WHERE e.title = :title")})
 public class ExtraDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,11 +47,11 @@ public class ExtraDto implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
+    
+    @Transient
+    @XmlTransient
+    @JsonIgnore // excludes extraImage from json view of the product
+    private MultipartFile extraImage;
 
     public ExtraDto() {
     }
@@ -69,12 +72,12 @@ public class ExtraDto implements Serializable {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public MultipartFile getExtraImage() {
+        return extraImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setExtraImage(MultipartFile extraImage) {
+        this.extraImage = extraImage;
     }
 
 }
