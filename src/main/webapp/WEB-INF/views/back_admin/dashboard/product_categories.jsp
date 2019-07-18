@@ -19,14 +19,17 @@
 						<h6 class="m-0 font-weight-bold text-primary"><spring:message code="admin.menu.productcategories.help"/></h6>
 					</div>
 					<div class="card-body">
-						<button id="addMainTableRowCFN" type="button" href="#" class="btn btn-success btn-circle">
+						<button id="addMainTableRowCFN" type="button" class="btn btn-success btn-circle">
 							<i class="fas fa-plus"></i>
 						</button>
-						<button id="editMainTableRowCFN" type="button" href="#" class="btn btn-warning btn-circle" disabled>
+						<button id="editMainTableRowCFN" type="button" class="btn btn-info btn-circle" disabled>
 							<i class="fas fa-edit"></i>
 						</button>
-						<button id="deleteMainTableRowCFN" type="button" href="#" class="btn btn-danger btn-circle" disabled>
+						<button id="deleteMainTableRowCFN" type="button" class="btn btn-danger btn-circle" disabled>
 							<i class="fas fa-trash"></i>
+						</button>
+						<button id="addRemoveMainTableRowCFN" type="button" class="btn btn-warning btn-circle" disabled>
+							<i class="fas fa-arrows-alt-h"></i>
 						</button>
 					</div>
 				</div>
@@ -78,11 +81,22 @@
 			</div>
 			
 			<div class="col-lg-6">
-			
+				<a href="#scrollToEditCardTop"></a>
 				<!-- Edit Main DataTable's ManyToMany Relationships Card -->
-				<div class="card shadow mb-4">
+				<div class="card border-left-warning shadow py-2">
 					<div class="card-body">
-						
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><spring:message code="admin.menu.productcategories.editCatTitle"/></div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800"><spring:message code="admin.menu.productcategories.help2"/></div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+							</div>
+						</div>
+						<div class="row no-gutters align-items-center">
+							
+						</div>
 					</div>
 				</div>
 			
