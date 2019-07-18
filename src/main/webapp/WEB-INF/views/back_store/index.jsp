@@ -12,7 +12,7 @@
 						<h3 class="panel-title">Please sign in</h3>
 					</div>
 					<div class="panel-body">
-						<c:url var="loginUrl" value="store/check" />
+						<c:url var="loginUrl" value="/store/dashboard/check" />
 						<form action=${loginUrl} method="post" class="form-horizontal">
 							<c:if test="${param.error != null}">
 								<div class="alert alert-danger">

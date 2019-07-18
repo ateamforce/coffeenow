@@ -59,14 +59,13 @@ public class AdminController {
     @Autowired
     PaymentTypeService paymentTypeService;
 
+    
+    
+
     // TODO : Gets what?
     // Go to administrator dashboard page
     @RequestMapping
-    public String admin_dashboard(ModelMap modelmap, Principal principal, HttpSession session) {
-
-        // add user
-        Administrator admin = (Administrator) appUserService.getUserByEmail(principal.getName());
-        session.setAttribute("currentUser", admin);
+    public String admin_dashboard(ModelMap modelmap) {
 
         modelmap.addAttribute("appRoles", appRoleService.getAllAppRoles());
         modelmap.addAttribute("paymentTypes", paymentTypeService.getAllPaymentTypes());
