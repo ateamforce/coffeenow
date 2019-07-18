@@ -29,7 +29,7 @@ function languageUri(param){
 	
 }
 
-// function to ask user yes or no with a modal for a destructive action
+// function to ask user yes or no with a modal for an action
 function yesNo(
 	yesUrl, 
 	openModal = false, 
@@ -122,6 +122,8 @@ $(document).ready(function() {
 		deleteButton.removeAttr("disabled");
 		deleteButton.attr("onclick", "yesNo('administrator/dashboard/productcategories/delete/"+ selectedRow.find(".rowIdCFN").html() +"', true, '"+language_JSON[locale]["deleteInform"]+"')");
 		
+		addRemoveButton.removeAttr("disabled");
+		
 	});
 	
 	// ON DATATABLE ROW DESELECT
@@ -131,6 +133,8 @@ $(document).ready(function() {
 		
 		deleteButton.attr("disabled","");
 		deleteButton.removeAttr("onclick");
+		
+		addRemoveButton.attr("disabled","");
 		
 	});
 	

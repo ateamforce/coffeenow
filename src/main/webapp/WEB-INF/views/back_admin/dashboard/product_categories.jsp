@@ -19,20 +19,17 @@
 						<h6 class="m-0 font-weight-bold text-primary"><spring:message code="admin.menu.productcategories.help"/></h6>
 					</div>
 					<div class="card-body">
-						<button id="addMainTableRowCFN" type="button" href="#" class="btn btn-success btn-circle">
+						<button id="addMainTableRowCFN" type="button" class="btn btn-success btn-circle">
 							<i class="fas fa-plus"></i>
 						</button>
-						<button id="editMainTableRowCFN" type="button" href="#" class="btn btn-warning btn-circle" disabled>
+						<button id="editMainTableRowCFN" type="button" class="btn btn-info btn-circle" disabled>
 							<i class="fas fa-edit"></i>
 						</button>
-						<button id="deleteMainTableRowCFN" type="button" href="#" class="btn btn-danger btn-circle" disabled>
+						<button id="deleteMainTableRowCFN" type="button" class="btn btn-danger btn-circle" disabled>
 							<i class="fas fa-trash"></i>
 						</button>
-						<button id="addRemoveMainTableRowCFN" class="btn btn-warning btn-icon-split">
-							<span class="icon text-white-50">
-								<i class="fas fa-arrows-alt-h"></i>
-							</span>
-							<span class="text"><spring:message code="admin.menu.productcategories.addRemoveProducts"/></span>
+						<button id="addRemoveMainTableRowCFN" type="button" class="btn btn-warning btn-circle" disabled>
+							<i class="fas fa-arrows-alt-h"></i>
 						</button>
 					</div>
 				</div>
