@@ -11,6 +11,7 @@ import com.ateamforce.coffeenow.service.ProductCategoryService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,9 +23,15 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Autowired
     ProductCategoryRepository productCategoryRepository;
 
+    @Transactional
     @Override
     public ProductCategory addProductCategory(ProductCategory productCategory) {
-        return productCategoryRepository.save(productCategory);
+        ProductCategory persistedProductCategory = productCategoryRepository.save(productCategory);
+        if ( persistedProductCategory.getParent() == 0 ) {
+            persistedProductCategory.setParent(persistedProductCategory.getId());
+            return productCategoryRepository.save(persistedProductCategory);
+        }
+        return persistedProductCategory;
     }
 
     @Override
