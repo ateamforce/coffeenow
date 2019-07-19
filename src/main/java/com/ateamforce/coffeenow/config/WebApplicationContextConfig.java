@@ -2,11 +2,14 @@ package com.ateamforce.coffeenow.config;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -26,8 +29,12 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @EnableWebMvc
+@PropertySource("classpath:custom.properties")
 @ComponentScan("com.ateamforce.coffeenow")
 public class WebApplicationContextConfig implements WebMvcConfigurer {
+    
+    @Autowired
+    Environment env;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -66,67 +73,67 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         
         // COMMON IMAGES
         // Common boilerplate (template) images (uploaded manually)
-        registry.addResourceHandler("/img/common/**").addResourceLocations("/resources/common/images/boilerplate/")
+        registry.addResourceHandler("/img/common/**").addResourceLocations(env.getProperty("common.images"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // COMMON CSS
-        registry.addResourceHandler("/css/common/**").addResourceLocations("/resources/common/css/")
+        registry.addResourceHandler("/css/common/**").addResourceLocations(env.getProperty("common.css"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // COMMON JS
-        registry.addResourceHandler("/js/common/**").addResourceLocations("/resources/common/js/")
+        registry.addResourceHandler("/js/common/**").addResourceLocations(env.getProperty("common.js"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
         // FRONT IMAGES
         // front boilerplate (template) images (uploaded manually)
-        registry.addResourceHandler("/img/front/**").addResourceLocations("/resources/front/images/boilerplate/")
+        registry.addResourceHandler("/img/front/**").addResourceLocations(env.getProperty("front.images.boilerplate"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // User specific images (uploaded by clients, saved as /resources/front/images/clients/clientId/imageId-filename )
-        registry.addResourceHandler("/img/user/**").addResourceLocations("/resources/front/images/clients/")
+        registry.addResourceHandler("/img/user/**").addResourceLocations(env.getProperty("front.images.clients"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Exras Categories images (uploaded by admin - saved as /resources/front/images/extras/categories/extraCatId-filename)
-        registry.addResourceHandler("/img/extra/category/**").addResourceLocations("/resources/front/images/extras/categories/")
+        registry.addResourceHandler("/img/extra/category/**").addResourceLocations(env.getProperty("front.images.extras.categories"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Extras Items images (uploaded by admin - saved as /resources/front/images/extras/items/extraId-filename)
-        registry.addResourceHandler("/img/extra/**").addResourceLocations("/resources/front/images/extras/items/")
+        registry.addResourceHandler("/img/extra/**").addResourceLocations(env.getProperty("front.images.extras.items"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Payment types images (uploaded by admin - saved as /resources/front/images/paymenttypes/paymentId-filename)
-        registry.addResourceHandler("/img/payment/**").addResourceLocations("/resources/front/images/paymenttypes/")
+        registry.addResourceHandler("/img/payment/**").addResourceLocations(env.getProperty("front.images.paymenttypes"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Product Categories images (uploaded by admin - saved as /resources/front/images/products/categories/productCatId-filename)
-        registry.addResourceHandler("/img/product/category/**").addResourceLocations("/resources/front/images/products/categories/")
+        registry.addResourceHandler("/img/product/category/**").addResourceLocations(env.getProperty("front.images.products.categories"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Product Items images (uploaded by admin - saved as /resources/front/images/products/items/productId-filename)
-        registry.addResourceHandler("/img/product/**").addResourceLocations("/resources/front/images/products/items/")
+        registry.addResourceHandler("/img/product/**").addResourceLocations(env.getProperty("front.images.products.items"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // Store specific images (uploaded by stores - saved as /resources/front/images/stores/storeId-filename)
-        registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/front/images/stores/")
+        registry.addResourceHandler("/img/store/**").addResourceLocations(env.getProperty("front.images.stores"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // FRONT CSS
-        registry.addResourceHandler("/css/front/**").addResourceLocations("/resources/front/css/")
+        registry.addResourceHandler("/css/front/**").addResourceLocations(env.getProperty("front.css"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // FRONT JS
-        registry.addResourceHandler("/js/front/**").addResourceLocations("/resources/front/js/")
+        registry.addResourceHandler("/js/front/**").addResourceLocations(env.getProperty("front.js"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
         // BACK_ADMIN IMAGES
         // back_admin boilerplate (template) images (uploaded manually)
-        registry.addResourceHandler("/img/administrator/**").addResourceLocations("/resources/back_admin/images/boilerplate/")
+        registry.addResourceHandler("/img/administrator/**").addResourceLocations(env.getProperty("admin.images.boilerplate"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // BACK_ADMIN CSS
-        registry.addResourceHandler("/css/administrator/**").addResourceLocations("/resources/back_admin/css/")
+        registry.addResourceHandler("/css/administrator/**").addResourceLocations(env.getProperty("admin.css"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // BACK_ADMIN JS
-        registry.addResourceHandler("/js/administrator/**").addResourceLocations("/resources/back_admin/js/")
+        registry.addResourceHandler("/js/administrator/**").addResourceLocations(env.getProperty("admin.js"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
         // BACK_STORE IMAGES
         // back_store boilerplate (template) images (uploaded manually)
-        registry.addResourceHandler("/img/store/**").addResourceLocations("/resources/back_store/images/boilerplate/")
+        registry.addResourceHandler("/img/store/**").addResourceLocations(env.getProperty("store.images.boilerplate"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // BACK_STORE css
-        registry.addResourceHandler("/css/store/**").addResourceLocations("/resources/back_store/css/")
+        registry.addResourceHandler("/css/store/**").addResourceLocations(env.getProperty("store.css"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // BACK_STORE js
-        registry.addResourceHandler("/js/store/**").addResourceLocations("/resources/back_store/js/")
+        registry.addResourceHandler("/js/store/**").addResourceLocations(env.getProperty("store.js"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
         // WEBJARS (resourceChain(false) enables version agnostic linking)

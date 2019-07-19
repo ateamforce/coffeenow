@@ -13,7 +13,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,11 +39,22 @@ public class AdminProductCategoriesController {
     
     @Autowired
     ImageHandlerService imageHandlerService;
+    
+    @Autowired
+    Environment env;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String admin_dashboard_productCategories_addProductCategory(@ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory, BindingResult result, HttpServletRequest request) throws IOException {
+    public String admin_dashboard_productCategories_addProductCategory(
+            ModelMap modelmap, 
+            @ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory, 
+            BindingResult result
+    ) throws IOException {
         
-        if (result.hasErrors()) return "back_admin/dashboard/product_categories";
+        if (result.hasErrors()) {
+            modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+            modelmap.addAttribute("productcategoriesIsActive", "active");
+            return "back_admin/dashboard/product_categories";
+        }
         
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0)
@@ -49,7 +62,7 @@ public class AdminProductCategoriesController {
                                 + StringUtils.arrayToCommaDelimitedString(suppressedFields));
 
         ProductCategory newProductCategoryFinal = productCategoryService.addProductCategory(newProductCategory);
-        imageHandlerService.saveImage("/resources/front/images/products/categories/",newProductCategoryFinal.getId() , newProductCategoryFinal);
+        imageHandlerService.saveImage(env.getProperty("front.images.products.categories"),newProductCategoryFinal.getId() , newProductCategoryFinal);
         
         return "redirect:/administrator/dashboard/productcategories";
     }

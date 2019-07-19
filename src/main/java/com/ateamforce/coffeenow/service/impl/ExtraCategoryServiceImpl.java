@@ -11,6 +11,7 @@ import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,9 +23,15 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;
 
+    @Transactional
     @Override
     public ExtraCategory addExtraCategory(ExtraCategory extraCategory) {
-        return extraCategoryRepository.save(extraCategory);
+        ExtraCategory persistedExtraCategory = extraCategoryRepository.save(extraCategory);
+        if ( persistedExtraCategory.getParent() == 0 ) {
+            persistedExtraCategory.setParent(persistedExtraCategory.getId());
+            return extraCategoryRepository.save(persistedExtraCategory);
+        }
+        return persistedExtraCategory;
     }
 
     @Override
