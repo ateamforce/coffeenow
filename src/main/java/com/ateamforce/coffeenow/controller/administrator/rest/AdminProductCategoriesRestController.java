@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * This is a REST controller responsible for getting productcategories
+ * BETA - This is a REST controller responsible for getting productcategories
  * as json.
  *
  *

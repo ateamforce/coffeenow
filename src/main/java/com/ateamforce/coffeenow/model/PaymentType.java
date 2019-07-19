@@ -47,7 +47,7 @@ public class PaymentType extends _ImageCarrier implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 3, max = 50, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @JoinTable(name = "stores_paymenttypes", joinColumns = {
