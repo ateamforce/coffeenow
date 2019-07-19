@@ -38,8 +38,12 @@
 								<div id="mainTableFormsCFN">
 								
 									<!-- Add New Product Category Form -->
+									<c:set var="hidden" value="hidden" />
+									<c:if test="${errors != null}">
+										<c:set var="hidden" value=" " />
+									</c:if>
 									<form:form id="newCategoryFormCFN" action="administrator/dashboard/productcategories/add" method="POST" modelAttribute="newProductCategory"
-										class="form-horizontal hidden" enctype="multipart/form-data">
+										class="form-horizontal ${hidden}" enctype="multipart/form-data">
 										<form:errors path="*" cssClass="alert alert-danger" element="div"/>
 										<fieldset>
 											<div class="form-group row">
@@ -53,17 +57,14 @@
 															</c:if>
 														</c:forEach>
 													</form:select>
-													<form:errors path="parent" cssClass="text-danger"/>
 												</div>
 												<div class="col-sm-3">
 													<label for="categoryTitleCFN"><spring:message code="writeTitle"/></label>
 													<form:input id="categoryTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm" />
-													<form:errors path="title" cssClass="text-danger"/>
 												</div>
 												<div class="col-sm-3">
 													<label for="categoryImageCFN"><spring:message code="addImage"/></label>
 													<form:input id="categoryImageCFN" name="image" path="image" type="file" class="form-control form-control-sm" />
-													<form:errors path="image" cssClass="text-danger"/>
 												</div>
 												<div class="col-sm-3">
 													<button type="submit" class="btn btn-primary"><spring:message code="add"/></button>
@@ -113,7 +114,9 @@
 											<td class="rowIdCFN">${productCategory.id}</td>
 											<td>${productCategory.parent}</td>
 											<td>${productCategory.title}</td>
-											<td><img src="img/product/category/${productCategory.id}.jpg" /></td>
+											<td>
+												
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
