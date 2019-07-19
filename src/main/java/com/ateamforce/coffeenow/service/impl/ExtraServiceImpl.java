@@ -23,8 +23,8 @@ public class ExtraServiceImpl implements ExtraService {
     ExtraRepository extraRepository;
 
     @Override
-    public void addExtra(Extra extra) {
-        extraRepository.save(extra);
+    public Extra addExtra(Extra extra) {
+        return extraRepository.save(extra);
     }
 
     @Override

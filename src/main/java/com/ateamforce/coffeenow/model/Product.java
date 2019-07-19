@@ -28,6 +28,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -39,9 +40,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Product.findAllProducts", query = "SELECT p FROM Product p")
     , @NamedQuery(name = "Product.findProductById", query = "SELECT p FROM Product p WHERE p.id = :productId")
-    , @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.title = :title")
-    , @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image")})
-public class Product implements Serializable {
+    , @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.title = :title")})
+public class Product extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,7 +51,7 @@ public class Product implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
@@ -60,11 +60,6 @@ public class Product implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @ManyToMany(mappedBy = "productsCollection")
     private Collection<Client> clientsCollection;
     @JoinTable(name = "productcategories_products", joinColumns = {
@@ -84,11 +79,17 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, String title, String description, String image) {
+    public Product(Integer id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.image = image;
+    }
+    
+    public Product(Integer id, String title, String description, MultipartFile image) {
+        super(image);
+        this.id = id;
+        this.title = title;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -113,14 +114,6 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @XmlTransient
@@ -161,6 +154,16 @@ public class Product implements Serializable {
 
     public void setStoresProductsCollection(Collection<StoreProduct> storesProductsCollection) {
         this.storesProductsCollection = storesProductsCollection;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

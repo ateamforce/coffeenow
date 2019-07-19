@@ -17,9 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,9 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ClientMedia.findAll", query = "SELECT c FROM ClientMedia c")
-    , @NamedQuery(name = "ClientMedia.findById", query = "SELECT c FROM ClientMedia c WHERE c.id = :id")
-    , @NamedQuery(name = "ClientMedia.findByFilename", query = "SELECT c FROM ClientMedia c WHERE c.filename = :filename")})
-public class ClientMedia implements Serializable {
+    , @NamedQuery(name = "ClientMedia.findById", query = "SELECT c FROM ClientMedia c WHERE c.id = :id")})
+public class ClientMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,11 +38,6 @@ public class ClientMedia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "filename")
-    private String filename;
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Client clientid;
@@ -56,9 +49,9 @@ public class ClientMedia implements Serializable {
         this.id = id;
     }
 
-    public ClientMedia(Integer id, String filename) {
+    public ClientMedia(Integer id, MultipartFile image) {
+        super(image);
         this.id = id;
-        this.filename = filename;
     }
 
     public Integer getId() {
@@ -69,20 +62,22 @@ public class ClientMedia implements Serializable {
         this.id = id;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
     public Client getClientid() {
         return clientid;
     }
 
     public void setClientid(Client clientid) {
         this.clientid = clientid;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

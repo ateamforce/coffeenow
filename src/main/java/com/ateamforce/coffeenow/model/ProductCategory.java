@@ -22,6 +22,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -34,9 +35,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "ProductCategory.findAllProductCategories", query = "SELECT p FROM ProductCategory p")
     , @NamedQuery(name = "ProductCategory.findProductCategoryById", query = "SELECT p FROM ProductCategory p WHERE p.id = :categoryId")
     , @NamedQuery(name = "ProductCategory.findByTitle", query = "SELECT p FROM ProductCategory p WHERE p.title = :title")
-    , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")
-    , @NamedQuery(name = "ProductCategory.findByImage", query = "SELECT p FROM ProductCategory p WHERE p.image = :image")})
-public class ProductCategory implements Serializable {
+    , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")})
+public class ProductCategory extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,18 +46,13 @@ public class ProductCategory implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 3, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @ManyToMany(mappedBy = "productcategoriesList")
     private List<Product> productsList;
     @ManyToMany(mappedBy = "productcategoriesList")
@@ -70,11 +65,17 @@ public class ProductCategory implements Serializable {
         this.id = id;
     }
 
-    public ProductCategory(Integer id, String title, int parent, String image) {
+    public ProductCategory(Integer id, String title, int parent) {
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.image = image;
+    }
+    
+    public ProductCategory(Integer id, String title, int parent, MultipartFile image) {
+        super(image);
+        this.id = id;
+        this.title = title;
+        this.parent = parent;
     }
 
     public Integer getId() {
@@ -101,14 +102,6 @@ public class ProductCategory implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     @XmlTransient
     @JsonIgnore
     public List<Product> getProductsList() {
@@ -116,7 +109,7 @@ public class ProductCategory implements Serializable {
     }
 
     public void setProductsList(List<Product> productsCollection) {
-        this.productsList = productsList;
+        this.productsList = productsCollection;
     }
 
     @XmlTransient
@@ -127,6 +120,16 @@ public class ProductCategory implements Serializable {
 
     public void setExtrascategoriesList(List<ExtraCategory> extrascategoriesList) {
         this.extrascategoriesList = extrascategoriesList;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

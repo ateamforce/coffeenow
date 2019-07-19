@@ -17,9 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -30,9 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreMedia.findAll", query = "SELECT s FROM StoreMedia s")
-    , @NamedQuery(name = "StoreMedia.findById", query = "SELECT s FROM StoreMedia s WHERE s.id = :id")
-    , @NamedQuery(name = "StoreMedia.findByFilename", query = "SELECT s FROM StoreMedia s WHERE s.filename = :filename")})
-public class StoreMedia implements Serializable {
+    , @NamedQuery(name = "StoreMedia.findById", query = "SELECT s FROM StoreMedia s WHERE s.id = :id")})
+public class StoreMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,11 +38,6 @@ public class StoreMedia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "filename")
-    private String filename;
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Store storeid;
@@ -56,9 +49,9 @@ public class StoreMedia implements Serializable {
         this.id = id;
     }
 
-    public StoreMedia(Integer id, String filename) {
+    public StoreMedia(Integer id, MultipartFile image) {
+        super(image);
         this.id = id;
-        this.filename = filename;
     }
 
     public Integer getId() {
@@ -69,20 +62,22 @@ public class StoreMedia implements Serializable {
         this.id = id;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
     public Store getStoreid() {
         return storeid;
     }
 
     public void setStoreid(Store storeid) {
         this.storeid = storeid;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

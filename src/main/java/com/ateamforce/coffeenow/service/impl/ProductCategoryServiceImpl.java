@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.service.impl;
 
-import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
@@ -24,8 +23,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public void addProductCategory(ProductCategory productCategory) {
-        productCategoryRepository.save(productCategory);
+    public ProductCategory addProductCategory(ProductCategory productCategory) {
+        return productCategoryRepository.save(productCategory);
     }
 
     @Override

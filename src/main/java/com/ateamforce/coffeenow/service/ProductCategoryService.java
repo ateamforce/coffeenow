@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.service;
 
-import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public interface ProductCategoryService {
     
-    void addProductCategory(ProductCategory productCategory);
+    ProductCategory addProductCategory(ProductCategory productCategory);
     
     void deleteProductCategoryById(int productCategoryId);
     

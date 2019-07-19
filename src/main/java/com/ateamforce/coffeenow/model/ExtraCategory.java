@@ -6,7 +6,6 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,6 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -37,9 +37,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "ExtraCategory.findAllExtraCategories", query = "SELECT e FROM ExtraCategory e")
     , @NamedQuery(name = "ExtraCategory.findExtraCategoryById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :categoryId")
     , @NamedQuery(name = "ExtraCategory.findByTitle", query = "SELECT e FROM ExtraCategory e WHERE e.title = :title")
-    , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")
-    , @NamedQuery(name = "ExtraCategory.findByImage", query = "SELECT e FROM ExtraCategory e WHERE e.image = :image")})
-public class ExtraCategory implements Serializable {
+    , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")})
+public class ExtraCategory extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,18 +48,13 @@ public class ExtraCategory implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
     @Column(name = "parent")
     private int parent;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "image")
-    private String image;
     @ManyToMany(mappedBy = "extracategoriesList")
     private List<Extra> extrasList;
     @JoinTable(name = "extras_products", joinColumns = {
@@ -76,11 +70,17 @@ public class ExtraCategory implements Serializable {
         this.id = id;
     }
 
-    public ExtraCategory(Integer id, String title, int parent, String image) {
+    public ExtraCategory(Integer id, String title, int parent) {
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.image = image;
+    }
+    
+    public ExtraCategory(Integer id, String title, int parent, MultipartFile image) {
+        super(image);
+        this.id = id;
+        this.title = title;
+        this.parent = parent;
     }
 
     public Integer getId() {
@@ -107,14 +107,6 @@ public class ExtraCategory implements Serializable {
         this.parent = parent;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     @XmlTransient
     @JsonIgnore
     public List<Extra> getExtrasList() {
@@ -133,6 +125,16 @@ public class ExtraCategory implements Serializable {
 
     public void setProductcategoriesList(List<ProductCategory> productcategoriesList) {
         this.productcategoriesList = productcategoriesList;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

@@ -23,8 +23,8 @@ public class ProductCategoryDtoServiceImpl implements ProductCategoryDtoService 
     ProductCategoryDtoRepository productCategoryDtoRepository;
 
     @Override
-    public void addProductCategory(ProductCategoryDto productCategory) {
-        productCategoryDtoRepository.save(productCategory);
+    public ProductCategoryDto addProductCategory(ProductCategoryDto productCategory) {
+        return productCategoryDtoRepository.save(productCategory);
     }
 
     @Override

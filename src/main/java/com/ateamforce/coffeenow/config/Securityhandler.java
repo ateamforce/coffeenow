@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +41,7 @@ public class Securityhandler extends SavedRequestAwareAuthenticationSuccessHandl
     @Autowired
     AppUserService appUserService;
 
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    private final static Logger LOGGER = Logger.getLogger(Securityhandler.class);
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 

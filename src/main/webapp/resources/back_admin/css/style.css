@@ -1,10 +1,20 @@
 /* custom */
+.hidden { display: none; }
 form {
 	line-height: 1;
 	text-align: center;
 }
 #languagesCFN a { font-weight: bold; }
 #languagesCFN a.disabled { color: #000; }
+
+#mainTableButtonsCFN {
+	height: 55px;
+	line-height: 55px;
+}
+#mainTableFormsCFN label {
+	display: block;
+	text-align: left;
+}
 
 /* overrides */
 .btn.disabled, .btn:disabled { cursor: not-allowed; }

@@ -23,8 +23,8 @@ public class ExtraDtoServiceImpl implements ExtraDtoService {
     ExtraDtoRepository extraDtoRepository;
 
     @Override
-    public void addExtra(ExtraDto extra) {
-        extraDtoRepository.save(extra);
+    public ExtraDto addExtra(ExtraDto extra) {
+        return extraDtoRepository.save(extra);
     }
 
     @Override
