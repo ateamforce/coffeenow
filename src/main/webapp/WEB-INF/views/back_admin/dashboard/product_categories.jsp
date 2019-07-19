@@ -62,8 +62,8 @@
 												</div>
 												<div class="col-sm-3">
 													<label for="categoryImageCFN"><spring:message code="addImage"/></label>
-													<form:input id="categoryImageCFN" name="productCategoryImage" path="productCategoryImage" type="file" class="form-control form-control-sm" />
-													<form:errors path="productCategoryImage" cssClass="text-danger"/>
+													<form:input id="categoryImageCFN" name="image" path="image" type="file" class="form-control form-control-sm" />
+													<form:errors path="image" cssClass="text-danger"/>
 												</div>
 												<div class="col-sm-3">
 													<button type="submit" class="btn btn-primary"><spring:message code="add"/></button>
@@ -113,7 +113,7 @@
 											<td class="rowIdCFN">${productCategory.id}</td>
 											<td>${productCategory.parent}</td>
 											<td>${productCategory.title}</td>
-											<td><img src="/img/product/category/${productCategory.id}.jpg" /></td>
+											<td><img src="img/product/category/${productCategory.id}.jpg" /></td>
 										</tr>
 									</c:forEach>
 								</tbody>

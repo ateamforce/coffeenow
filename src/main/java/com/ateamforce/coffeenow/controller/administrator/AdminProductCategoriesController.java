@@ -7,8 +7,8 @@ package com.ateamforce.coffeenow.controller.administrator;
 
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
+import com.ateamforce.coffeenow.util.ImageHandlerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,6 +34,9 @@ public class AdminProductCategoriesController {
 
     @Autowired
     ProductCategoryService productCategoryService;
+    
+    @Autowired
+    ImageHandlerService imageHandlerService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String admin_dashboard_productCategories_addProductCategory(@ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory, BindingResult result, HttpServletRequest request) throws IOException {
@@ -47,18 +49,7 @@ public class AdminProductCategoriesController {
                                 + StringUtils.arrayToCommaDelimitedString(suppressedFields));
 
         ProductCategory newProductCategoryFinal = productCategoryService.addProductCategory(newProductCategory);
-        // copy image to disk
-        MultipartFile productImage = newProductCategory.getProductCategoryImage();
-        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-        if (!productImage.isEmpty()) {
-                try {
-                        productImage.transferTo(
-                                        new File(rootDirectory + "resources\\front\\images\\products\\categories\\" + newProductCategoryFinal.getId() + ".jpg"));
-                        
-                } catch (IOException | IllegalStateException e) {
-                        throw new RuntimeException("Product Image saving failed", e);
-                }
-        }  
+        imageHandlerService.saveImage("/resources/front/images/products/categories/",newProductCategoryFinal.getId() , newProductCategoryFinal);
         
         return "redirect:/administrator/dashboard/productcategories";
     }

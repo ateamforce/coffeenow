@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,7 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
     , @NamedQuery(name = "ProductCategory.findProductCategoryById", query = "SELECT p FROM ProductCategory p WHERE p.id = :categoryId")
     , @NamedQuery(name = "ProductCategory.findByTitle", query = "SELECT p FROM ProductCategory p WHERE p.title = :title")
     , @NamedQuery(name = "ProductCategory.findByParent", query = "SELECT p FROM ProductCategory p WHERE p.parent = :parent")})
-public class ProductCategory implements Serializable {
+public class ProductCategory extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,11 +57,6 @@ public class ProductCategory implements Serializable {
     private List<Product> productsList;
     @ManyToMany(mappedBy = "productcategoriesList")
     private List<ExtraCategory> extrascategoriesList;
-    
-    @Transient
-    @XmlTransient
-    @JsonIgnore // excludes productCategoryImage from json view of the product
-    private MultipartFile productCategoryImage;
 
     public ProductCategory() {
     }
@@ -77,11 +71,11 @@ public class ProductCategory implements Serializable {
         this.parent = parent;
     }
     
-    public ProductCategory(Integer id, String title, int parent, MultipartFile productCategoryImage) {
+    public ProductCategory(Integer id, String title, int parent, MultipartFile image) {
+        super(image);
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.productCategoryImage = productCategoryImage;
     }
 
     public Integer getId() {
@@ -108,14 +102,6 @@ public class ProductCategory implements Serializable {
         this.parent = parent;
     }
 
-    public MultipartFile getProductCategoryImage() {
-        return productCategoryImage;
-    }
-
-    public void setProductCategoryImage(MultipartFile productCategoryImage) {
-        this.productCategoryImage = productCategoryImage;
-    }
-
     @XmlTransient
     @JsonIgnore
     public List<Product> getProductsList() {
@@ -134,6 +120,16 @@ public class ProductCategory implements Serializable {
 
     public void setExtrascategoriesList(List<ExtraCategory> extrascategoriesList) {
         this.extrascategoriesList = extrascategoriesList;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

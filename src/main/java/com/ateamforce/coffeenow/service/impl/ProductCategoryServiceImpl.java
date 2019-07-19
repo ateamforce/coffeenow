@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.service.impl;
 
-import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
 import com.ateamforce.coffeenow.service.ProductCategoryService;

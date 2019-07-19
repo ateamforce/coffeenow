@@ -22,7 +22,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,7 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Extra.findAllExtras", query = "SELECT e FROM Extra e")
     , @NamedQuery(name = "Extra.findExtraById", query = "SELECT e FROM Extra e WHERE e.id = :extraId")
     , @NamedQuery(name = "Extra.findByTitle", query = "SELECT e FROM Extra e WHERE e.title = :title")})
-public class Extra implements Serializable {
+public class Extra extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,11 +62,6 @@ public class Extra implements Serializable {
     private Collection<StoreExtra> storesExtrasCollection;
     @OneToMany(mappedBy = "extraid")
     private Collection<OrderProduct> ordersProductsCollection;
-    
-    @Transient
-    @XmlTransient
-    @JsonIgnore // excludes extraImage from json view of the product
-    private MultipartFile extraImage;
 
     public Extra() {
     }
@@ -81,10 +75,10 @@ public class Extra implements Serializable {
         this.title = title;
     }
     
-    public Extra(Integer id, String title, MultipartFile extraImage) {
+    public Extra(Integer id, String title, MultipartFile image) {
+        super(image);
         this.id = id;
         this.title = title;
-        this.extraImage = extraImage;
     }
 
     public Integer getId() {
@@ -101,14 +95,6 @@ public class Extra implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public MultipartFile getExtraImage() {
-        return extraImage;
-    }
-
-    public void setExtraImage(MultipartFile extraImage) {
-        this.extraImage = extraImage;
     }
 
     @XmlTransient
@@ -139,6 +125,16 @@ public class Extra implements Serializable {
 
     public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
         this.ordersProductsCollection = ordersProductsCollection;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

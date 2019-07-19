@@ -47,7 +47,6 @@ public class AdminProductCategoriesProductsRestController {
     ProductDtoService productDtoService;
 
     // return a json object containing two named lists of products of this productCategory
-    // return a json object containing two named lists of products of this productCategory
     @GetMapping("/products/{productCategoryId}")
     public Map<String, List<ProductDto>> admin_dashboard_productCategory_getproducts(@PathVariable int productCategoryId) {
         List<ProductDto> belongingProducts = new ArrayList(productDtoService

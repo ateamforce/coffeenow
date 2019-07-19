@@ -23,7 +23,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Product.findAllProducts", query = "SELECT p FROM Product p")
     , @NamedQuery(name = "Product.findProductById", query = "SELECT p FROM Product p WHERE p.id = :productId")
     , @NamedQuery(name = "Product.findByTitle", query = "SELECT p FROM Product p WHERE p.title = :title")})
-public class Product implements Serializable {
+public class Product extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,11 +71,6 @@ public class Product implements Serializable {
     private Collection<OrderProduct> ordersProductsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
     private Collection<StoreProduct> storesProductsCollection;
-    
-    @Transient
-    @XmlTransient
-    @JsonIgnore // excludes productImage from json view of the product
-    private MultipartFile productImage;
 
     public Product() {
     }
@@ -91,11 +85,11 @@ public class Product implements Serializable {
         this.description = description;
     }
     
-    public Product(Integer id, String title, String description, MultipartFile productImage) {
+    public Product(Integer id, String title, String description, MultipartFile image) {
+        super(image);
         this.id = id;
         this.title = title;
         this.description = description;
-        this.productImage = productImage;
     }
 
     public Integer getId() {
@@ -120,14 +114,6 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public MultipartFile getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(MultipartFile productImage) {
-        this.productImage = productImage;
     }
 
     @XmlTransient
@@ -168,6 +154,16 @@ public class Product implements Serializable {
 
     public void setStoresProductsCollection(Collection<StoreProduct> storesProductsCollection) {
         this.storesProductsCollection = storesProductsCollection;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

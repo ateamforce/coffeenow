@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,9 +36,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "PaymentType.findAllPaymentTypes", query = "SELECT p FROM PaymentType p")
     , @NamedQuery(name = "PaymentType.findPaymentTypeById", query = "SELECT p FROM PaymentType p WHERE p.id = :paymentTypeId")
-    , @NamedQuery(name = "PaymentType.findByTitle", query = "SELECT p FROM PaymentType p WHERE p.title = :title")
-    , @NamedQuery(name = "PaymentType.findByImage", query = "SELECT p FROM PaymentType p WHERE p.image = :image")})
-public class PaymentType implements Serializable {
+    , @NamedQuery(name = "PaymentType.findByTitle", query = "SELECT p FROM PaymentType p WHERE p.title = :title")})
+public class PaymentType extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +50,6 @@ public class PaymentType implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "image")
-    private String image;
     @JoinTable(name = "stores_paymenttypes", joinColumns = {
         @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "storeid", referencedColumnName = "id")})
@@ -68,10 +63,10 @@ public class PaymentType implements Serializable {
         this.id = id;
     }
 
-    public PaymentType(Integer id, String title, String image) {
+    public PaymentType(Integer id, String title, MultipartFile image) {
+        super(image);
         this.id = id;
         this.title = title;
-        this.image = image;
     }
 
     public Integer getId() {
@@ -90,12 +85,14 @@ public class PaymentType implements Serializable {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @XmlTransient

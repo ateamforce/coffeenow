@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.controller.administrator;
 
-import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
 import com.ateamforce.coffeenow.model.Extra;
 import com.ateamforce.coffeenow.model.ExtraCategory;
@@ -21,14 +20,10 @@ import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.security.Principal;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

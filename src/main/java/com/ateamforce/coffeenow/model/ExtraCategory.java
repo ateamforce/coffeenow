@@ -6,7 +6,6 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,7 +19,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
     , @NamedQuery(name = "ExtraCategory.findExtraCategoryById", query = "SELECT e FROM ExtraCategory e WHERE e.id = :categoryId")
     , @NamedQuery(name = "ExtraCategory.findByTitle", query = "SELECT e FROM ExtraCategory e WHERE e.title = :title")
     , @NamedQuery(name = "ExtraCategory.findByParent", query = "SELECT e FROM ExtraCategory e WHERE e.parent = :parent")})
-public class ExtraCategory implements Serializable {
+public class ExtraCategory extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,11 +62,6 @@ public class ExtraCategory implements Serializable {
         @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
     @ManyToMany
     private List<ProductCategory> productcategoriesList;
-    
-    @Transient
-    @XmlTransient
-    @JsonIgnore // excludes extraCategoryImage from json view of the product
-    private MultipartFile extraCategoryImage;
 
     public ExtraCategory() {
     }
@@ -83,11 +76,11 @@ public class ExtraCategory implements Serializable {
         this.parent = parent;
     }
     
-    public ExtraCategory(Integer id, String title, int parent, MultipartFile extraCategoryImage) {
+    public ExtraCategory(Integer id, String title, int parent, MultipartFile image) {
+        super(image);
         this.id = id;
         this.title = title;
         this.parent = parent;
-        this.extraCategoryImage = extraCategoryImage;
     }
 
     public Integer getId() {
@@ -114,14 +107,6 @@ public class ExtraCategory implements Serializable {
         this.parent = parent;
     }
 
-    public MultipartFile getExtraCategoryImage() {
-        return extraCategoryImage;
-    }
-
-    public void setExtraCategoryImage(MultipartFile extraCategoryImage) {
-        this.extraCategoryImage = extraCategoryImage;
-    }
-
     @XmlTransient
     @JsonIgnore
     public List<Extra> getExtrasList() {
@@ -140,6 +125,16 @@ public class ExtraCategory implements Serializable {
 
     public void setProductcategoriesList(List<ProductCategory> productcategoriesList) {
         this.productcategoriesList = productcategoriesList;
+    }
+
+    @Override
+    public void setImage(MultipartFile image) {
+        super.setImage(image);
+    }
+
+    @Override
+    public MultipartFile getImage() {
+        return super.getImage();
     }
 
     @Override

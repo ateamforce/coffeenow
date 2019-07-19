@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.service;
 
-import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import java.util.List;
 
