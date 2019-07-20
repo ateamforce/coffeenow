@@ -39,7 +39,7 @@
 								
 									<!-- Add New Product Category Form -->
 									<c:set var="hidden" value="hidden" />
-									<c:if test="${errors != null}">
+									<c:if test="${hasErrors != null}">
 										<c:set var="hidden" value=" " />
 									</c:if>
 									<form:form id="newCategoryFormCFN" action="administrator/dashboard/productcategories/add" method="POST" modelAttribute="newProductCategory"
@@ -115,7 +115,9 @@
 											<td>${productCategory.parent}</td>
 											<td>${productCategory.title}</td>
 											<td>
-												
+												<c:if test="${productCategory.hasimage == true}">
+													<img src="img/product/category/${productCategory.id}.jpg" />
+												</c:if>
 											</td>
 										</tr>
 									</c:forEach>

@@ -8,8 +8,10 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
+import com.ateamforce.coffeenow.util.ImageHandlerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,20 +24,46 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
+    
+    @Autowired
+    ImageHandlerService imageHandlerService;
+    
+    @Autowired
+    Environment env;
 
     @Transactional
     @Override
     public ProductCategory addProductCategory(ProductCategory productCategory) {
+
+        boolean hasChanged = false;
         ProductCategory persistedProductCategory = productCategoryRepository.save(productCategory);
+        
+        if ( !productCategory.getImage().isEmpty() ) {
+            persistedProductCategory.setHasimage(
+                imageHandlerService.saveImage(
+                    env.getProperty("front.images.products.categories"), 
+                    persistedProductCategory.getId(),
+                    productCategory
+                )
+            );
+            hasChanged = true;
+        }
+        
         if ( persistedProductCategory.getParent() == 0 ) {
             persistedProductCategory.setParent(persistedProductCategory.getId());
-            return productCategoryRepository.save(persistedProductCategory);
+            hasChanged = true;
         }
-        return persistedProductCategory;
+        
+        return (hasChanged)? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
     }
 
     @Override
     public void deleteProductCategoryById(int productCategoryId) {
+        
+        if (getProductCategoryById(productCategoryId).isHasimage()) {
+            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
+        }
+        
         productCategoryRepository.deleteById(productCategoryId);
     }
 
