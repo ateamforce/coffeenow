@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -96,7 +97,7 @@ public class AdminController {
     // Go to administrator productcategories page
     @RequestMapping("/productcategories")
     public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("newProductCategory") ProductCategory newProductCategory) {
-
+        
         // add product categories
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
 

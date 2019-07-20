@@ -48,25 +48,24 @@ public class ImageHandler implements ImageHandlerService {
 
             // convert image to jpg, if necessary, and save to disk
             // TODO: process image. compress, resize etc
-            if (!businessObj.getImage().isEmpty()) {
-                try {
+            try {
 
-                    BufferedImage img = ImageIO.read(businessObj.getImage().getInputStream());
-                    // TODO: only keep one of the two on live environment. or put a new path entirely.
-                    // Copy image in both destinations, because tomcat has a delay in copying from the first to the 2nd automatically,
-                    // so when the page loads, the image that is supposed to load is at the 2nd path, but tomcat, hasn't put it there yet
-                    ImageIO.write(img, "jpg", new File(pathArr[0] + "/src/main/webapp" + path + id.toString() + ".jpg"));
-                    ImageIO.write(img, "jpg", new File(pathArr[0] + "/target/coffeenow-1.0" + path + id.toString() + ".jpg"));
-                } catch (IOException | IllegalStateException e) {
-                    throw new RuntimeException("Product Image saving failed", e);
-                }
+                BufferedImage img = ImageIO.read(businessObj.getImage().getInputStream());
+                // TODO: only keep one of the two on live environment. or put a new path entirely.
+                // Copy image in both destinations, because tomcat has a delay in copying from the first to the 2nd automatically,
+                // so when the page loads, the image that is supposed to load is at the 2nd path, but tomcat, hasn't put it there yet
+                localFile = new File(pathArr[0] + "/src/main/webapp" + path + id.toString() + ".jpg");
+                ImageIO.write(img, "jpg", localFile);
+                ImageIO.write(img, "jpg", new File(pathArr[0] + "/target/coffeenow-1.0" + path + id.toString() + ".jpg"));
+            } catch (IOException | IllegalStateException e) {
+                throw new RuntimeException("Product Image saving failed", e);
             }
 
         } catch (UnsupportedEncodingException ex) {
             // this is the custom log4j logger (output: ${catalina_home}\logs\coffeenow_general.log) 
             LOGGER.error(ex);
         }
-
+        
         return (!localFile.equals(new File("/")) && localFile.exists());
     }
 
