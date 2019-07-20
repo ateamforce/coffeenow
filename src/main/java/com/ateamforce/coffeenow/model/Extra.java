@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -53,6 +54,9 @@ public class Extra extends _ImageCarrier implements Serializable {
     @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
     @JoinTable(name = "extracategories_extras", joinColumns = {
         @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
@@ -74,7 +78,7 @@ public class Extra extends _ImageCarrier implements Serializable {
         this.id = id;
         this.title = title;
     }
-    
+
     public Extra(Integer id, String title, MultipartFile image) {
         super(image);
         this.id = id;
@@ -95,6 +99,14 @@ public class Extra extends _ImageCarrier implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @XmlTransient
@@ -161,5 +173,5 @@ public class Extra extends _ImageCarrier implements Serializable {
     public String toString() {
         return "com.ateamforce.coffeenow.model.Extras[ id=" + id + " ]";
     }
-    
+
 }

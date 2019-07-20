@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -29,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreMedia.findAll", query = "SELECT s FROM StoreMedia s")
-    , @NamedQuery(name = "StoreMedia.findById", query = "SELECT s FROM StoreMedia s WHERE s.id = :id")})
+    , @NamedQuery(name = "StoreMedia.findStoreMediaById", query = "SELECT s FROM StoreMedia s WHERE s.id = :storeMediaId")})
 public class StoreMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +42,9 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Store storeid;
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
 
     public StoreMedia() {
     }
@@ -68,6 +72,14 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
 
     public void setStoreid(Store storeid) {
         this.storeid = storeid;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @Override
@@ -104,5 +116,5 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
     public String toString() {
         return "com.ateamforce.coffeenow.model.Storemedia[ id=" + id + " ]";
     }
-    
+
 }

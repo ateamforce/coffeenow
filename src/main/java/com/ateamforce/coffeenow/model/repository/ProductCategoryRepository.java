@@ -9,6 +9,7 @@ import com.ateamforce.coffeenow.model.ProductCategory;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,8 +20,8 @@ import org.springframework.stereotype.Repository;
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
 
     List<ProductCategory> findAllProductCategories();
-
-    ProductCategory findProductCategoryById(int categoryId);
+    
+    ProductCategory findProductCategoryById(@Param("categoryId")int categoryId);
     
     @Query(value = "SELECT*from productcategories pc where id not in(select categoryid from productcategories_products where productid=?1)",
             nativeQuery = true)

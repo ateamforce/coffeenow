@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -29,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ClientMedia.findAll", query = "SELECT c FROM ClientMedia c")
-    , @NamedQuery(name = "ClientMedia.findById", query = "SELECT c FROM ClientMedia c WHERE c.id = :id")})
+    , @NamedQuery(name = "ClientMedia.findClientMediaById", query = "SELECT c FROM ClientMedia c WHERE c.id = :clientMediaId")})
 public class ClientMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +42,9 @@ public class ClientMedia extends _ImageCarrier implements Serializable {
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Client clientid;
+    @Column(name = "hasimage")
+    @Type(type= "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
 
     public ClientMedia() {
     }
@@ -69,6 +73,16 @@ public class ClientMedia extends _ImageCarrier implements Serializable {
     public void setClientid(Client clientid) {
         this.clientid = clientid;
     }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
+    }
+    
+    
 
     @Override
     public void setImage(MultipartFile image) {

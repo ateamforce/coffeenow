@@ -9,6 +9,7 @@ import com.ateamforce.coffeenow.dto.ExtraCategoryDto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,7 +21,7 @@ public interface ExtraCategoryDtoRepository extends JpaRepository<ExtraCategoryD
     
     List<ExtraCategoryDto> findAllExtraCategories();
     
-    ExtraCategoryDto findExtraCategoryById(int categoryId);
+    ExtraCategoryDto findExtraCategoryById(@Param("categoryId")int categoryId);
     
      @Query(value = "SELECT*from extrascategories ec where id not in(select categoryid from extrascategories_extras where extraid=?1)",
             nativeQuery = true)
