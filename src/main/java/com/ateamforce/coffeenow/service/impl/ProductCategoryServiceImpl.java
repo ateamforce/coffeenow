@@ -60,11 +60,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public void deleteProductCategoryById(int productCategoryId) {
         
-        if (getProductCategoryById(productCategoryId).isHasimage()) {
+        boolean hasImage = getProductCategoryById(productCategoryId).isHasimage();
+        productCategoryRepository.deleteById(productCategoryId);
+        if (hasImage && getProductCategoryById(productCategoryId) == null) {
             imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
         }
-        
-        productCategoryRepository.deleteById(productCategoryId);
+
     }
 
     @Override

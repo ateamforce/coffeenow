@@ -8,8 +8,10 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.model.repository.ExtraCategoryRepository;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
+import com.ateamforce.coffeenow.util.ImageHandlerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,21 +24,48 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;
+    
+    @Autowired
+    ImageHandlerService imageHandlerService;
+    
+    @Autowired
+    Environment env;
 
     @Transactional
     @Override
     public ExtraCategory addExtraCategory(ExtraCategory extraCategory) {
+        
+        boolean hasChanged = false;
         ExtraCategory persistedExtraCategory = extraCategoryRepository.save(extraCategory);
+        
+        if ( !extraCategory.getImage().isEmpty() ) {
+            persistedExtraCategory.setHasimage(
+                imageHandlerService.saveImage(
+                    env.getProperty("front.images.extras.categories"), 
+                    persistedExtraCategory.getId(),
+                    extraCategory
+                )
+            );
+            hasChanged = true;
+        }
+        
         if ( persistedExtraCategory.getParent() == 0 ) {
             persistedExtraCategory.setParent(persistedExtraCategory.getId());
-            return extraCategoryRepository.save(persistedExtraCategory);
+            hasChanged = true;
         }
-        return persistedExtraCategory;
+        
+        return (hasChanged)? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
     }
 
     @Override
     public void deleteExtraCategoryById(int extraCategoryId) {
+        
+        boolean hasImage = getExtraCategoryById(extraCategoryId).isHasimage();
         extraCategoryRepository.deleteById(extraCategoryId);
+        if (hasImage && getExtraCategoryById(extraCategoryId) == null) {
+            imageHandlerService.deleteImage(env.getProperty("front.images.extras.categories"), extraCategoryId);
+        }
+        
     }
 
     @Override
