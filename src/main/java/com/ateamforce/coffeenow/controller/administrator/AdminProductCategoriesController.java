@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -36,39 +37,51 @@ public class AdminProductCategoriesController {
 
     @Autowired
     ProductCategoryService productCategoryService;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String admin_dashboard_productCategories_addProductCategory(
-            ModelMap modelmap, 
-            @ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory, 
+            ModelMap modelmap,
+            @ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory,
             BindingResult result
     ) throws IOException {
-        
+
         if (result.hasErrors()) {
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
             modelmap.addAttribute("productcategoriesIsActive", "active");
             return "back_admin/dashboard/product_categories";
         }
-        
-        String[] suppressedFields = result.getSuppressedFields();
-        if (suppressedFields.length > 0)
-                throw new RuntimeException("Attempting to bind disallowed fields: "
-                                + StringUtils.arrayToCommaDelimitedString(suppressedFields));
 
-        ProductCategory newProductCategoryFinal = productCategoryService.addProductCategory(newProductCategory);
-        imageHandlerService.saveImage(env.getProperty("front.images.products.categories"),newProductCategoryFinal.getId() , newProductCategoryFinal);
+        String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: "
+                    + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
+
+        //Checks if an image was added
+        //If not false is the default
+        if(!newProductCategory.getImage().isEmpty()){
+        newProductCategory.setHasimage(true);
+        }
         
+        ProductCategory newProductCategoryFinal = productCategoryService.addProductCategory(newProductCategory);
+        imageHandlerService.saveImage(env.getProperty("front.images.products.categories"), newProductCategoryFinal.getId(), newProductCategoryFinal);
+
         return "redirect:/administrator/dashboard/productcategories";
     }
 
     @GetMapping("/delete/{productCategoryId}")
     public String admin_dashboard_productCategories_deleteProductCategory(@PathVariable int productCategoryId) {
+        
+        if(productCategoryService.getProductCategoryById(productCategoryId).isHasimage()){
+            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"),productCategoryId);
+        }
+        
         productCategoryService.deleteProductCategoryById(productCategoryId);
         return "redirect:/administrator/dashboard/productcategories";
     }
