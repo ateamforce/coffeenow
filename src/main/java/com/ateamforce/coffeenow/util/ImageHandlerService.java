@@ -10,4 +10,5 @@ public interface ImageHandlerService {
 
     boolean saveImage(String path, Integer id, _ImageCarrier businessObj);
     
+    void deleteImage(String path, Integer id);
 }

@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -55,6 +56,9 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
     @NotNull
     @Column(name = "parent")
     private int parent;
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
     @ManyToMany(mappedBy = "extracategoriesList")
     private List<Extra> extrasList;
     @JoinTable(name = "extras_products", joinColumns = {
@@ -75,7 +79,7 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
         this.title = title;
         this.parent = parent;
     }
-    
+
     public ExtraCategory(Integer id, String title, int parent, MultipartFile image) {
         super(image);
         this.id = id;
@@ -115,6 +119,14 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
 
     public void setExtrasList(List<Extra> extrasList) {
         this.extrasList = extrasList;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @XmlTransient
@@ -161,5 +173,5 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
     public String toString() {
         return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + " ]";
     }
-    
+
 }

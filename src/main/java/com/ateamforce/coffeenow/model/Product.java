@@ -28,6 +28,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -60,6 +61,9 @@ public class Product extends _ImageCarrier implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "description")
     private String description;
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
     @ManyToMany(mappedBy = "productsCollection")
     private Collection<Client> clientsCollection;
     @JoinTable(name = "productcategories_products", joinColumns = {
@@ -84,7 +88,7 @@ public class Product extends _ImageCarrier implements Serializable {
         this.title = title;
         this.description = description;
     }
-    
+
     public Product(Integer id, String title, String description, MultipartFile image) {
         super(image);
         this.id = id;
@@ -114,6 +118,14 @@ public class Product extends _ImageCarrier implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @XmlTransient
@@ -190,5 +202,5 @@ public class Product extends _ImageCarrier implements Serializable {
     public String toString() {
         return "com.ateamforce.coffeenow.model.Products[ id=" + id + " ]";
     }
-    
+
 }

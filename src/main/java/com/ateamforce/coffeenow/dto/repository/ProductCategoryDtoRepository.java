@@ -9,6 +9,7 @@ import com.ateamforce.coffeenow.dto.ProductCategoryDto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,7 +21,7 @@ public interface ProductCategoryDtoRepository extends JpaRepository<ProductCateg
     
     List<ProductCategoryDto> findAllProductCategories();
 
-    ProductCategoryDto findProductCategoryById(int categoryId);
+    ProductCategoryDto findProductCategoryById(@Param("categoryId")int categoryId);
     
     @Query(value = "SELECT*from productcategories pc where id not in(select categoryid from productcategories_products where productid=?1)",
             nativeQuery = true)

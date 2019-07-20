@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -50,6 +51,9 @@ public class PaymentType extends _ImageCarrier implements Serializable {
     @Size(min = 3, max = 50, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
     @JoinTable(name = "stores_paymenttypes", joinColumns = {
         @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "storeid", referencedColumnName = "id")})
@@ -83,6 +87,14 @@ public class PaymentType extends _ImageCarrier implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @Override
