@@ -47,6 +47,7 @@ public class ImageHandler implements ImageHandlerService {
             String pathArr[] = fullPath.split("/target/");
 
             // convert image to jpg, if necessary, and save to disk
+            // TODO: process image. compress, resize etc
             if (!businessObj.getImage().isEmpty()) {
                 try {
 

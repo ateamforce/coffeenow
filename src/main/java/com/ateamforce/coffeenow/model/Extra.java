@@ -51,7 +51,7 @@ public class Extra extends _ImageCarrier implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255, message = "{title.size.restriction.message}")
+    @Size(min = 3, max = 255, message = "{title.size.restriction.message}")
     @Column(name = "title")
     private String title;
     @Column(name = "hasimage")

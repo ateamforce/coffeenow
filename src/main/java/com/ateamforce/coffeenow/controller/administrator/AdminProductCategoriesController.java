@@ -50,7 +50,7 @@ public class AdminProductCategoriesController {
             @ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory,
             BindingResult result
     ) throws IOException {
-
+        // TODO: fix this to an appropriate solution that passes the errors without duplicating the admin_dashboard_productcategories method of AdminController
         if (result.hasErrors()) {
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
             modelmap.addAttribute("productcategoriesIsActive", "active");
