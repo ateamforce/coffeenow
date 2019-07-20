@@ -63,25 +63,22 @@ public class AdminProductCategoriesController {
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
 
-        //Checks if an image was added
-        //If not false is the default
-        if(!newProductCategory.getImage().isEmpty()){
-        newProductCategory.setHasimage(true);
-        }
-        
         ProductCategory newProductCategoryFinal = productCategoryService.addProductCategory(newProductCategory);
-        imageHandlerService.saveImage(env.getProperty("front.images.products.categories"), newProductCategoryFinal.getId(), newProductCategoryFinal);
+        
+        newProductCategoryFinal.setHasimage(imageHandlerService
+                .saveImage(env.getProperty("front.images.products.categories"), newProductCategoryFinal.getId(),
+                         newProductCategoryFinal));
 
         return "redirect:/administrator/dashboard/productcategories";
     }
 
     @GetMapping("/delete/{productCategoryId}")
     public String admin_dashboard_productCategories_deleteProductCategory(@PathVariable int productCategoryId) {
-        
-        if(productCategoryService.getProductCategoryById(productCategoryId).isHasimage()){
-            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"),productCategoryId);
+
+        if (productCategoryService.getProductCategoryById(productCategoryId).isHasimage()) {
+            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
         }
-        
+
         productCategoryService.deleteProductCategoryById(productCategoryId);
         return "redirect:/administrator/dashboard/productcategories";
     }
