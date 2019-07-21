@@ -57,6 +57,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return (hasChanged)? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
     }
 
+    @Transactional
     @Override
     public void deleteProductCategoryById(int productCategoryId) {
         
@@ -68,14 +69,15 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     }
 
-    @Override
-    public void updateProductCategory(ProductCategory updatedProductCategory) {
-        productCategoryRepository.save(updatedProductCategory);
-    }
-
+    @Transactional
     @Override
     public List<ProductCategory> getAllProductCategories() {
-        return productCategoryRepository.findAllProductCategories();
+        List<ProductCategory> allProductCategories = productCategoryRepository.findAllProductCategories();
+        allProductCategories.forEach((e) -> {
+            e.getExtrascategoriesList().size(); // force JPA to prefetch these ( works in combination with the @Transactional )
+            e.getProductsList().size(); // force JPA to prefetch these as well
+        });
+        return allProductCategories;
     }
 
     @Override

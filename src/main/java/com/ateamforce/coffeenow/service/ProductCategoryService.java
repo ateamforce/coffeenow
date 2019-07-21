@@ -18,8 +18,6 @@ public interface ProductCategoryService {
     
     void deleteProductCategoryById(int productCategoryId);
     
-    void updateProductCategory(ProductCategory updatedProductCategory);
-    
     List<ProductCategory>getAllProductCategories();
     
     ProductCategory getProductCategoryById(int categoryId);

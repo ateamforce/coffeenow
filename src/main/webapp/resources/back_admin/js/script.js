@@ -1,16 +1,9 @@
 var currentUrl = window.location.href;
-
-// main modal for messages
-var mainModal = $("#logoutModal");
-
-// add new category hidden form
-var addCategoryForm = $("#newCategoryFormCFN");
-
-// edit buttons for datatables
-var editButton = $("#editMainTableRowCFN"),
-	deleteButton = $("#deleteMainTableRowCFN"),
-	newButton = $("#addMainTableRowCFN"),
-	addRemoveButton = $("#addRemoveMainTableRowCFN");
+var mainModal = $("#logoutModal"); // main modal for messages
+var mainTable = $('#mainCategoriesTableCFN'); // Main datatable
+var newOrUpdateButton = $("#newOrUpdateMainTableRowButtonCFN"); // new or update button for main datatable
+var deleteButton = $("#deleteMainTableRowButtonCFN"); // delete button for main datatable
+var newOrUpdateItemFormCFN = $("#newOrUpdateItemFormCFN"); // form for adding a new main item
 
 // fix language redirect url, which cannot work correctly because of base meta tag
 function languageUri(param){
@@ -83,10 +76,23 @@ $(document).on("click", "#userMenuLogoutCNF", function(e){
 	
 });
 
-// handling form injection for new category button click
-newButton.on("click", function(){
-	addCategoryForm.removeClass("hidden");
-});
+// function that decides if a row is applicable for deletion before trying to delete it
+function deleteRow(rowId){
+	
+	var doDelete = true;
+	
+	mainTable.find('tr[role="row"]').each(function(){
+		if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
+			doDelete = false;
+			return false;
+		}
+	});
+	
+	if ( doDelete ){
+		yesNo("administrator/dashboard/productcategories/delete/" + rowId, true, language_JSON[locale]["deleteInform"]);
+	}
+	
+}
 
 $(document).ready(function() {
 	
@@ -95,7 +101,7 @@ $(document).ready(function() {
 	// 2. parent id
 	// 3. title
 	// anything else after that
-	var table = $('#mainTableCFN').DataTable({
+	var table = mainTable.DataTable({
 		orderFixed: [1, 'asc'],
 		select: {
 			style: 'single'
@@ -123,11 +129,14 @@ $(document).ready(function() {
 				targets: "titleHeaderCFN" ,
 				
 			},
-			{
-				"targets": [ 1 ],
-				"visible": false,
-				"searchable": false
-			}
+			{ 
+				responsivePriority: 2, 
+				targets: "imageHeaderCFN" ,
+				
+			},
+			{ "width": "20px", "targets": 0 },
+			{ "width": "50px", "targets": 1 },
+			{ "width": "50%", "targets": 2 }
 		]
 	});
 	
@@ -135,32 +144,42 @@ $(document).ready(function() {
 	table.on( 'select', function( event, data, type, indexes ) {
 		
 		let selectedRow = table[ type ]( indexes ).nodes().to$();
+		let selectedRowId = selectedRow.find(".rowIdCFN").html();
+		let doDelete = true;
 		
-		addCategoryForm.addClass("hidden");
+		// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
+		mainTable.find('tr[role="row"]').each(function(){
+			if (($(this).find(".rowIdCFN").html() != selectedRowId) &&  ($(this).find(".parentIdCFN").html() == selectedRowId)) {
+				doDelete = false;
+				return false;
+			}
+		});
 		
-		editButton.removeAttr("disabled");
-		editButton.attr("onclick","");
+		if (doDelete) {
+			deleteButton.removeAttr("disabled");
+			deleteButton.removeClass("hidden");
+			deleteButton.attr("onclick", "deleteRow("+ selectedRowId +")");
+		}
 		
-		deleteButton.removeAttr("disabled");
-		deleteButton.attr("onclick", "yesNo('administrator/dashboard/productcategories/delete/"+ selectedRow.find(".rowIdCFN").html() +"', true, '"+language_JSON[locale]["deleteInform"]+"')");
-		
-		addRemoveButton.removeAttr("disabled");
+		newOrUpdateButton.removeClass("btn-primary");
+		newOrUpdateButton.addClass("btn-success");
+		newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
 		
 	});
 	
 	// ON DATATABLE ROW DESELECT
 	table.on( 'deselect', function( event, data, type, indexes ) {
 		
-		addCategoryForm.addClass("hidden");
-		
-		editButton.attr("disabled","");
-		editButton.removeAttr("onclick");
-		
 		deleteButton.attr("disabled","");
+		deleteButton.addClass("hidden");
 		deleteButton.removeAttr("onclick");
 		
-		addRemoveButton.attr("disabled","");
+		newOrUpdateButton.removeClass("btn-success");
+		newOrUpdateButton.addClass("btn-primary");
+		newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-plus"></i></span><span class="text">'+ language_JSON[locale]["insert"] +'</span>');
 		
 	});
+	
+	$('.multipleSelectCFN_JS').multiselect();
 	
 });

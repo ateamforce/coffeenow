@@ -7,7 +7,9 @@ var language_JSON = {
 		"logoutInfo":"Επίλεξε το \"Έξοδος\" όταν έισαι έτοιμος/η να βγείς",
 		"cancel":"Άκυρο",
 		"logout":"Έξοδος",
-		"deleteInform":"Επίλεξες διαγραφή"
+		"deleteInform":"Επίλεξες διαγραφή",
+		"insert":"Εισαγωγή",
+		"update":"Ενημέρωση"
 	},
 	"en":{
 		"yes":"Yes",
@@ -17,7 +19,9 @@ var language_JSON = {
 		"logoutInfo":"Select \"Logout\" below if you are ready to end your current session",
 		"cancel":"Cancel",
 		"logout":"Logout",
-		"deleteInform":"You chose delete"
+		"deleteInform":"You chose delete",
+		"insert":"Insert",
+		"update":"Update"
 	}
 };
 var locale = document.getElementById("languagesCFN").getAttribute("data-cfn-locale");
