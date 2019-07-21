@@ -58,8 +58,13 @@
 													<div class="col-lg-4 text-left">
 														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="extras"/></label>
 														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" name="extrascategoriesList" class="multipleSelectCFN_JS">
-															<c:forEach items="${extras}" var="extra">
-																<form:option value="${extra.id}">${extra.title}</form:option>
+															<c:forEach items="${extracategories}" var="extracategory">
+
+																<c:set var="extraCategoryJSON">
+																	{"id":"${extracategory.id}","title":"${extracategory.title}","parent":"${extracategory.parent}","hasimage":"${extracategory.hasimage}"}
+																</c:set>
+
+																<form:option value="${extraCategoryJSON}">${extracategory.title}</form:option>
 															</c:forEach>
 														</form:select>
 													</div>
@@ -67,7 +72,12 @@
 														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="products"/></label>
 														<form:select id="itemProductsCFN" multiple="true" path="productsList" name="productsList" class="multipleSelectCFN_JS">
 															<c:forEach items="${products}" var="product">
-																<form:option value="${product.id}">${product.title}</form:option>
+
+																<c:set var="productJSON">
+																	{"id":"${product.id}","title":"${product.title}","description":"${product.description}","hasimage":"${product.hasimage}"}
+																</c:set>
+
+																<form:option value="${productJSON}">${product.title}</form:option>
 															</c:forEach>
 														</form:select>
 													</div>

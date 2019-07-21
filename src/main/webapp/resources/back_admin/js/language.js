@@ -9,7 +9,12 @@ var language_JSON = {
 		"logout":"Έξοδος",
 		"deleteInform":"Επίλεξες διαγραφή",
 		"insert":"Εισαγωγή",
-		"update":"Ενημέρωση"
+		"update":"Ενημέρωση",
+		"search":"Αναζήτηση",
+		"noneSelected":"Κανένα επιλεγμένο",
+		"selected":"Επιλεγμένα",
+		"allSelected":"Όλα επιλεγμένα",
+		"selectAll":"Επιλογή όλων"
 	},
 	"en":{
 		"yes":"Yes",
@@ -21,7 +26,12 @@ var language_JSON = {
 		"logout":"Logout",
 		"deleteInform":"You chose delete",
 		"insert":"Insert",
-		"update":"Update"
+		"update":"Update",
+		"search":"Search",
+		"noneSelected":"None selected",
+		"selected":"Selected",
+		"allSelected":"All selected",
+		"selectAll":"Select all"
 	}
 };
 var locale = document.getElementById("languagesCFN").getAttribute("data-cfn-locale");
