@@ -1,16 +1,8 @@
 var currentUrl = window.location.href;
-
-// main modal for messages
-var mainModal = $("#logoutModal");
-
-// add new category hidden form
-var addCategoryForm = $("#newCategoryFormCFN");
-
-// edit buttons for datatables
-var editButton = $("#editMainTableRowCFN"),
-	deleteButton = $("#deleteMainTableRowCFN"),
-	newButton = $("#addMainTableRowCFN"),
-	addRemoveButton = $("#addRemoveMainTableRowCFN");
+var mainModal = $("#logoutModal"); // main modal for messages
+var mainTable = $('#mainCategoriesTableCFN'); // Main datatable
+var deleteButton = $("#deleteMainTableRowCFN"); // edit buttons for datatables
+var newOrUpdateItemFormCFN = $("#newOrUpdateItemFormCFN"); // form for adding a new main item
 
 // fix language redirect url, which cannot work correctly because of base meta tag
 function languageUri(param){
@@ -83,10 +75,23 @@ $(document).on("click", "#userMenuLogoutCNF", function(e){
 	
 });
 
-// handling form injection for new category button click
-newButton.on("click", function(){
-	addCategoryForm.removeClass("hidden");
-});
+// function that decides if a row is applicable for deletion before trying to delete it
+function deleteRow(rowId){
+	
+	var doDelete = true;
+	
+	mainTable.find('tr[role="row"]').each(function(){
+		if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
+			doDelete = false;
+			return false;
+		}
+	});
+	
+	if ( doDelete ){
+		yesNo("administrator/dashboard/productcategories/delete/" + rowId, true, language_JSON[locale]["deleteInform"]);
+	}
+	
+}
 
 $(document).ready(function() {
 	
@@ -95,7 +100,7 @@ $(document).ready(function() {
 	// 2. parent id
 	// 3. title
 	// anything else after that
-	var table = $('#mainTableCFN').DataTable({
+	var table = mainTable.DataTable({
 		orderFixed: [1, 'asc'],
 		select: {
 			style: 'single'
@@ -123,11 +128,14 @@ $(document).ready(function() {
 				targets: "titleHeaderCFN" ,
 				
 			},
-			{
-				"targets": [ 1 ],
-				"visible": false,
-				"searchable": false
-			}
+			{ 
+				responsivePriority: 2, 
+				targets: "imageHeaderCFN" ,
+				
+			},
+			{ "width": "20px", "targets": 0 },
+			{ "width": "50px", "targets": 1 },
+			{ "width": "50%", "targets": 2 }
 		]
 	});
 	
@@ -135,31 +143,30 @@ $(document).ready(function() {
 	table.on( 'select', function( event, data, type, indexes ) {
 		
 		let selectedRow = table[ type ]( indexes ).nodes().to$();
+		let selectedRowId = selectedRow.find(".rowIdCFN").html();
+		let doDelete = true;
 		
-		addCategoryForm.addClass("hidden");
+		mainTable.find('tr[role="row"]').each(function(){
+			if (($(this).find(".rowIdCFN").html() != selectedRowId) &&  ($(this).find(".parentIdCFN").html() == selectedRowId)) {
+				doDelete = false;
+				return false;
+			}
+		});
 		
-		editButton.removeAttr("disabled");
-		editButton.attr("onclick","");
-		
-		deleteButton.removeAttr("disabled");
-		deleteButton.attr("onclick", "yesNo('administrator/dashboard/productcategories/delete/"+ selectedRow.find(".rowIdCFN").html() +"', true, '"+language_JSON[locale]["deleteInform"]+"')");
-		
-		addRemoveButton.removeAttr("disabled");
+		if (doDelete) {
+			deleteButton.removeAttr("disabled");
+			deleteButton.removeClass("hidden");
+			deleteButton.attr("onclick", "deleteRow("+ selectedRowId +")");
+		}
 		
 	});
 	
 	// ON DATATABLE ROW DESELECT
 	table.on( 'deselect', function( event, data, type, indexes ) {
 		
-		addCategoryForm.addClass("hidden");
-		
-		editButton.attr("disabled","");
-		editButton.removeAttr("onclick");
-		
 		deleteButton.attr("disabled","");
+		deleteButton.addClass("hidden");
 		deleteButton.removeAttr("onclick");
-		
-		addRemoveButton.attr("disabled","");
 		
 	});
 	

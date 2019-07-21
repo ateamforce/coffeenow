@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -95,8 +96,8 @@ public class AdminController {
     // Gets all productcaregories to display them in productcategories page
     // prepares add new product category form
     // Go to administrator productcategories page
-    @RequestMapping("/productcategories")
-    public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("newProductCategory") ProductCategory newProductCategory) {
+    @RequestMapping(value = "/productcategories", method = RequestMethod.GET)
+    public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("productCategory") ProductCategory productCategory) {
         
         // add product categories
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());

@@ -7,11 +7,11 @@ package com.ateamforce.coffeenow.controller.administrator;
 
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -33,22 +30,19 @@ public class AdminProductCategoriesController {
 
     @Autowired
     ProductCategoryService productCategoryService;
-    
-    private final String redirectToClassMapping = "redirect:/administrator/dashboard/productcategories";
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    // INSERT/UPDATE a product category
+    @PostMapping
     public String admin_dashboard_productCategories_addProductCategory(
-            @ModelAttribute("newProductCategory") @Valid ProductCategory newProductCategory, 
-            BindingResult result, 
-            RedirectAttributes redirectAttrs
+            ModelMap modelmap, 
+            @ModelAttribute("productCategory") @Valid ProductCategory productCategory, 
+            BindingResult result
     ) throws IOException {
         
-        // TODO: fix this to an appropriate solution that passes the errors without duplicating the admin_dashboard_productcategories method of AdminController
         if (result.hasErrors()) {
-            redirectAttrs.addFlashAttribute("hasErrors", true); // custom attribute to indicate that there are errors (some forms are hidden initially, unless there are errors)
-            redirectAttrs.addFlashAttribute("org.springframework.validation.BindingResult.newProductCategory", result);
-            redirectAttrs.addFlashAttribute("newProductCategory", newProductCategory);
-            return redirectToClassMapping;
+            modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+            modelmap.addAttribute("productcategoriesIsActive", "active");
+            return "back_admin/dashboard/product_categories";
         }
 
         String[] suppressedFields = result.getSuppressedFields();
@@ -57,23 +51,16 @@ public class AdminProductCategoriesController {
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
 
-        productCategoryService.addProductCategory(newProductCategory);
+        productCategoryService.addProductCategory(productCategory);
 
-        return redirectToClassMapping;
+        return "redirect:/administrator/dashboard/productcategories";
     }
 
+    // DELETE a product category by id
     @GetMapping("/delete/{productCategoryId}")
     public String admin_dashboard_productCategories_deleteProductCategory(@PathVariable int productCategoryId) {
         productCategoryService.deleteProductCategoryById(productCategoryId);
-        return redirectToClassMapping;
-    }
-
-    @PostMapping("/update")
-    public String admin_dashboard_productCategories_updateProductCategory(@RequestParam("updatedProductCategoryJson") String updatedProductCategoryJson) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        ProductCategory updatedProductCategory = mapper.readValue(updatedProductCategoryJson, ProductCategory.class);
-        productCategoryService.updateProductCategory(updatedProductCategory);
-        return redirectToClassMapping;
+        return "redirect:/administrator/dashboard/productcategories";
     }
 
 }

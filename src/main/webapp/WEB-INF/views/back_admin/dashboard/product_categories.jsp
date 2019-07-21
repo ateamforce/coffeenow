@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <!-- Begin Page Content -->
@@ -15,65 +16,53 @@
 			
 				<!-- Main DataTable Buttons -->
 				<div class="card shadow mb-4">
-					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary"><spring:message code="admin.menu.productcategories.help"/></h6>
-					</div>
-					<div class="card-body">
+					<div class="card-body" id="newOrUpdateItemCardCFN">
 						<div class="row">
-							<div class="col-12 col-xl-3 col-lg-4" id="mainTableButtonsCFN">
-								<button id="addMainTableRowCFN" type="button" class="btn btn-success btn-circle">
-									<i class="fas fa-plus"></i>
-								</button>
-								<button id="editMainTableRowCFN" type="button" class="btn btn-info btn-circle" disabled>
-									<i class="fas fa-edit"></i>
-								</button>
-								<button id="deleteMainTableRowCFN" type="button" class="btn btn-danger btn-circle" disabled>
-									<i class="fas fa-trash"></i>
-								</button>
-								<button id="addRemoveMainTableRowCFN" type="button" class="btn btn-warning btn-circle" disabled>
-									<i class="fas fa-arrows-alt-h"></i>
-								</button>
-							</div>
-							<div class="col-12 col-xl-9 col-lg-8">
-								<div id="mainTableFormsCFN">
-								
-									<!-- Add New Product Category Form -->
-									<c:set var="hidden" value="hidden" />
-									<c:if test="${hasErrors != null}">
-										<c:set var="hidden" value=" " />
-									</c:if>
-									<form:form id="newCategoryFormCFN" action="administrator/dashboard/productcategories/add" method="POST" modelAttribute="newProductCategory"
-										class="form-horizontal ${hidden}" enctype="multipart/form-data">
-										<form:errors path="*" cssClass="alert alert-danger" element="div"/>
-										<fieldset>
-											<div class="form-group row">
-												<div class="col-sm-3">
-													<label for="categoryParentCFN"><spring:message code="chooseParent"/></label>
-													<form:select id="categoryParentCFN" name="parent" path="parent" class="form-control form-control-sm">
-														<form:option value="0"><spring:message code="noneF"/></form:option>
-														<c:forEach items="${productcategories}" var="productCat">
-															<c:if test="${productCat.id == productCat.parent}">
-																<form:option value="${productCat.id}">${productCat.title}</form:option>
-															</c:if>
-														</c:forEach>
-													</form:select>
-												</div>
-												<div class="col-sm-3">
-													<label for="categoryTitleCFN"><spring:message code="writeTitle"/></label>
-													<form:input id="categoryTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm" />
-												</div>
-												<div class="col-sm-3">
-													<label for="categoryImageCFN"><spring:message code="addImage"/></label>
-													<form:input id="categoryImageCFN" name="image" path="image" type="file" class="form-control form-control-sm" />
-												</div>
-												<div class="col-sm-3">
-													<button type="submit" class="btn btn-primary"><spring:message code="add"/></button>
-												</div>
+							<div class="col-12 labels-left_CFN">
+								<!-- Add New Product Category Form -->
+								<form:form id="newOrUpdateItemFormCFN" action="administrator/dashboard/productcategories" method="POST" modelAttribute="productCategory"
+									class="form-horizontal" enctype="multipart/form-data">
+									<form:errors path="*" cssClass="alert alert-danger" element="div"/>
+									<fieldset>
+										<div class="form-group row">
+											<div class="col-sm-3">
+												<label for="itemParentCFN"><spring:message code="chooseParent"/></label>
+												<form:select id="itemParentCFN" name="parent" path="parent" class="form-control form-control-sm">
+													<form:option value="0"><spring:message code="noneF"/></form:option>
+													<c:forEach items="${productcategories}" var="productCat">
+														<c:if test="${productCat.id == productCat.parent}">
+															<form:option value="${productCat.id}">${productCat.title}</form:option>
+														</c:if>
+													</c:forEach>
+												</form:select>
 											</div>
-										</fieldset>
-									</form:form>
-									
-								</div>
+											<div class="col-sm-3">
+												<label for="itemTitleCFN"><spring:message code="writeTitle"/></label>
+												<form:input id="itemTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm" />
+											</div>
+											<div class="col-sm-3">
+												<label for="itemImageCFN"><spring:message code="addImage"/></label>
+												<form:input id="itemImageCFN" name="image" path="image" type="file" class="form-control form-control-sm" />
+											</div>
+											<form:input id="itemIdCFN" name="id" path="id" type="hidden" class="form-control form-control-sm" value="" />
+											<div class="col-sm-3">
+												<button type="submit" class="btn btn-primary btn-icon-split btn-sm">
+													<span class="icon text-white">
+														<i class="fas fa-plus"></i>
+													</span>
+													<span class="text"><spring:message code="add"/></span>
+												</button>
+												<div class="my-2"></div>
+												<button id="deleteMainTableRowCFN" type="button" class="btn btn-danger btn-icon-split btn-sm hidden" disabled>
+													<span class="icon text-white">
+														<i class="fas fa-trash"></i>
+													</span>
+													<span class="text"><spring:message code="delete"/></span>
+												</button>
+											</div>
+										</div>
+									</fieldset>
+								</form:form>
 							</div>
 						</div>
 					</div>
@@ -85,26 +74,30 @@
 		
 		<div class="row">
 		
-			<div class="col-lg-6">
+			<div class="col-lg-12">
 			
 				<!-- Main DataTable Card -->
 				<div class="card shadow mb-4">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table table-bordered responsive no-wrap" id="mainTableCFN" width="100%" cellspacing="0">
+							<table class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<th>Id</th>
-										<th>Parent</th>
+										<th class="hidden">Parent</th>
 										<th class="titleHeaderCFN">Title</th>
-										<th>Image</th>
+										<th><spring:message code="extras"/></th>
+										<th><spring:message code="products"/></th>
+										<th class="imageHeaderCFN">Image</th>
 									</tr>
 								</thead>
 								<tfoot>
 									<tr>
 										<th>Id</th>
-										<th>Parent</th>
+										<th class="hidden">Parent</th>
 										<th>Title</th>
+										<th><spring:message code="extras"/></th>
+										<th><spring:message code="products"/></th>
 										<th>Image</th>
 									</tr>
 								</tfoot>
@@ -112,8 +105,10 @@
 									<c:forEach var="productCategory" items="${productcategories}">
 										<tr>
 											<td class="rowIdCFN">${productCategory.id}</td>
-											<td>${productCategory.parent}</td>
+											<td class="parentIdCFN hidden">${productCategory.parent}</td>
 											<td>${productCategory.title}</td>
+											<td>${fn:length(productCategory.extrascategoriesList)}</td>
+											<td>${fn:length(productCategory.productsList)}</td>
 											<td>
 												<c:if test="${productCategory.hasimage == true}">
 													<img src="img/product/category/${productCategory.id}.jpg" />
@@ -123,28 +118,6 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						</div>
-					</div>
-				</div>
-			
-			</div>
-			
-			<div class="col-lg-6">
-				<a href="#scrollToEditCardTop"></a>
-				<!-- Edit Main DataTable's ManyToMany Relationships Card -->
-				<div class="card border-left-warning shadow py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><spring:message code="admin.menu.productcategories.editCatProductsTitle"/></div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800"><spring:message code="admin.menu.productcategories.help2"/></div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-							</div>
-						</div>
-						<div class="row no-gutters align-items-center">
-							
 						</div>
 					</div>
 				</div>

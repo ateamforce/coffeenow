@@ -7,13 +7,24 @@ form {
 #languagesCFN a { font-weight: bold; }
 #languagesCFN a.disabled { color: #000; }
 
-#mainTableButtonsCFN {
-	height: 55px;
-	line-height: 55px;
-}
-#mainTableFormsCFN label {
+.labels-left_CFN label {
 	display: block;
 	text-align: left;
+	position: absolute;
+    top: -20px;
+}
+.table-responsive img { max-height: 50px; }
+
+#newOrUpdateItemCardCFN { min-height: 130px; }
+
+#newOrUpdateItemFormCFN .col-sm-3 {
+	position: relative;
+    max-height: 40px;
+    top: 10px;
+}
+#newOrUpdateItemFormCFN select, #newOrUpdateItemFormCFN input {
+	max-height: 38px;
+    height: 100%;
 }
 
 /* overrides */
