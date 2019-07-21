@@ -101,6 +101,12 @@ public class AdminController {
         
         // add product categories
         modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+        
+        // add products
+        modelmap.addAttribute("products", productService.getAllProducts());
+        
+        // add extras
+        modelmap.addAttribute("extras", extraService.getAllExtras());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productcategoriesIsActive", "active");

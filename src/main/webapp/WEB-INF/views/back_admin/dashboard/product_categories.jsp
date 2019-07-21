@@ -18,47 +18,73 @@
 				<div class="card shadow mb-4">
 					<div class="card-body" id="newOrUpdateItemCardCFN">
 						<div class="row">
-							<div class="col-12 labels-left_CFN">
+							<div class="col-12">
 								<!-- Add New Product Category Form -->
 								<form:form id="newOrUpdateItemFormCFN" action="administrator/dashboard/productcategories" method="POST" modelAttribute="productCategory"
 									class="form-horizontal" enctype="multipart/form-data">
 									<form:errors path="*" cssClass="alert alert-danger" element="div"/>
 									<fieldset>
 										<div class="form-group row">
-											<div class="col-sm-3">
-												<label for="itemParentCFN"><spring:message code="chooseParent"/></label>
-												<form:select id="itemParentCFN" name="parent" path="parent" class="form-control form-control-sm">
-													<form:option value="0"><spring:message code="noneF"/></form:option>
-													<c:forEach items="${productcategories}" var="productCat">
-														<c:if test="${productCat.id == productCat.parent}">
-															<form:option value="${productCat.id}">${productCat.title}</form:option>
-														</c:if>
-													</c:forEach>
-												</form:select>
+											<div class="col-lg-9">
+												<div class="form-group row">
+													<div class="col-lg-4">
+														<label class="labels-left_CFN" for="itemParentCFN"><spring:message code="chooseParent"/></label>
+														<form:select id="itemParentCFN" name="parent" path="parent" class="form-control form-control-sm newOrUpdateItemFormCFN">
+															<form:option value="0"><spring:message code="noneF"/></form:option>
+															<c:forEach items="${productcategories}" var="productCat">
+																<c:if test="${productCat.id == productCat.parent}">
+																	<form:option value="${productCat.id}">${productCat.title}</form:option>
+																</c:if>
+															</c:forEach>
+														</form:select>
+													</div>
+													<div class="col-lg-4">
+														<label class="labels-left_CFN" for="itemTitleCFN"><spring:message code="writeTitle"/></label>
+														<form:input id="itemTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm newOrUpdateItemFormCFN" />
+													</div>
+													<div class="col-lg-4">
+														<label class="labels-left_CFN" for="itemImageCFN"><spring:message code="addImage"/></label>
+														<form:input id="itemImageCFN" name="image" path="image" type="file" class="form-control form-control-sm newOrUpdateItemFormCFN" />
+													</div>
+													<form:input id="itemIdCFN" name="id" path="id" type="hidden" class="form-control form-control-sm" value="" />
+												</div>
+												<div class="form-group row">
+													<div class="col-lg-4">
+														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="extras"/></label>
+														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" name="extrascategoriesList" class="multipleSelectCFN_JS">
+															<c:forEach items="${extras}" var="extra">
+																<form:option value="${extra.id}">${extra.title}</form:option>
+															</c:forEach>
+														</form:select>
+													</div>
+													<div class="col-lg-4">
+														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="products"/></label>
+														<form:select id="itemProductsCFN" multiple="true" path="productsList" name="productsList" class="multipleSelectCFN_JS">
+															<c:forEach items="${products}" var="product">
+																<form:option value="${product.id}">${product.title}</form:option>
+															</c:forEach>
+														</form:select>
+													</div>
+												</div>
 											</div>
-											<div class="col-sm-3">
-												<label for="itemTitleCFN"><spring:message code="writeTitle"/></label>
-												<form:input id="itemTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm" />
-											</div>
-											<div class="col-sm-3">
-												<label for="itemImageCFN"><spring:message code="addImage"/></label>
-												<form:input id="itemImageCFN" name="image" path="image" type="file" class="form-control form-control-sm" />
-											</div>
-											<form:input id="itemIdCFN" name="id" path="id" type="hidden" class="form-control form-control-sm" value="" />
-											<div class="col-sm-3">
-												<button type="submit" class="btn btn-primary btn-icon-split btn-sm">
-													<span class="icon text-white">
-														<i class="fas fa-plus"></i>
-													</span>
-													<span class="text"><spring:message code="add"/></span>
-												</button>
-												<div class="my-2"></div>
-												<button id="deleteMainTableRowCFN" type="button" class="btn btn-danger btn-icon-split btn-sm hidden" disabled>
-													<span class="icon text-white">
-														<i class="fas fa-trash"></i>
-													</span>
-													<span class="text"><spring:message code="delete"/></span>
-												</button>
+											<div class="col-lg-3">
+												<div class="row">
+													<div class="col-lg-12">
+														<button id="newOrUpdateMainTableRowButtonCFN" type="submit" class="btn btn-primary btn-icon-split btn-sm">
+															<span class="icon text-white">
+																<i class="fas fa-plus"></i>
+															</span>
+															<span class="text"><spring:message code="insert"/></span>
+														</button>
+														<div class="my-2"></div>
+														<button id="deleteMainTableRowButtonCFN" type="button" class="btn btn-danger btn-icon-split btn-sm hidden" disabled>
+															<span class="icon text-white">
+																<i class="fas fa-trash"></i>
+															</span>
+															<span class="text"><spring:message code="delete"/></span>
+														</button>
+													</div>
+												</div>
 											</div>
 										</div>
 									</fieldset>

@@ -6,7 +6,9 @@
 package com.ateamforce.coffeenow.controller.administrator;
 
 import com.ateamforce.coffeenow.model.ProductCategory;
+import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
+import com.ateamforce.coffeenow.service.ProductService;
 import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,12 @@ public class AdminProductCategoriesController {
 
     @Autowired
     ProductCategoryService productCategoryService;
+    
+    @Autowired
+    ProductService productService;
+    
+    @Autowired
+    ExtraService extraService;
 
     // INSERT/UPDATE a product category
     @PostMapping
@@ -41,6 +49,8 @@ public class AdminProductCategoriesController {
         
         if (result.hasErrors()) {
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+            modelmap.addAttribute("products", productService.getAllProducts());
+            modelmap.addAttribute("extras", extraService.getAllExtras());
             modelmap.addAttribute("productcategoriesIsActive", "active");
             return "back_admin/dashboard/product_categories";
         }

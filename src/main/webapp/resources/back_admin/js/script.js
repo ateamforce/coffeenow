@@ -1,7 +1,8 @@
 var currentUrl = window.location.href;
 var mainModal = $("#logoutModal"); // main modal for messages
 var mainTable = $('#mainCategoriesTableCFN'); // Main datatable
-var deleteButton = $("#deleteMainTableRowCFN"); // edit buttons for datatables
+var newOrUpdateButton = $("#newOrUpdateMainTableRowButtonCFN"); // new or update button for main datatable
+var deleteButton = $("#deleteMainTableRowButtonCFN"); // delete button for main datatable
 var newOrUpdateItemFormCFN = $("#newOrUpdateItemFormCFN"); // form for adding a new main item
 
 // fix language redirect url, which cannot work correctly because of base meta tag
@@ -146,6 +147,7 @@ $(document).ready(function() {
 		let selectedRowId = selectedRow.find(".rowIdCFN").html();
 		let doDelete = true;
 		
+		// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
 		mainTable.find('tr[role="row"]').each(function(){
 			if (($(this).find(".rowIdCFN").html() != selectedRowId) &&  ($(this).find(".parentIdCFN").html() == selectedRowId)) {
 				doDelete = false;
@@ -159,6 +161,10 @@ $(document).ready(function() {
 			deleteButton.attr("onclick", "deleteRow("+ selectedRowId +")");
 		}
 		
+		newOrUpdateButton.removeClass("btn-primary");
+		newOrUpdateButton.addClass("btn-success");
+		newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
+		
 	});
 	
 	// ON DATATABLE ROW DESELECT
@@ -168,6 +174,12 @@ $(document).ready(function() {
 		deleteButton.addClass("hidden");
 		deleteButton.removeAttr("onclick");
 		
+		newOrUpdateButton.removeClass("btn-success");
+		newOrUpdateButton.addClass("btn-primary");
+		newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-plus"></i></span><span class="text">'+ language_JSON[locale]["insert"] +'</span>');
+		
 	});
+	
+	$('.multipleSelectCFN_JS').multiselect();
 	
 });
