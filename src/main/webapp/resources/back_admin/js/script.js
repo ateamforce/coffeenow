@@ -180,6 +180,15 @@ $(document).ready(function() {
 		
 	});
 	
-	$('.multipleSelectCFN_JS').multiselect();
+	$('.multipleSelectCFN_JS').multiselect({
+		buttonClass: 'btn btn-secondary btn-sm',
+		maxHeight: 200,
+        includeSelectAllOption: true,
+		enableFiltering: true
+	});
 	
+});
+
+$(window).on('load', function(){
+	$("#contentPreLoaderCFN").remove();
 });

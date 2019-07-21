@@ -5,11 +5,17 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid positionRel">
 
 	<!-- Page Heading -->
 	<h1 class="h3 mb-4 text-gray-800"><spring:message code="admin.menu.productcategories"/></h1>
 	
+		<div id="contentPreLoaderCFN" class="row">
+			<div class="col-lg-12">
+				<div><img src="img/administrator/mainloader.gif" /></div>
+			</div>
+		</div>
+		
 		<div class="row">
 		
 			<div class="col-lg-12">
@@ -48,8 +54,8 @@
 													</div>
 													<form:input id="itemIdCFN" name="id" path="id" type="hidden" class="form-control form-control-sm" value="" />
 												</div>
-												<div class="form-group row">
-													<div class="col-lg-4">
+												<div class="form-group row margin-top-2">
+													<div class="col-lg-4 text-left">
 														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="extras"/></label>
 														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" name="extrascategoriesList" class="multipleSelectCFN_JS">
 															<c:forEach items="${extras}" var="extra">
@@ -57,7 +63,7 @@
 															</c:forEach>
 														</form:select>
 													</div>
-													<div class="col-lg-4">
+													<div class="col-lg-4 text-left">
 														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="products"/></label>
 														<form:select id="itemProductsCFN" multiple="true" path="productsList" name="productsList" class="multipleSelectCFN_JS">
 															<c:forEach items="${products}" var="product">
@@ -70,14 +76,14 @@
 											<div class="col-lg-3">
 												<div class="row">
 													<div class="col-lg-12">
-														<button id="newOrUpdateMainTableRowButtonCFN" type="submit" class="btn btn-primary btn-icon-split btn-sm">
+														<button id="newOrUpdateMainTableRowButtonCFN" type="submit" class="btn btn-primary btn-icon-split btn-sm newOrUpdateItemFormCFN">
 															<span class="icon text-white">
 																<i class="fas fa-plus"></i>
 															</span>
 															<span class="text"><spring:message code="insert"/></span>
 														</button>
 														<div class="my-2"></div>
-														<button id="deleteMainTableRowButtonCFN" type="button" class="btn btn-danger btn-icon-split btn-sm hidden" disabled>
+														<button id="deleteMainTableRowButtonCFN" type="button" class="btn btn-danger btn-icon-split btn-sm newOrUpdateItemFormCFN hidden" disabled>
 															<span class="icon text-white">
 																<i class="fas fa-trash"></i>
 															</span>
@@ -151,6 +157,6 @@
 			</div>
 		
 		</div>
-
+		
 </div>
 <!-- /.container-fluid -->
