@@ -5,6 +5,7 @@
  */
 package com.ateamforce.coffeenow.controller.administrator;
 
+import com.ateamforce.coffeenow.annotation.ProductFormat;
 import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
@@ -83,12 +84,12 @@ public class AdminProductCategoriesController {
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
 
-            // adding custom spring validator AND reenabling JSR-303 validations that were
-            // disabled because of spring validator
-            binder.setValidator(productCategoryValidator);
+        // adding custom spring validator AND reenabling JSR-303 validations that were
+        // disabled because of spring validator
+        binder.setValidator(productCategoryValidator);
 
-            // setting allowed fields
-            binder.setAllowedFields("id", "title", "parent", "image", "extrascategoriesList", "productsList", "language");
+        // setting allowed fields
+        binder.setAllowedFields("id", "title", "parent", "image", "extrascategoriesList", "productsList", "language");
     }
 
 }

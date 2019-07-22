@@ -1,8 +1,11 @@
 package com.ateamforce.coffeenow.config;
 
+import com.ateamforce.coffeenow.formatter.ProductFormatAnnotationFormatter;
+import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.validator.ImageValidator;
 import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.CacheControl;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -203,6 +207,12 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
             ProductCategoryValidator productCategoryValidator = new ProductCategoryValidator();
             productCategoryValidator.setSpringValidators(springValidators);
             return productCategoryValidator;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        WebMvcConfigurer.super.addFormatters(registry);
+        registry.addFormatterForFieldType(Product.class, new ProductFormatAnnotationFormatter());
     }
 
 }

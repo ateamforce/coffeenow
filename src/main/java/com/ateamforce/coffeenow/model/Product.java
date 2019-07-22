@@ -88,6 +88,13 @@ public class Product extends _ImageCarrier implements Serializable {
         this.title = title;
         this.description = description;
     }
+    
+    public Product(Integer id, String title, String description, boolean hasimage) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.hasimage = hasimage;
+    }
 
     public Product(Integer id, String title, String description, MultipartFile image) {
         super(image);
