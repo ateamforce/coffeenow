@@ -88,6 +88,13 @@ public class Product extends _ImageCarrier implements Serializable {
         this.title = title;
         this.description = description;
     }
+    
+    public Product(Integer id, String title, String description, boolean hasimage) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.hasimage = hasimage;
+    }
 
     public Product(Integer id, String title, String description, MultipartFile image) {
         super(image);
@@ -200,7 +207,7 @@ public class Product extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Products[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Products[ id=" + id + ", title=" + title + ", description=" + description + ", hasimage=" + hasimage + " ]";
     }
 
 }

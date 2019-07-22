@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -166,7 +167,7 @@ public class ProductCategory extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Productcategories[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Productcategories[ id=" + id + ", title=" + title + ", parent=" + parent + ", hasimage=" + hasimage + " ]";
     }
 
 }

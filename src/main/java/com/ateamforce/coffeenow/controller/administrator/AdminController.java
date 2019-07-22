@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -105,8 +104,8 @@ public class AdminController {
         // add products
         modelmap.addAttribute("products", productService.getAllProducts());
         
-        // add extras
-        modelmap.addAttribute("extras", extraService.getAllExtras());
+        // add extras categories
+        modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productcategoriesIsActive", "active");

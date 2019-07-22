@@ -57,7 +57,7 @@ public class Extra extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @JoinTable(name = "extracategories_extras", joinColumns = {
+    @JoinTable(name = "extrascategories_extras", joinColumns = {
         @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
     @ManyToMany
@@ -171,7 +171,7 @@ public class Extra extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + ", title=" + title + ", hasimage=" + hasimage + " ]";
     }
 
 }

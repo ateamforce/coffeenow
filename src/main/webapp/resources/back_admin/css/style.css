@@ -58,6 +58,11 @@ button.newOrUpdateItemFormCFN {
     margin: 10px auto;
 }
 button.multiselect { margin: 0; }
+button.multiselect-clear-filter {
+	padding: 0;
+    line-height: 1;
+    margin: 5px 0 5px 5px;
+}
 #newOrUpdateItemFormCFN .btn-icon-split.btn-sm .icon { width: 30px }
 #newOrUpdateItemFormCFN .btn-icon-split.btn-sm .text {
 	width: 89px;
@@ -69,6 +74,15 @@ button.multiselect { margin: 0; }
 .dropdown-menu.show {
 	padding: 5px 0;
 	border-radius: 0;
+}
+.multiselect-container .input-group {
+	margin: 0;
+    padding: 5px;
+}
+.input-group > .form-control.multiselect-search {
+	height: auto;
+    padding: 0 5px;
+    border-radius: 0;
 }
 .multiselect-container>li>a>label {
 	padding: 5px;

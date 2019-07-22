@@ -184,7 +184,8 @@ $(document).ready(function() {
 		buttonClass: 'btn btn-secondary btn-sm',
 		maxHeight: 200,
         includeSelectAllOption: true,
-		enableFiltering: true
+		enableFiltering: true,
+		numberDisplayed : 5
 	});
 	
 });

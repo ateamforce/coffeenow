@@ -79,6 +79,13 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
         this.title = title;
         this.parent = parent;
     }
+    
+    public ExtraCategory(Integer id, String title, int parent, boolean hasimage) {
+        this.id = id;
+        this.title = title;
+        this.parent = parent;
+        this.hasimage = hasimage;
+    }
 
     public ExtraCategory(Integer id, String title, int parent, MultipartFile image) {
         super(image);
@@ -171,7 +178,7 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + ", title=" + title + ", parent=" + parent + ", hasimage=" + hasimage + " ]";
     }
 
 }

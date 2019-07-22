@@ -1,6 +1,10 @@
 package com.ateamforce.coffeenow.config;
 
+import com.ateamforce.coffeenow.validator.ImageValidator;
+import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -148,7 +152,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
-        resolver.setMaxUploadSize(10240000); // 10MB
         resolver.setResolveLazily(true);
         return resolver;
     }
@@ -190,6 +193,16 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public Validator getValidator() {
         return validator();
+    }
+    
+    // bean for the spring validator ProductCategoryValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ProductCategoryValidator productCategoryValidator() {
+            Set<Validator> springValidators = new HashSet();
+            springValidators.add(new ImageValidator());
+            ProductCategoryValidator productCategoryValidator = new ProductCategoryValidator();
+            productCategoryValidator.setSpringValidators(springValidators);
+            return productCategoryValidator;
     }
 
 }

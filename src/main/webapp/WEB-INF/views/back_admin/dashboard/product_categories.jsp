@@ -56,20 +56,12 @@
 												</div>
 												<div class="form-group row margin-top-2">
 													<div class="col-lg-4 text-left">
-														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="extras"/></label>
-														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" name="extrascategoriesList" class="multipleSelectCFN_JS">
-															<c:forEach items="${extras}" var="extra">
-																<form:option value="${extra.id}">${extra.title}</form:option>
-															</c:forEach>
-														</form:select>
+														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="admin.menu.extras"/></label>
+														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" items="${extracategories}" itemLabel="title" itemValue="id" name="extrascategoriesList" class="multipleSelectCFN_JS"></form:select>
 													</div>
 													<div class="col-lg-4 text-left">
 														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="products"/></label>
-														<form:select id="itemProductsCFN" multiple="true" path="productsList" name="productsList" class="multipleSelectCFN_JS">
-															<c:forEach items="${products}" var="product">
-																<form:option value="${product.id}">${product.title}</form:option>
-															</c:forEach>
-														</form:select>
+														<form:select id="itemProductsCFN" multiple="true" path="productsList" items="${products}" itemLabel="title" itemValue="id" name="productsList" class="multipleSelectCFN_JS"></form:select>
 													</div>
 												</div>
 											</div>
@@ -118,7 +110,7 @@
 										<th>Id</th>
 										<th class="hidden">Parent</th>
 										<th class="titleHeaderCFN">Title</th>
-										<th><spring:message code="extras"/></th>
+										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="products"/></th>
 										<th class="imageHeaderCFN">Image</th>
 									</tr>
@@ -128,7 +120,7 @@
 										<th>Id</th>
 										<th class="hidden">Parent</th>
 										<th>Title</th>
-										<th><spring:message code="extras"/></th>
+										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="products"/></th>
 										<th>Image</th>
 									</tr>
