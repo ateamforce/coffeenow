@@ -195,7 +195,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return validator();
     }
     
-    // bean for the spring validator ProductCategoryValidator
+    // bean for the spring validator ProductCategoryValidator (basically merging JSR-303 with spring validation)
     @Bean
     public ProductCategoryValidator productCategoryValidator() {
             Set<Validator> springValidators = new HashSet();

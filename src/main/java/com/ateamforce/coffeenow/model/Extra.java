@@ -171,7 +171,7 @@ public class Extra extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extras[ id=" + id + ", title=" + title + ", hasimage=" + hasimage + " ]";
     }
 
 }

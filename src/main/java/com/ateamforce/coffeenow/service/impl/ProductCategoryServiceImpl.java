@@ -10,6 +10,7 @@ import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.util.ImageHandlerService;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
+    
+    private final static Logger LOGGER = Logger.getLogger(ProductCategoryServiceImpl.class);
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
@@ -51,6 +54,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         
         if ( persistedProductCategory.getParent() == 0 ) {
             persistedProductCategory.setParent(persistedProductCategory.getId());
+            hasChanged = true;
+        }
+        
+        LOGGER.error("productCategory.getExtrascategoriesList() : " + productCategory.getExtrascategoriesList());
+        if ( productCategory.getExtrascategoriesList() != null && !productCategory.getExtrascategoriesList().isEmpty() ) {
+            persistedProductCategory.setExtrascategoriesList(productCategory.getExtrascategoriesList());
+            hasChanged = true;
+        }
+        
+        LOGGER.error("productCategory.getProductsList() : " + productCategory.getProductsList());
+        if ( productCategory.getProductsList() != null && !productCategory.getProductsList().isEmpty() ) {
+            persistedProductCategory.setProductsList(productCategory.getProductsList());
             hasChanged = true;
         }
         

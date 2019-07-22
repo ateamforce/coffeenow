@@ -167,7 +167,7 @@ public class ProductCategory extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Productcategories[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Productcategories[ id=" + id + ", title=" + title + ", parent=" + parent + ", hasimage=" + hasimage + " ]";
     }
 
 }

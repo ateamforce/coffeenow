@@ -178,7 +178,7 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Extrascategories[ id=" + id + ", title=" + title + ", parent=" + parent + ", hasimage=" + hasimage + " ]";
     }
 
 }

@@ -52,16 +52,6 @@ public class AdminProductCategoriesController {
     
     @Autowired
     ProductCategoryValidator productCategoryValidator;
-    
-    @ModelAttribute("productsList")
-    public List<Product> getProducts(){
-        return productService.getAllProducts();
-    }
-    
-    @ModelAttribute("extrascategoriesList")
-    public List<ExtraCategory> getExtraCategories(){
-        return extraCategoryService.getAllExtraCategories();
-    }
 
     // INSERT/UPDATE a product category
     @PostMapping
@@ -113,9 +103,7 @@ public class AdminProductCategoriesController {
                 protected Product convertElement(Object element){
                     LOGGER.error("product : " + element);
                     if (element instanceof String) {
-                        Product product = productService.getProductById(Integer.parseInt(element.toString()));
-                        Hibernate.initialize(product);
-                        return product;
+                        return productService.getProductById(Integer.parseInt(element.toString()));
                     }
                     return null;
                 }
@@ -126,9 +114,7 @@ public class AdminProductCategoriesController {
                 protected ExtraCategory convertElement(Object element){
                     LOGGER.error("extrascategory : " + element);
                     if (element instanceof String) {
-                        ExtraCategory extraCategory = extraCategoryService.getExtraCategoryById(Integer.parseInt(element.toString()));
-                        Hibernate.initialize(extraCategory);
-                        return extraCategory;
+                        return extraCategoryService.getExtraCategoryById(Integer.parseInt(element.toString()));
                     }
                     return null;
                 }

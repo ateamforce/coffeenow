@@ -207,7 +207,7 @@ public class Product extends _ImageCarrier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.Products[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.Products[ id=" + id + ", title=" + title + ", description=" + description + ", hasimage=" + hasimage + " ]";
     }
 
 }
