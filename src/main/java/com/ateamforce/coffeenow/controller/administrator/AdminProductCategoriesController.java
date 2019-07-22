@@ -9,6 +9,7 @@ import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
+import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
 import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +41,9 @@ public class AdminProductCategoriesController {
     
     @Autowired
     ExtraCategoryService extraCategoryService;
+    
+    @Autowired
+    ProductCategoryValidator productCategoryValidator;
 
     // INSERT/UPDATE a product category
     @PostMapping
@@ -71,6 +77,18 @@ public class AdminProductCategoriesController {
     public String admin_dashboard_productCategories_deleteProductCategory(@PathVariable int productCategoryId) {
         productCategoryService.deleteProductCategoryById(productCategoryId);
         return "redirect:/administrator/dashboard/productcategories";
+    }
+    
+    // allowed fields for the new/update ProductCategory form returned fields
+    @InitBinder
+    public void initialiseBinder(WebDataBinder binder) {
+
+            // adding custom spring validator AND reenabling JSR-303 validations that were
+            // disabled because of spring validator
+            binder.setValidator(productCategoryValidator);
+
+            // setting allowed fields
+            binder.setAllowedFields("id", "title", "parent", "image", "extrascategoriesList", "productsList", "language");
     }
 
 }

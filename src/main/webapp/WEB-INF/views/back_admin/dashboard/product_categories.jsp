@@ -56,7 +56,7 @@
 												</div>
 												<div class="form-group row margin-top-2">
 													<div class="col-lg-4 text-left">
-														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="extras"/></label>
+														<label class="labels-left_CFN" for="itemExtrasCategoriesCFN"><spring:message code="admin.menu.extras"/></label>
 														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" name="extrascategoriesList" class="multipleSelectCFN_JS">
 															<c:forEach items="${extracategories}" var="extracategory">
 
@@ -128,7 +128,7 @@
 										<th>Id</th>
 										<th class="hidden">Parent</th>
 										<th class="titleHeaderCFN">Title</th>
-										<th><spring:message code="extras"/></th>
+										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="products"/></th>
 										<th class="imageHeaderCFN">Image</th>
 									</tr>
@@ -138,7 +138,7 @@
 										<th>Id</th>
 										<th class="hidden">Parent</th>
 										<th>Title</th>
-										<th><spring:message code="extras"/></th>
+										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="products"/></th>
 										<th>Image</th>
 									</tr>
