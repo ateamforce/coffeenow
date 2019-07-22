@@ -5,7 +5,6 @@
  */
 package com.ateamforce.coffeenow.model;
 
-import com.ateamforce.coffeenow.annotation.ProductFormat;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
