@@ -16,12 +16,12 @@
 		<div class="input-group">
 			<c:choose>
 				<c:when test="${pageContext.response.locale == 'en'}">
-					<a onclick="event.preventDefault(); languageUri('?language=el');" href="administrator/dashboard?language=el" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Ελληνικά</a>
-					<a class="d-none d-sm-inline-block btn btn-sm disabled">English</a>
+					<a onclick="event.preventDefault(); languageUri('?language=el');" href="administrator/dashboard?language=el" class="d-sm-inline-block btn btn-sm underline">Ελληνικά</a>
+					<a class="d-sm-inline-block btn btn-sm bold disabled">English</a>
 				</c:when>    
 				<c:otherwise>
-					<a class="d-none d-sm-inline-block btn btn-sm disabled">Ελληνικά</a>
-					<a onclick="event.preventDefault(); languageUri('?language=en');" href="administrator/dashboard?language=en" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">English</a>
+					<a class="d-sm-inline-block btn btn-sm bold disabled">Ελληνικά</a>
+					<a onclick="event.preventDefault(); languageUri('?language=en');" href="administrator/dashboard?language=en" class="d-sm-inline-block btn btn-sm underline">English</a>
 				</c:otherwise>
 			</c:choose>
 		</div>

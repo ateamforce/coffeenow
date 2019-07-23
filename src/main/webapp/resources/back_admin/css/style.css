@@ -1,9 +1,9 @@
 /* custom */
 .hidden { display: none!important; }
-.margin-top-2 { margin-top: 2rem; }
 .text-left { text-align: left; }
 .positionRel { position: relative; }
 button { margin: 10px; }
+
 #contentPreLoaderCFN {
 	position: absolute;
 	top: 0;
@@ -17,10 +17,21 @@ button { margin: 10px; }
 	text-align: center;
 }
 #contentPreLoaderCFN img {
-	left: 50px;
 	position: absolute;
 	top: 50px
 }
+
+#actionLayer-98 {
+	position: absolute;
+    z-index: 98;
+    background: #000;
+	opacity: 0.5;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 form {
 	line-height: 1;
 	text-align: center;
@@ -31,22 +42,52 @@ form {
 label.labels-left_CFN {
 	display: block;
 	text-align: left;
-	position: absolute;
-    top: -20px;
+	margin-top: 0.5rem;
 }
 .table-responsive img { max-height: 50px; }
 
-#newOrUpdateItemCardCFN { min-height: 130px; }
+#userDropdown { padding: 0; }
+#newOrUpdateItemCardCFN {
+	position: fixed;
+    z-index: 99;
+    webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
+    right: -505px;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    background: #fff;
+    max-width: 500px;
+    top: 82px;
+    width: 80%;
+}
+&:hover, &:focus
+{
+	transform: translate3d(-250px, 0, 0);
+	animation-timing-function: 1s ease-in;
+}
+#newOrUpdateItemCardCFN .switch {
+	position: absolute;
+    top: 20px;
+    left: -50px;
+    width: 50px;
+    height: 30px;
+    background: #fff;
+	text-align: left;
+    box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
+	cursor: pointer;
+}
+#newOrUpdateItemCardCFN .card { border: 0; }
+#newOrUpdateItemCardCFN .switch .fas {
+	font-size: 17px;
+    vertical-align: middle;
+    padding: 7px;
+	color: #1cc88a;
+}
+#newOrUpdateItemCardCFN.expandedCFN {
+	right: 0;
+}
+#newOrUpdateItemCardCFN .col { background: #fff; }
 
-#newOrUpdateItemFormCFN .col-lg-4 {
-	position: relative;
-    max-height: 40px;
-    top: 10px;
-	margin-top: 30px;
-}
-@media (min-width: 992px) {
-	#newOrUpdateItemFormCFN .col-lg-4 {margin-top: 0;}
-}
 .newOrUpdateItemFormCFN select, .newOrUpdateItemFormCFN input {
 	max-height: 38px;
     height: 100%;
@@ -68,8 +109,12 @@ button.multiselect-clear-filter {
 	width: 89px;
 	text-align: center;
 }
+#newOrUpdateMainTableRowButtonCFN { margin: 20px 0 0 0; }
 
 /* overrides */
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+}
 .btn.disabled, .btn:disabled { cursor: not-allowed; }
 .dropdown-menu.show {
 	padding: 5px 0;
@@ -91,4 +136,10 @@ button.multiselect-clear-filter {
 .multiselect-container>li>a>label>input[type=checkbox] {
 	margin: 0;
 	vertical-align: bottom;
+}
+.sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+	max-width: 2rem;
+	max-height: 2rem;
+	width: 100%;
+	height: auto;
 }
