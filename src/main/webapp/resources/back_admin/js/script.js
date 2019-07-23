@@ -163,15 +163,20 @@ $(document).ready(function() {
 		columnDefs: [
 			{ 
 				responsivePriority: 1, 
-				targets: "titleHeaderCFN" ,
+				targets: "idHeaderCFN" ,
 				
 			},
 			{ 
 				responsivePriority: 2, 
+				targets: "titleHeaderCFN" ,
+				
+			},
+			{ 
+				responsivePriority: 3, 
 				targets: "imageHeaderCFN" ,
 				
 			},
-			{ "width": "20px", "targets": 0 },
+			{ "width": "20px", "targets": "idHeaderCFN" },
 			{ "width": "50%", "targets": "titleHeaderCFN" },
 			{ "width": "100px", "targets": "optionsHeaderCFN" }
 		]

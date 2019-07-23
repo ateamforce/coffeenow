@@ -52,13 +52,12 @@ label.labels-left_CFN {
     z-index: 99;
     webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
     box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
-    right: -505px;
+    right: -345px;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
     background: #fff;
-    max-width: 500px;
     top: 82px;
-    width: 80%;
+    width: 340px;
 }
 &:hover, &:focus
 {
