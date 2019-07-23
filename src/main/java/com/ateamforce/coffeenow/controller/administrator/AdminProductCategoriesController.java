@@ -62,6 +62,7 @@ public class AdminProductCategoriesController {
     ) throws IOException {
         
         if (result.hasErrors()) {
+            modelmap.addAttribute("mainFormHasErrors", true);
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
             modelmap.addAttribute("products", productService.getAllProducts());
             modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());

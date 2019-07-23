@@ -14,7 +14,10 @@ var language_JSON = {
 		"noneSelected":"Κανένα επιλεγμένο",
 		"selected":"Επιλεγμένα",
 		"allSelected":"Όλα επιλεγμένα",
-		"selectAll":"Επιλογή όλων"
+		"selectAll":"Επιλογή όλων",
+		"attention":"Προσοχή",
+		"close":"Κλείσιμο",
+		"cannotDeleteParentWithChildren":"Δεν μπορείς να διαγράψεις κατηγορία με υποκατηγορίες"
 	},
 	"en":{
 		"yes":"Yes",
@@ -31,7 +34,10 @@ var language_JSON = {
 		"noneSelected":"None selected",
 		"selected":"Selected",
 		"allSelected":"All selected",
-		"selectAll":"Select all"
+		"selectAll":"Select all",
+		"attention":"Attention",
+		"close":"Close",
+		"cannotDeleteParentWithChildren":"You cannot delete a category with children"
 	}
 };
 var locale = document.getElementById("languagesCFN").getAttribute("data-cfn-locale");
