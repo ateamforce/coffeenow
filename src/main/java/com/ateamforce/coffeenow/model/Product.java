@@ -66,10 +66,7 @@ public class Product extends _ImageCarrier implements Serializable {
     private boolean hasimage;
     @ManyToMany(mappedBy = "productsCollection")
     private Collection<Client> clientsCollection;
-    @JoinTable(name = "productcategories_products", joinColumns = {
-        @JoinColumn(name = "productid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "categoryid", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "productsList")
     private List<ProductCategory> productcategoriesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
     private Collection<OrderProduct> ordersProductsCollection;

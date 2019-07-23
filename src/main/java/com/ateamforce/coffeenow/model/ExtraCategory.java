@@ -59,12 +59,12 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @ManyToMany(mappedBy = "extracategoriesList")
-    private List<Extra> extrasList;
-    @JoinTable(name = "extras_products", joinColumns = {
-        @JoinColumn(name = "extracategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "productcategoryid", referencedColumnName = "id")})
+    @JoinTable(name = "extrascategories_extras", joinColumns = {
+        @JoinColumn(name = "categoryid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "extraid", referencedColumnName = "id")})
     @ManyToMany
+    private List<Extra> extrasList;
+    @ManyToMany(mappedBy = "extrascategoriesList")
     private List<ProductCategory> productcategoriesList;
 
     public ExtraCategory() {

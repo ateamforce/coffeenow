@@ -54,10 +54,7 @@ public class PaymentType extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @JoinTable(name = "stores_paymenttypes", joinColumns = {
-        @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "storeid", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "paymenttypesCollection")
     private Collection<Store> storesCollection;
 
     public PaymentType() {
