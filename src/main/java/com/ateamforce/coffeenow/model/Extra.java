@@ -57,10 +57,7 @@ public class Extra extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @JoinTable(name = "extrascategories_extras", joinColumns = {
-        @JoinColumn(name = "extraid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "categoryid", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "extrasList")
     private List<ExtraCategory> extracategoriesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "extras")
     private Collection<StoreExtra> storesExtrasCollection;

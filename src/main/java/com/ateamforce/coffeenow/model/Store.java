@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -22,8 +23,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -98,25 +97,33 @@ public class Store extends AppUser {
     @Column(name = "latitude")
     private double latitude;
     
-    // Decide cascedetype an fecth
+    @JoinTable(name = "stores_paymenttypes", joinColumns = {
+        @JoinColumn(name = "storeid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<PaymentType> paymenttypesCollection;
     
-//    @ManyToMany(mappedBy = "storesCollection")
-//    private Collection<Client> clientsCollection;
-//    @ManyToMany(mappedBy = "storesCollection")
-//    private Collection<PaymentType> paymenttypesCollection;
-//    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-//    @OneToOne(optional = false)
-//    private AppUser appusers;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-//    private Collection<StoreExtra> storesExtrasCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeid")
-//    private Collection<StoreMedia> storemediaCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-//    private Collection<StoreProduct> storesProductsCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-//    private Collection<Rating> ratingsCollection;
-//    @OneToMany(mappedBy = "storeid")
-//    private Collection<AppOrder> ordersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeid")
+    private Collection<StoreMedia> storemediaCollection;
+    
+    @ManyToMany(mappedBy = "storesCollection")
+    private Collection<Client> clientsCollection;
+    
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private AppUser appusers;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
+    private Collection<StoreExtra> storesExtrasCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
+    private Collection<StoreProduct> storesProductsCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
+    private Collection<Rating> ratingsCollection;
+    
+    @OneToMany(mappedBy = "storeid")
+    private Collection<AppOrder> ordersCollection;
 
     public Store() {
     }

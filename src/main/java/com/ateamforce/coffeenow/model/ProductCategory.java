@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -58,9 +60,15 @@ public class ProductCategory extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type= "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @ManyToMany(mappedBy = "productcategoriesList")
+    @JoinTable(name = "productcategories_products", joinColumns = {
+        @JoinColumn(name = "categoryid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "productid", referencedColumnName = "id")})
+    @ManyToMany
     private List<Product> productsList;
-    @ManyToMany(mappedBy = "productcategoriesList")
+    @JoinTable(name = "extras_products", joinColumns = {
+        @JoinColumn(name = "productcategoryid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "extracategoryid", referencedColumnName = "id")})
+    @ManyToMany
     private List<ExtraCategory> extrascategoriesList;
 
     public ProductCategory() {
