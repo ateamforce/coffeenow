@@ -57,6 +57,7 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         return (hasChanged)? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
     }
 
+    @Transactional
     @Override
     public void deleteExtraCategoryById(int extraCategoryId) {
         
@@ -68,19 +69,24 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         
     }
 
-    @Override
-    public void updateExtraCategory(ExtraCategory updatedExtraCategory) {
-        extraCategoryRepository.save(updatedExtraCategory);
-    }
-
+    @Transactional
     @Override
     public List<ExtraCategory> getAllExtraCategories() {
-        return extraCategoryRepository.findAllExtraCategories();
+        List<ExtraCategory> allExtraCategories = extraCategoryRepository.findAllExtraCategories();
+        allExtraCategories.forEach((e) -> {
+            e.getProductcategoriesList().size(); // force JPA to prefetch these ( works in combination with the @Transactional )
+            e.getExtrasList().size(); // force JPA to prefetch these as well
+        });
+        return allExtraCategories;
     }
 
+    @Transactional
     @Override
     public ExtraCategory getExtraCategoryById(int categoryId) {
-        return extraCategoryRepository.findExtraCategoryById(categoryId);
+        ExtraCategory extraCategory = extraCategoryRepository.findExtraCategoryById(categoryId);
+        extraCategory.getProductcategoriesList().size();// force JPA to prefetch these
+        extraCategory.getExtrasList().size();// force JPA to prefetch these
+        return extraCategory;
     }
 
     @Override

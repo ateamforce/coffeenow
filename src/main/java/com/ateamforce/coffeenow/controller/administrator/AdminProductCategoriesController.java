@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
@@ -92,34 +91,32 @@ public class AdminProductCategoriesController {
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
 
-            // adding custom spring validator AND reenabling JSR-303 validations that were
-            // disabled because of spring validator
-            binder.setValidator(productCategoryValidator);
+        // adding custom spring validator AND reenabling JSR-303 validations that were
+        // disabled because of spring validator
+        binder.setValidator(productCategoryValidator);
 
-            // setting allowed fields
-            binder.setAllowedFields("id", "title", "parent", "image", "extrascategoriesList", "productsList", "language");
-            
-            binder.registerCustomEditor(List.class,"productsList", new CustomCollectionEditor(List.class){
-                @Override
-                protected Product convertElement(Object element){
-                    LOGGER.error("product : " + element);
-                    if (element instanceof String) {
-                        return productService.getProductById(Integer.parseInt(element.toString()));
-                    }
-                    return null;
+        // setting allowed fields
+        binder.setAllowedFields("id", "title", "parent", "image", "extrascategoriesList", "productsList", "language");
+
+        binder.registerCustomEditor(List.class,"productsList", new CustomCollectionEditor(List.class){
+            @Override
+            protected Product convertElement(Object element){
+                if (element instanceof String) {
+                    return productService.getProductById(Integer.parseInt(element.toString()));
                 }
-            });
-            
-            binder.registerCustomEditor(List.class,"extrascategoriesList", new CustomCollectionEditor(List.class){
-                @Override
-                protected ExtraCategory convertElement(Object element){
-                    LOGGER.error("extrascategory : " + element);
-                    if (element instanceof String) {
-                        return extraCategoryService.getExtraCategoryById(Integer.parseInt(element.toString()));
-                    }
-                    return null;
+                return null;
+            }
+        });
+
+        binder.registerCustomEditor(List.class,"extrascategoriesList", new CustomCollectionEditor(List.class){
+            @Override
+            protected ExtraCategory convertElement(Object element){
+                if (element instanceof String) {
+                    return extraCategoryService.getExtraCategoryById(Integer.parseInt(element.toString()));
                 }
-            });
+                return null;
+            }
+        });
             
     }
 

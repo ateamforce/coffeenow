@@ -100,7 +100,7 @@
 							<table data-cnf-delUrl="administrator/dashboard/productcategories/delete/" class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
 								<thead>
 									<tr>
-										<th>Id</th>
+										<th class="idHeaderCFN">Id</th>
 										<th class="hidden">Parent</th>
 										<th class="titleHeaderCFN">Title</th>
 										<th><spring:message code="admin.menu.extras"/></th>
@@ -128,7 +128,7 @@
 											<td>${productCategory.title}</td>
 											<td>${fn:length(productCategory.extrascategoriesList)}</td>
 											<td>${fn:length(productCategory.productsList)}</td>
-											<td>
+											<td class="rowImageCFN">
 												<c:if test="${productCategory.hasimage == true}">
 													<img src="img/product/category/${productCategory.id}.jpg" />
 												</c:if>

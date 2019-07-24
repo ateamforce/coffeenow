@@ -6,11 +6,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
 	<!-- template definition -->
 	<definition name="baseLayout_front" template="/WEB-INF/layouts/front/template/baseLayout.jsp">
-		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
-		<put-attribute name="ogImageWidth" value="400" />
-		<put-attribute name="ogImageHeight" value="400" />
-		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
-	
 		<put-attribute name="navigation" value="/WEB-INF/layouts/front/template/navigation.jsp" />
 		<put-attribute name="content" value="" />
 		<put-attribute name="leftsidebar" value="" />
@@ -19,9 +14,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- definition name = request mapping return string | all attributes can change, except the name="content" one -->
 	<definition name="front/index" extends="baseLayout_front">
-		<put-attribute name="title" value="HomePage | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/front/index.jsp" />
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/front/template/sidebar-left.jsp" />
 	</definition>

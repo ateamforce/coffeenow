@@ -42,12 +42,4 @@ public class AdminExtraCategoriesController {
         return "redirect:/administrator/dashboard/extracategories";
     }
 
-    @PostMapping("/update")
-    public String admin_dashboard_extraCategories_updateExtraCategory(@RequestParam("updatedExtraCategoryJson") String updatedExtraCategoryJson) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        ExtraCategory updatedExtraCategory = mapper.readValue(updatedExtraCategoryJson, ExtraCategory.class);
-        extraCategoryService.updateExtraCategory(updatedExtraCategory);
-        return "redirect:/administrator/dashboard/extracategories";
-    }
-
 }

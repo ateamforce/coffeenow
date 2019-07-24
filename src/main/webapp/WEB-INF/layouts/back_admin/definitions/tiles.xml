@@ -10,19 +10,12 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 
 	<!-- Admin login template definition -->
 	<definition name="loginLayout_admin" template="/WEB-INF/layouts/back_admin/template/loginLayout.jsp">
-		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
-		<put-attribute name="ogImageWidth" value="400" />
-		<put-attribute name="ogImageHeight" value="400" />
-		<put-attribute name="pageDescription" value="coffeenow.gr - Admin Login" />
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css" />
 		<put-attribute name="scripts" value="js/common/script.js,js/administrator/sb-admin-2.js" />
 	</definition>
 	
 	<!-- Admin Login Page -->
 	<definition name="back_admin/index" extends="loginLayout_admin">
-		<put-attribute name="title" value="Administrator Login | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/index.jsp" />
 	</definition>
 	
@@ -32,10 +25,6 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- Admin main template definition -->
 	<definition name="baseLayout_admin" template="/WEB-INF/layouts/back_admin/template/baseLayout.jsp">
-		<put-attribute name="ogImageUrl" value="img/common/logo-square.png" />
-		<put-attribute name="ogImageWidth" value="400" />
-		<put-attribute name="ogImageHeight" value="400" />
-		<put-attribute name="pageDescription" value="coffeenow.gr - The new way to order coffee online, from all over Greece" />
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css" />
 		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/script.js" />
 	
@@ -47,25 +36,16 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- Admin Dashboard Page -->
 	<definition name="back_admin/dashboard/index" extends="baseLayout_admin">
-		<put-attribute name="title" value="Administrator Dashboard | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator/dashboard" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/index.jsp" />
 	</definition>
 	
 	<!-- Admin Products Page -->
 	<definition name="back_admin/dashboard/products" extends="baseLayout_admin">
-		<put-attribute name="title" value="Products | Administrator Dashboard | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator/dashboard/products" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/products.jsp" />
 	</definition>
 	
 	<!-- Admin Product Categories Page -->
 	<definition name="back_admin/dashboard/product_categories" extends="baseLayout_admin">
-		<put-attribute name="title" value="Product Categories | Administrator Dashboard | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator/dashboard/productcategories" />
-		
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/administrator/style.css" />
 		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/administrator/script.js" />
 		
@@ -74,17 +54,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- Admin Extras Page -->
 	<definition name="back_admin/dashboard/extras" extends="baseLayout_admin">
-		<put-attribute name="title" value="Extras | Administrator Dashboard | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator/dashboard/extras" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extras.jsp" />
 	</definition>
 	
 	<!-- Admin Extras Categories Page -->
 	<definition name="back_admin/dashboard/extra_categories" extends="baseLayout_admin">
-		<put-attribute name="title" value="Extras Categories | Administrator Dashboard | CoffeeNow" />
-		<put-attribute name="ogUrl" value="/administrator/dashboard/extracategories" />
-		
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extra_categories.jsp" />
 	</definition>
 	

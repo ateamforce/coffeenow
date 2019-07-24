@@ -1,5 +1,6 @@
 package com.ateamforce.coffeenow.config;
 
+import com.ateamforce.coffeenow.interceptor.SeoPageDetailsInterceptor;
 import com.ateamforce.coffeenow.validator.ImageValidator;
 import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
 import java.util.HashSet;
@@ -37,8 +38,16 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @ComponentScan("com.ateamforce.coffeenow")
 public class WebApplicationContextConfig implements WebMvcConfigurer {
     
+    public MessageSource messageSource;
+    public LocaleResolver localeResolver;
+    
     @Autowired
     Environment env;
+
+    public WebApplicationContextConfig(MessageSource messageSource) {
+        this.messageSource = messageSource();
+        this.localeResolver = localeResolver();
+    }
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -62,7 +71,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     // enable messages.properties
     @Bean
-    public MessageSource messageSource() {
+    public static MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
         resource.setDefaultEncoding("UTF-8");
         resource.setBasename("messages");
@@ -164,12 +173,13 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
         registry.addInterceptor(localeChangeInterceptor);
+        registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver));
 
     }
 
     // setting default Locale
     @Bean
-    public LocaleResolver localeResolver() {
+    public static LocaleResolver localeResolver() {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         resolver.setDefaultLocale(new Locale("el"));
         return resolver;

@@ -84,9 +84,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return allProductCategories;
     }
 
+    @Transactional
     @Override
     public ProductCategory getProductCategoryById(int categoryId) {
-        return productCategoryRepository.findProductCategoryById(categoryId);
+        ProductCategory productCategory = productCategoryRepository.findProductCategoryById(categoryId);
+        productCategory.getExtrascategoriesList().size();// force JPA to prefetch these
+        productCategory.getProductsList().size();// force JPA to prefetch these
+        return productCategory;
     }
 
     @Override
