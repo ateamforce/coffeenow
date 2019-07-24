@@ -2,6 +2,7 @@
 .hidden { display: none!important; }
 .text-left { text-align: left; }
 .positionRel { position: relative; }
+.pad-right-30 { padding-right: 30px; }
 button { margin: 10px; }
 
 #contentPreLoaderCFN {
@@ -45,10 +46,11 @@ label.labels-left_CFN {
 	margin-top: 0.5rem;
 }
 .table-responsive img { max-height: 50px; }
+.rowImageCFN { text-align: center; }
 
 #userDropdown { padding: 0; }
 #newOrUpdateItemCardCFN {
-	position: fixed;
+	position: absolute;
     z-index: 99;
     webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
     box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
@@ -56,7 +58,7 @@ label.labels-left_CFN {
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
     background: #fff;
-    top: 82px;
+    top: -15px;
     width: 340px;
 }
 &:hover, &:focus
@@ -115,6 +117,10 @@ body {
 	font-family: 'Source Sans Pro', sans-serif;
 }
 .btn.disabled, .btn:disabled { cursor: not-allowed; }
+.table th, .table td {
+	padding: 5px;
+	vertical-align: middle;
+}
 .dropdown-menu.show {
 	padding: 5px 0;
 	border-radius: 0;
@@ -142,3 +148,4 @@ body {
 	width: 100%;
 	height: auto;
 }
+table.dataTable thead .sorting:before, table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:before, table.dataTable thead .sorting_desc_disabled:after { bottom: 0.45em; }

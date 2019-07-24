@@ -105,7 +105,7 @@ actionLayer.on("click", function(e){
 	actionLayer.addClass("hidden");
 	newOrUpdateButton.removeClass("btn-warning");
 	newOrUpdateButton.addClass("btn-success");
-	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
+	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["insert"] +'</span>');
 });
 
 // function that loads a row into the update form and resets the form
@@ -142,6 +142,9 @@ $(document).ready(function() {
 	
 	// productcategories/extrascategories DATATABLE	(id always first)
 	var table = mainTable.DataTable({
+		"language": {
+            "url": language_JSON[locale]["dataTableLanguageURL"]
+        },
 		orderFixed: [1, 'asc'],
 		info: false,
 		responsive: true,
@@ -155,7 +158,7 @@ $(document).ready(function() {
 					if( ids[i] == group ) title = titles[i];
 				}
 				return $('<tr/>')
-                    .append( '<td colspan="'+rows.columns().count()+'">'+group+' - '+title+'</td>' );
+                    .append( '<td colspan="'+rows.columns().count()+'"><span class="pad-right-30">'+group+'</span>'+title+'</td>' );
 			},
 			endRender: null,
             dataSrc: 1
@@ -177,7 +180,9 @@ $(document).ready(function() {
 				
 			},
 			{ "width": "20px", "targets": "idHeaderCFN" },
-			{ "width": "50%", "targets": "titleHeaderCFN" },
+			{ "width": "70px", "targets": 3 },// extrasCategories or productCategories
+			{ "width": "70px", "targets": 4 },// products or extras
+			{ "width": "100px", "targets": "imageHeaderCFN" },
 			{ "width": "100px", "targets": "optionsHeaderCFN" }
 		]
 	});

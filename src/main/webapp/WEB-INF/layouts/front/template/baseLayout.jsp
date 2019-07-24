@@ -20,15 +20,15 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title><tiles:getAsString name="title" /></title>
+		<title>${SEO_pageTitle}</title>
 		
-		<meta property="og:url" content='<tiles:getAsString name="ogUrl" />' />
+		<meta property="og:url" content='${SEO_ogUrl}' />
 		<meta property="og:type" content="website" />
-		<meta property="og:image" content='<tiles:getAsString name="ogImageUrl" />' />
-		<meta property="og:image:width" content='<tiles:getAsString name="ogImageWidth" />' />
-		<meta property="og:image:height" content='<tiles:getAsString name="ogImageHeight" />' />
+		<meta property="og:image" content='${SEO_ogImage}' />
+		<meta property="og:image:width" content='${SEO_ogImageWidth}' />
+		<meta property="og:image:height" content='${SEO_ogImageHeight}' />
 		<meta property="og:image:type" content="image/jpeg" />
-		<meta name="description" content='<tiles:getAsString name="pageDescription" />'>
+		<meta name="description" content='${SEO_pageDescription}'>
 		
 		<link href="img/common/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 		

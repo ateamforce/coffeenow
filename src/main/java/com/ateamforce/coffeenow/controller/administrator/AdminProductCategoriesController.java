@@ -102,7 +102,6 @@ public class AdminProductCategoriesController {
             binder.registerCustomEditor(List.class,"productsList", new CustomCollectionEditor(List.class){
                 @Override
                 protected Product convertElement(Object element){
-                    LOGGER.error("product : " + element);
                     if (element instanceof String) {
                         return productService.getProductById(Integer.parseInt(element.toString()));
                     }
@@ -113,7 +112,6 @@ public class AdminProductCategoriesController {
             binder.registerCustomEditor(List.class,"extrascategoriesList", new CustomCollectionEditor(List.class){
                 @Override
                 protected ExtraCategory convertElement(Object element){
-                    LOGGER.error("extrascategory : " + element);
                     if (element instanceof String) {
                         return extraCategoryService.getExtraCategoryById(Integer.parseInt(element.toString()));
                     }

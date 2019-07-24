@@ -17,7 +17,8 @@ var language_JSON = {
 		"selectAll":"Επιλογή όλων",
 		"attention":"Προσοχή",
 		"close":"Κλείσιμο",
-		"cannotDeleteParentWithChildren":"Δεν μπορείς να διαγράψεις κατηγορία με υποκατηγορίες"
+		"cannotDeleteParentWithChildren":"Δεν μπορείς να διαγράψεις κατηγορία με υποκατηγορίες",
+		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Greek.json"
 	},
 	"en":{
 		"yes":"Yes",
@@ -37,7 +38,8 @@ var language_JSON = {
 		"selectAll":"Select all",
 		"attention":"Attention",
 		"close":"Close",
-		"cannotDeleteParentWithChildren":"You cannot delete a category with children"
+		"cannotDeleteParentWithChildren":"You cannot delete a category with children",
+		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json"
 	}
 };
 var locale = document.getElementById("languagesCFN").getAttribute("data-cfn-locale");
