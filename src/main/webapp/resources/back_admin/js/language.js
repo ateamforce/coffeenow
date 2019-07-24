@@ -17,6 +17,7 @@ var language_JSON = {
 		"selectAll":"Επιλογή όλων",
 		"attention":"Προσοχή",
 		"close":"Κλείσιμο",
+		"reset":"Επαναφορά",
 		"cannotDeleteParentWithChildren":"Δεν μπορείς να διαγράψεις κατηγορία με υποκατηγορίες",
 		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Greek.json"
 	},
@@ -38,6 +39,7 @@ var language_JSON = {
 		"selectAll":"Select all",
 		"attention":"Attention",
 		"close":"Close",
+		"reset":"Reset",
 		"cannotDeleteParentWithChildren":"You cannot delete a category with children",
 		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json"
 	}

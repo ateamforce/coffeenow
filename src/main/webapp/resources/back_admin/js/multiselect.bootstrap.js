@@ -437,7 +437,7 @@
             delimiterText: ', ',
             includeResetOption: false,
             includeResetDivider: false,
-            resetText: 'Reset',
+            resetText: language_JSON[locale]["reset"],
             templates: {
                 button: '<button type="button" class="multiselect dropdown-toggle" data-toggle="dropdown"><span class="multiselect-selected-text"></span> <b class="caret"></b></button>',
                 ul: '<ul class="multiselect-container dropdown-menu"></ul>',

@@ -193,7 +193,8 @@ $(document).ready(function() {
 		maxHeight: 200,
         includeSelectAllOption: true,
 		enableFiltering: true,
-		numberDisplayed : 5
+		numberDisplayed : 3,
+		enableCaseInsensitiveFiltering: true
 	});
 	
 });
