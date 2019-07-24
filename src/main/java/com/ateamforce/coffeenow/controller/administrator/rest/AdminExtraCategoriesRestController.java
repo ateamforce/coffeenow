@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
-import com.ateamforce.coffeenow.dto.ExtraCategoryDto;
-import com.ateamforce.coffeenow.dto.service.ExtraCategoryDtoService;
+import com.ateamforce.coffeenow.model.ExtraCategory;
+import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminExtraCategoriesRestController {
 
     @Autowired
-    ExtraCategoryDtoService extraCategoryDtoService;
+    ExtraCategoryService extraCategoryService;
     
     // return a json object containing a single extra category
     @GetMapping("/administrator/dashboard/extracategories/{extraCategoryId}")
-    public ExtraCategoryDto admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
-        return extraCategoryDtoService.getExtraCategoryById(extraCategoryId);
+    public ExtraCategory admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
+        return extraCategoryService.getExtraCategoryById(extraCategoryId);
     }
 
 }

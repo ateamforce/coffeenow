@@ -25,6 +25,9 @@ public abstract class _ImageCarrier {
         this.image = image;
     }
 
+    @Transient
+    @XmlTransient
+    @JsonIgnore
     public MultipartFile getImage() {
         return image;
     }

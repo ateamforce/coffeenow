@@ -18,8 +18,6 @@ public interface ExtraCategoryService {
 
     void deleteExtraCategoryById(int extraCategoryId);
     
-    void updateExtraCategory(ExtraCategory updatedExtraCategory);
-    
     List<ExtraCategory>getAllExtraCategories();
     
     ExtraCategory getExtraCategoryById(int categoryId);

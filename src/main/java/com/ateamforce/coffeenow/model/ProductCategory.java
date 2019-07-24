@@ -123,8 +123,6 @@ public class ProductCategory extends _ImageCarrier implements Serializable {
         this.hasimage = hasimage;
     }
 
-    @XmlTransient
-    @JsonIgnore
     public List<Product> getProductsList() {
         return productsList;
     }
@@ -133,8 +131,6 @@ public class ProductCategory extends _ImageCarrier implements Serializable {
         this.productsList = productsCollection;
     }
 
-    @XmlTransient
-    @JsonIgnore
     public List<ExtraCategory> getExtrascategoriesList() {
         return extrascategoriesList;
     }
