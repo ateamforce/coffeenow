@@ -2,7 +2,7 @@ package com.ateamforce.coffeenow.model;
 
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

@@ -115,27 +115,41 @@ function load(rowId){
 	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
 	actionLayer.removeClass("hidden");
 	toolsSidebar.addClass("expandedCFN");
+	
+	// make ajax call to get row's needed data
+	$.ajax({
+		type: 'POST',
+		url: mainTable.attr("data-cnf-getOneUrl") + rowId,
+		error: function error(data) {
+			inform(language_JSON[locale]["somethingWentWrong"]);
+		},
+		success: function success(data) {
+			let categoryToUpdate = data;
+			console.log(categoryToUpdate["extrascategoriesList"]);
+		}
+	});
+	
 }
 
 // function that forwards a yesNo delete message/action
 function deleteRow(rowId){
 	
-		let doDelete = true;
-		
-		// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
-		mainTable.find('tr[role="row"]').each(function(){
-			if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
-				doDelete = false;
-				return false;
-			}
-		});
-		
-		if (doDelete) {
-			yesNo(mainTable.attr("data-cnf-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
+	let doDelete = true;
+	
+	// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
+	mainTable.find('tr[role="row"]').each(function(){
+		if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
+			doDelete = false;
+			return false;
 		}
-		else {
-			inform(language_JSON[locale]["cannotDeleteParentWithChildren"]);
-		}
+	});
+	
+	if (doDelete) {
+		yesNo(mainTable.attr("data-cnf-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
+	}
+	else {
+		inform(language_JSON[locale]["cannotDeleteParentWithChildren"]);
+	}
 }
 
 $(document).ready(function() {
@@ -176,6 +190,11 @@ $(document).ready(function() {
 			},
 			{ 
 				responsivePriority: 3, 
+				targets: "optionsHeaderCFN" ,
+				
+			},
+			{ 
+				responsivePriority: 4, 
 				targets: "imageHeaderCFN" ,
 				
 			},
