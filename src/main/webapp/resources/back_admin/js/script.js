@@ -4,7 +4,9 @@ var mainTable = $('#mainCategoriesTableCFN'); // Main datatable
 var newOrUpdateButton = $("#newOrUpdateMainTableRowButtonCFN"); // new or update button for main datatable
 var newOrUpdateItemFormCFN = $("#newOrUpdateItemFormCFN"); // form for adding a new main item, or updating an old one
 var toolsSidebar = $("#newOrUpdateItemCardCFN"); // form container
+var toolsSidebarSwitch = $("#newOrUpdateItemCardCFN .switch");
 var actionLayer = $("#actionLayer-98");
+var savedParentList = $("#itemParentCFN").html(); //  to be used for saving the state of the original parent category selection dropdown
 
 // fix language redirect url, which cannot work correctly because of base meta tag
 function languageUri(param){
@@ -95,21 +97,41 @@ $(document).on("click", "#userMenuLogoutCNF", function(e){
 
 // handle the clicking of the "open/close tools sidebar"
 $(document).on("click", "#newOrUpdateItemCardCFN .switch", function(e){
-	actionLayer.toggleClass("hidden");
-	toolsSidebar.toggleClass("expandedCFN");
+	if ( toolsSidebar.hasClass("expandedCFN") ) {
+		actionLayer.trigger("click");
+	}
+	else {
+		actionLayer.removeClass("hidden");
+		toolsSidebar.addClass("expandedCFN");
+	}
 });
 
 // close the tools sidebar on clicking outside of it and reset the form
 actionLayer.on("click", function(e){
 	toolsSidebar.removeClass("expandedCFN");
 	actionLayer.addClass("hidden");
+	toolsSidebarSwitch.removeClass("open");
 	newOrUpdateButton.removeClass("btn-warning");
 	newOrUpdateButton.addClass("btn-success");
 	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["insert"] +'</span>');
+	
+	// reset the hidden id
+	$("#itemIdCFN").val("0");
+	// reset the title
+	$("#itemTitleCFN").val("");
+	// reset the parent
+	$("#itemParentCFN").html(savedParentList);
+	// reset the extracategories/productcategories
+	$('#itemExtrasCategoriesCFN').multiselect('deselectAll', false);
+	$('#itemExtrasCategoriesCFN').multiselect('updateButtonText');
+	// reset the products/extras
+	$('#itemProductsCFN').multiselect('deselectAll', false);
+	$('#itemProductsCFN').multiselect('updateButtonText');
 });
 
 // function that loads a row into the update form and resets the form
 function load(rowId){
+	toolsSidebarSwitch.addClass("open");
 	newOrUpdateButton.removeClass("btn-success");
 	newOrUpdateButton.addClass("btn-warning");
 	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
@@ -125,7 +147,50 @@ function load(rowId){
 		},
 		success: function success(data) {
 			let categoryToUpdate = data;
-			console.log(categoryToUpdate["extrascategoriesList"]);
+			// set hidden id
+			$("#itemIdCFN").val(categoryToUpdate["id"]);
+			// set title
+			$("#itemTitleCFN").val(categoryToUpdate["title"]);
+			// set parent if it is a child
+			if ( categoryToUpdate["parent"] != categoryToUpdate["id"] ) {
+				$("#itemParentCFN option").each(function(){
+					if ( $(this).val() == categoryToUpdate["parent"] ) {
+						$(this).prop("selected", true);
+						return false;
+					}
+				});
+			}
+			else {
+				$("#itemParentCFN option").each(function(){
+					if ( $(this).val() == categoryToUpdate["id"] ) {
+						$(this).remove();
+						return false;
+					}
+				});
+			}
+			// set any extracategories/productcategories it may have
+			let categoriesCount = categoryToUpdate["extrascategoriesList"].length;
+			if ( categoriesCount ) {
+				let idArray = [];
+				// get all category ids to an array
+				for(var i = 0; i < categoriesCount; i++){
+					idArray.push(categoryToUpdate["extrascategoriesList"][i].id);
+				}
+				// make the selection
+				$('#itemExtrasCategoriesCFN').multiselect('select', idArray);
+			}
+			// set any products/extras it may have
+			let itemCount = categoryToUpdate["productsList"].length;
+			if ( itemCount ) {
+				let idArray = [];
+				// get all item ids to an array
+				for(var i = 0; i < itemCount; i++){
+					idArray.push(categoryToUpdate["productsList"][i].id);
+				}
+				// make the selection
+				$('#itemProductsCFN').multiselect('select', idArray);
+			}
+			
 		}
 	});
 	
@@ -141,7 +206,7 @@ function deleteRow(rowId){
 		if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
 			doDelete = false;
 			return false;
-		}
+		 }
 	});
 	
 	if (doDelete) {
