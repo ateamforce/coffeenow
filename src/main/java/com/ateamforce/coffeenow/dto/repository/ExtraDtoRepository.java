@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.model.repository;
+package com.ateamforce.coffeenow.dto.repository;
 
-import com.ateamforce.coffeenow.model.Extra;
+import com.ateamforce.coffeenow.dto.ExtraDto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,18 +17,17 @@ import org.springframework.stereotype.Repository;
  * @author alexa
  */
 @Repository
-public interface ExtraRepository extends JpaRepository<Extra,Integer> {
-    
-    List<Extra> findAllExtras();
-    
-    Extra findExtraById(@Param("extraId")int extraId);
-    
+public interface ExtraDtoRepository extends JpaRepository<ExtraDto,Integer> {
+
+    List<ExtraDto> findAllExtras();
+
+    ExtraDto findExtraById(@Param("extraId")int extraId);
+
     @Query(value = "SELECT*from extras e where id not in(select extraid from extrascategories_extras where categoryid=?1)",
             nativeQuery = true)
-    public List<Extra> findRemainigExtrasByExtraCategoryId(int categoryid);
-    
+    public List<ExtraDto> findRemainigExtrasByExtraCategoryId(int categoryid);
+
     @Query(value = "SELECT*from extras e where id in(select extraid from extrascategories_extras where categoryid=?1)",
             nativeQuery = true)
-    public List<Extra> findAllExtrasByExtraCategoryId(int categoryid);
-    
+    public List<ExtraDto> findAllExtrasByExtraCategoryId(int categoryid);
 }

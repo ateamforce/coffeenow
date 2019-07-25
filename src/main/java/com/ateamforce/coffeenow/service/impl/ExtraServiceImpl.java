@@ -52,4 +52,9 @@ public class ExtraServiceImpl implements ExtraService {
         return extraRepository.findRemainigExtrasByExtraCategoryId(categoryid);
     }
 
+    @Override
+    public List<Extra> getAllExtrasByExtraCategoryId(int categoryid) {
+        return extraRepository.findAllExtrasByExtraCategoryId(categoryid);
+    }
+
 }

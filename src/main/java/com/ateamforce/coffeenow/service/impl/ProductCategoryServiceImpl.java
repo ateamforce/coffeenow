@@ -23,48 +23,48 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
-    
+
     private final static Logger LOGGER = Logger.getLogger(ProductCategoryServiceImpl.class);
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
 
     @Transactional
     @Override
     public ProductCategory addProductCategory(ProductCategory productCategory) {
-        
+
         boolean hasChanged = false;
         ProductCategory persistedProductCategory = productCategoryRepository.save(productCategory);
-        
-        if ( !productCategory.getImage().isEmpty() ) {
+
+        if (!productCategory.getImage().isEmpty()) {
             persistedProductCategory.setHasimage(
-                imageHandlerService.saveImage(
-                    env.getProperty("front.images.products.categories"), 
-                    persistedProductCategory.getId(),
-                    productCategory
-                )
+                    imageHandlerService.saveImage(
+                            env.getProperty("front.images.products.categories"),
+                            persistedProductCategory.getId(),
+                            productCategory
+                    )
             );
             hasChanged = true;
         }
-        
-        if ( persistedProductCategory.getParent() == 0 ) {
+
+        if (persistedProductCategory.getParent() == 0) {
             persistedProductCategory.setParent(persistedProductCategory.getId());
             hasChanged = true;
         }
-        
-        return (hasChanged)? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
+
+        return (hasChanged) ? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
     }
 
     @Transactional
     @Override
     public void deleteProductCategoryById(int productCategoryId) {
-        
+
         boolean hasImage = getProductCategoryById(productCategoryId).isHasimage();
         productCategoryRepository.deleteById(productCategoryId);
         if (hasImage && getProductCategoryById(productCategoryId) == null) {
@@ -96,6 +96,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public List<ProductCategory> getRemainigProductCategoriesByProductId(int productId) {
         return productCategoryRepository.findRemainigProductCategoriesByProductId(productId);
+    }
+
+    @Override
+    public List<ProductCategory> getAllProductCategoriesByExtraCategoryId(int extraCategoryId) {
+        return productCategoryRepository.findAllProductCategoriesByExtraCategoryId(extraCategoryId);
     }
 
 }
