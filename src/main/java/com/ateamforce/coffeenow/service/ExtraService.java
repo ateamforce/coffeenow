@@ -25,4 +25,6 @@ public interface ExtraService {
     List<Extra> getAllExtras();
     
     List<Extra>getRemainigExtrasByExtraCategoryId(int categoryid);
+    
+    public List<Extra> getAllExtrasByExtraCategoryId(int categoryid);
 }

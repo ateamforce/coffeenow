@@ -25,70 +25,68 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
 
     @Override
     public ExtraCategory addExtraCategory(ExtraCategory extraCategory) {
-        
+
         boolean hasChanged = false;
         ExtraCategory persistedExtraCategory = extraCategoryRepository.save(extraCategory);
-        
-        if ( !extraCategory.getImage().isEmpty() ) {
+
+        if (!extraCategory.getImage().isEmpty()) {
             persistedExtraCategory.setHasimage(
-                imageHandlerService.saveImage(
-                    env.getProperty("front.images.extras.categories"), 
-                    persistedExtraCategory.getId(),
-                    extraCategory
-                )
+                    imageHandlerService.saveImage(
+                            env.getProperty("front.images.extras.categories"),
+                            persistedExtraCategory.getId(),
+                            extraCategory
+                    )
             );
             hasChanged = true;
         }
-        
-        if ( persistedExtraCategory.getParent() == 0 ) {
+
+        if (persistedExtraCategory.getParent() == 0) {
             persistedExtraCategory.setParent(persistedExtraCategory.getId());
             hasChanged = true;
         }
-        
-        return (hasChanged)? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
+
+        return (hasChanged) ? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
     }
 
     @Override
     public void deleteExtraCategoryById(int extraCategoryId) {
-        
+
         boolean hasImage = getExtraCategoryById(extraCategoryId).isHasimage();
         extraCategoryRepository.deleteById(extraCategoryId);
         if (hasImage && getExtraCategoryById(extraCategoryId) == null) {
             imageHandlerService.deleteImage(env.getProperty("front.images.extras.categories"), extraCategoryId);
         }
-        
+
     }
 
     @Override
     public List<ExtraCategory> getAllExtraCategories() {
         List<ExtraCategory> allExtraCategories = extraCategoryRepository.findAllExtraCategories();
-        allExtraCategories.forEach((e) -> {
-            e.getProductcategoriesList().size(); // force JPA to prefetch these ( works in combination with the @Transactional )
-            e.getExtrasList().size(); // force JPA to prefetch these as well
-        });
         return allExtraCategories;
     }
 
     @Override
     public ExtraCategory getExtraCategoryById(int categoryId) {
-        ExtraCategory extraCategory = extraCategoryRepository.findExtraCategoryById(categoryId);
-        extraCategory.getProductcategoriesList().size();// force JPA to prefetch these
-        extraCategory.getExtrasList().size();// force JPA to prefetch these
-        return extraCategory;
+        return extraCategoryRepository.findExtraCategoryById(categoryId);
     }
 
     @Override
     public List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId) {
         return extraCategoryRepository.findRemainigExtraCategoriesByExtraId(extraId);
+    }
+
+    @Override
+    public List<ExtraCategory> getAllExtraCategoriesByProductCategoryId(int productCategoryId) {
+        return extraCategoryRepository.findAllExtraCategoriesByProductCategoryId(productCategoryId);
     }
 
 }

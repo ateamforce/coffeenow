@@ -27,4 +27,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             nativeQuery = true)
     public List<Product> findRemainigProductsByProductCategoryId(int categoryid);
     
+    @Query(value = "SELECT*from products p where id in(select productid from productcategories_products where categoryid=?1)",
+            nativeQuery = true)
+    public List<Product> findAllProductsByProductCategoryId(int categoryid);
+    
 }

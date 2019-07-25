@@ -1,7 +1,10 @@
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
+
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
+import com.ateamforce.coffeenow.service.ExtraService;
+import com.ateamforce.coffeenow.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +19,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AdminExtraCategoriesRestController {
-
+    
+    @Autowired
+    ExtraService extraService;
+    
     @Autowired
     ExtraCategoryService extraCategoryService;
     
-    // return a json object containing a single extra category
-    @PostMapping(path = "/administrator/dashboard/extracategories/{extraCategoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    ProductCategoryService productCategoryService;
+    
+    // return a json object containing a single extra category with extras and products categories
+    @GetMapping("/administrator/dashboard/extracategories/{extraCategoryId}")
     public ExtraCategory admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
-        return extraCategoryService.getExtraCategoryById(extraCategoryId);
+        ExtraCategory extraCategory=extraCategoryService.getExtraCategoryById(extraCategoryId);
+        extraCategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extraCategoryId));
+        extraCategory.setProductcategoriesList(productCategoryService.getAllProductCategoriesByExtraCategoryId(extraCategoryId));
+        return extraCategory;
     }
 
 }

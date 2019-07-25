@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.model;
 
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,22 +56,19 @@ public class Client extends AppUser {
     @JoinTable(name = "clientfavoriteproducts", joinColumns = {
         @JoinColumn(name = "clientid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "productid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Product> productsCollection;
-    @JoinTable(name = "clientfavoritestores", joinColumns = {
-        @JoinColumn(name = "clientid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "storeid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Store> storesCollection;
+    @Transient
+    private List<Product> productsList;
+    @Transient
+    private List<Store> storesList;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private AppUser appusers;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clients")
-    private Collection<Rating> ratingsCollection;
-    @OneToMany(mappedBy = "clientid")
-    private Collection<AppOrder> ordersCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientid")
-    private Collection<ClientMedia> clientmediaCollection;
+    @Transient
+    private List<Rating> ratingsList;
+    @Transient
+    private List<AppOrder> ordersList;
+    @Transient
+    private List<ClientMedia> clientmediaList;
 
     public Client() {
     }
@@ -93,22 +92,22 @@ public class Client extends AppUser {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Product> getProductsCollection() {
-        return productsCollection;
+    public List<Product> getProductsList() {
+        return productsList;
     }
 
-    public void setProductsCollection(Collection<Product> productsCollection) {
-        this.productsCollection = productsCollection;
+    public void setProductsList(List<Product> productsList) {
+        this.productsList = productsList;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Store> getStoresCollection() {
-        return storesCollection;
+    public List<Store> getStoresList() {
+        return storesList;
     }
 
-    public void setStoresCollection(Collection<Store> storesCollection) {
-        this.storesCollection = storesCollection;
+    public void setStoresList(List<Store> storesList) {
+        this.storesList = storesList;
     }
 
     public AppUser getAppusers() {
@@ -121,32 +120,32 @@ public class Client extends AppUser {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Rating> getRatingsCollection() {
-        return ratingsCollection;
+    public List<Rating> getRatingsList() {
+        return ratingsList;
     }
 
-    public void setRatingsCollection(Collection<Rating> ratingsCollection) {
-        this.ratingsCollection = ratingsCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<AppOrder> getOrdersCollection() {
-        return ordersCollection;
-    }
-
-    public void setOrdersCollection(Collection<AppOrder> ordersCollection) {
-        this.ordersCollection = ordersCollection;
+    public void setRatingsList(List<Rating> ratingsList) {
+        this.ratingsList = ratingsList;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<ClientMedia> getClientmediaCollection() {
-        return clientmediaCollection;
+    public List<AppOrder> getOrdersList() {
+        return ordersList;
     }
 
-    public void setClientmediaCollection(Collection<ClientMedia> clientmediaCollection) {
-        this.clientmediaCollection = clientmediaCollection;
+    public void setOrdersList(List<AppOrder> ordersList) {
+        this.ordersList = ordersList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ClientMedia> getClientmediaList() {
+        return clientmediaList;
+    }
+
+    public void setClientmediaList(List<ClientMedia> clientmediaList) {
+        this.clientmediaList = clientmediaList;
     }
 
     

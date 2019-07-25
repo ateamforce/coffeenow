@@ -6,7 +6,7 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,8 +55,8 @@ public class PaymentType extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @ManyToMany(mappedBy = "paymenttypesCollection")
-    private Collection<Store> storesCollection;
+    @Transient
+    private List<Store> storesList;
 
     public PaymentType() {
     }
@@ -106,12 +107,12 @@ public class PaymentType extends _ImageCarrier implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Store> getStoresCollection() {
-        return storesCollection;
+    public List<Store> getStoresList() {
+        return storesList;
     }
 
-    public void setStoresCollection(Collection<Store> storesCollection) {
-        this.storesCollection = storesCollection;
+    public void setStoresList(List<Store> storesList) {
+        this.storesList = storesList;
     }
 
     @Override

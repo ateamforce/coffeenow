@@ -23,4 +23,6 @@ public interface ExtraCategoryService {
     ExtraCategory getExtraCategoryById(int categoryId);
     
     List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId);
+    
+    public List<ExtraCategory> getAllExtraCategoriesByProductCategoryId(int productCategoryId);
 }

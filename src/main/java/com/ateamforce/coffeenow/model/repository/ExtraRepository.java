@@ -27,4 +27,8 @@ public interface ExtraRepository extends JpaRepository<Extra,Integer> {
             nativeQuery = true)
     public List<Extra> findRemainigExtrasByExtraCategoryId(int categoryid);
     
+    @Query(value = "SELECT*from extras e where id in(select extraid from extrascategories_extras where categoryid=?1)",
+            nativeQuery = true)
+    public List<Extra> findAllExtrasByExtraCategoryId(int categoryid);
+    
 }
