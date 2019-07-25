@@ -49,6 +49,7 @@ public class AdminProductCategoriesController {
     @Autowired
     ExtraCategoryService extraCategoryService;
     
+    
     @Autowired
     ProductCategoryValidator productCategoryValidator;
 

@@ -25,4 +25,6 @@ public interface ProductService {
     List<Product> getAllProducts();
     
     List<Product>getRemainigProductsByProductCategoryId(int categoryid);
+    
+    public List<Product> getAllProductsByProductCategoryId(int categoryid);
 }

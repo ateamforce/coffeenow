@@ -20,6 +20,7 @@ import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -98,8 +99,19 @@ public class AdminController {
     @RequestMapping(value = "/productcategories", method = RequestMethod.GET)
     public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("productCategory") ProductCategory productCategory) {
         
-        // add product categories
-        modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+        // add product categories with ExtraCategories and Products
+        List<ProductCategory> productcategories=productCategoryService.getAllProductCategories();
+        
+        productcategories.stream().map((productcategory) -> {
+            productcategory.setExtrascategoriesList(extraCategoryService
+                    .getAllExtraCategoriesByProductCategoryId(productcategory.getId()));
+            return productcategory;
+        }).forEachOrdered((productcategory) -> {
+            productcategory.setProductsList(productService
+                    .getAllProductsByProductCategoryId(productcategory.getId()));
+        });
+        
+        modelmap.addAttribute("productcategories", productcategories);
         
         // add products
         modelmap.addAttribute("products", productService.getAllProducts());

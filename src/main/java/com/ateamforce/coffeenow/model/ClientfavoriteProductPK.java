@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.dto;
+package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -16,31 +16,31 @@ import javax.validation.constraints.NotNull;
  * @author alexa
  */
 @Embeddable
-public class ProductcategoriesProductsPK implements Serializable {
+public class ClientfavoriteProductPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "categoryid")
-    private int categoryid;
+    @Column(name = "clientid")
+    private int clientid;
     @Basic(optional = false)
     @NotNull
     @Column(name = "productid")
     private int productid;
 
-    public ProductcategoriesProductsPK() {
+    public ClientfavoriteProductPK() {
     }
 
-    public ProductcategoriesProductsPK(int categoryid, int productid) {
-        this.categoryid = categoryid;
+    public ClientfavoriteProductPK(int clientid, int productid) {
+        this.clientid = clientid;
         this.productid = productid;
     }
 
-    public int getCategoryid() {
-        return categoryid;
+    public int getClientid() {
+        return clientid;
     }
 
-    public void setCategoryid(int categoryid) {
-        this.categoryid = categoryid;
+    public void setClientid(int clientid) {
+        this.clientid = clientid;
     }
 
     public int getProductid() {
@@ -54,7 +54,7 @@ public class ProductcategoriesProductsPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) categoryid;
+        hash += (int) clientid;
         hash += (int) productid;
         return hash;
     }
@@ -62,11 +62,11 @@ public class ProductcategoriesProductsPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductcategoriesProductsPK)) {
+        if (!(object instanceof ClientfavoriteProductPK)) {
             return false;
         }
-        ProductcategoriesProductsPK other = (ProductcategoriesProductsPK) object;
-        if (this.categoryid != other.categoryid) {
+        ClientfavoriteProductPK other = (ClientfavoriteProductPK) object;
+        if (this.clientid != other.clientid) {
             return false;
         }
         if (this.productid != other.productid) {
@@ -77,7 +77,7 @@ public class ProductcategoriesProductsPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.ProductcategoriesProductsPK[ categoryid=" + categoryid + ", productid=" + productid + " ]";
+        return "com.ateamforce.coffeenow.model.ClientfavoriteProductPK[ clientid=" + clientid + ", productid=" + productid + " ]";
     }
     
 }

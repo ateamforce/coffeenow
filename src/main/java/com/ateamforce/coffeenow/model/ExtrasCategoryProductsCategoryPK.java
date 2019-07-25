@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.dto;
+package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * @author alexa
  */
 @Embeddable
-public class ExtrasCategoriesProductsCategoriesPK implements Serializable {
+public class ExtrasCategoryProductsCategoryPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -27,10 +27,10 @@ public class ExtrasCategoriesProductsCategoriesPK implements Serializable {
     @Column(name = "productcategoryid")
     private int productcategoryid;
 
-    public ExtrasCategoriesProductsCategoriesPK() {
+    public ExtrasCategoryProductsCategoryPK() {
     }
 
-    public ExtrasCategoriesProductsCategoriesPK(int extracategoryid, int productcategoryid) {
+    public ExtrasCategoryProductsCategoryPK(int extracategoryid, int productcategoryid) {
         this.extracategoryid = extracategoryid;
         this.productcategoryid = productcategoryid;
     }
@@ -62,10 +62,10 @@ public class ExtrasCategoriesProductsCategoriesPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExtrasCategoriesProductsCategoriesPK)) {
+        if (!(object instanceof ExtrasCategoryProductsCategoryPK)) {
             return false;
         }
-        ExtrasCategoriesProductsCategoriesPK other = (ExtrasCategoriesProductsCategoriesPK) object;
+        ExtrasCategoryProductsCategoryPK other = (ExtrasCategoryProductsCategoryPK) object;
         if (this.extracategoryid != other.extracategoryid) {
             return false;
         }
@@ -77,7 +77,7 @@ public class ExtrasCategoriesProductsCategoriesPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.ExtrasCategoriesProductsCategoriesPK[ extracategoryid=" + extracategoryid + ", productcategoryid=" + productcategoryid + " ]";
+        return "com.ateamforce.coffeenow.model.ExtrasCategoryProductsCategoryPK[ extracategoryid=" + extracategoryid + ", productcategoryid=" + productcategoryid + " ]";
     }
     
 }

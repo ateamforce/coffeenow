@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -44,12 +46,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})
 public class AppOrder implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
@@ -64,8 +60,15 @@ public class AppOrder implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderid")
-    private Collection<OrderProduct> ordersProductsCollection;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Transient
+    private List<OrderProduct> ordersProductsList;
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne
     private Client clientid;
@@ -95,6 +98,33 @@ public class AppOrder implements Serializable {
         this.id = id;
     }
 
+
+    @XmlTransient
+    @JsonIgnore
+    public List<OrderProduct> getOrdersProductsList() {
+        return ordersProductsList;
+    }
+
+    public void setOrdersProductsList(List<OrderProduct> ordersProductsList) {
+        this.ordersProductsList = ordersProductsList;
+    }
+
+    public Client getClientid() {
+        return clientid;
+    }
+
+    public void setClientid(Client clientid) {
+        this.clientid = clientid;
+    }
+
+    public Store getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(Store storeid) {
+        this.storeid = storeid;
+    }
+
     public String getMode() {
         return mode;
     }
@@ -117,32 +147,6 @@ public class AppOrder implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<OrderProduct> getOrdersProductsCollection() {
-        return ordersProductsCollection;
-    }
-
-    public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
-        this.ordersProductsCollection = ordersProductsCollection;
-    }
-
-    public Client getClientid() {
-        return clientid;
-    }
-
-    public void setClientid(Client clientid) {
-        this.clientid = clientid;
-    }
-
-    public Store getStoreid() {
-        return storeid;
-    }
-
-    public void setStoreid(Store storeid) {
-        this.storeid = storeid;
     }
 
     

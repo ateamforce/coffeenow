@@ -6,7 +6,6 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -22,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -57,12 +57,12 @@ public class Extra extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @ManyToMany(mappedBy = "extrasList")
+    @Transient
     private List<ExtraCategory> extracategoriesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "extras")
-    private Collection<StoreExtra> storesExtrasCollection;
-    @OneToMany(mappedBy = "extraid")
-    private Collection<OrderProduct> ordersProductsCollection;
+    @Transient
+    private List<StoreExtra> storesExtrasList;
+    @Transient
+    private List<OrderProduct> ordersProductsList;
 
     public Extra() {
     }
@@ -118,22 +118,22 @@ public class Extra extends _ImageCarrier implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<StoreExtra> getStoresExtrasCollection() {
-        return storesExtrasCollection;
+    public List<StoreExtra> getStoresExtrasList() {
+        return storesExtrasList;
     }
 
-    public void setStoresExtrasCollection(Collection<StoreExtra> storesExtrasCollection) {
-        this.storesExtrasCollection = storesExtrasCollection;
+    public void setStoresExtrasList(List<StoreExtra> storesExtrasList) {
+        this.storesExtrasList = storesExtrasList;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<OrderProduct> getOrdersProductsCollection() {
-        return ordersProductsCollection;
+    public List<OrderProduct> getOrdersProductsList() {
+        return ordersProductsList;
     }
 
-    public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
-        this.ordersProductsCollection = ordersProductsCollection;
+    public void setOrdersProductsList(List<OrderProduct> ordersProductsList) {
+        this.ordersProductsList = ordersProductsList;
     }
 
     @Override

@@ -5,8 +5,14 @@
  */
 package com.ateamforce.coffeenow.service.impl;
 
+import com.ateamforce.coffeenow.model.ExtraCategory;
+import com.ateamforce.coffeenow.model.ExtrasCategoryProductsCategory;
+import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
+import com.ateamforce.coffeenow.model.ProductCategoryProduct;
 import com.ateamforce.coffeenow.model.repository.ProductCategoryRepository;
+import com.ateamforce.coffeenow.service.ExtrasCategoryProductsCategoryService;
+import com.ateamforce.coffeenow.service.ProductCategoryProductService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.util.ImageHandlerService;
 import java.util.ArrayList;
@@ -31,6 +37,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     ImageHandlerService imageHandlerService;
+
+    @Autowired
+    ExtrasCategoryProductsCategoryService extrasCategoryProductsCategoryService;
+
+    @Autowired
+    ProductCategoryProductService productCategoryProductService;
 
     @Autowired
     Environment env;
@@ -58,6 +70,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             hasChanged = true;
         }
 
+        List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
+        LOGGER.error("productCategory.getExtrascategoriesList() : " + extraCategoriesList);
+        if (productCategory.getExtrascategoriesList() != null && !extraCategoriesList.isEmpty()) {
+            addExtraCategoriesToProductCategory(productCategory);
+        }
+
+        List<Product> productsList = productCategory.getProductsList();
+        LOGGER.error("productCategory.getProductsList() : " + productsList);
+        if (productCategory.getProductsList() != null && !productsList.isEmpty()) {
+            addPoductsToProductCategory(productCategory);
+        }
+
         return (hasChanged) ? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
     }
 
@@ -67,30 +91,26 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         boolean hasImage = getProductCategoryById(productCategoryId).isHasimage();
         productCategoryRepository.deleteById(productCategoryId);
-        if (hasImage && getProductCategoryById(productCategoryId) == null) {
-            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
+        try {
+            getProductCategoryById(productCategoryId);
+        } catch (NullPointerException e) {
+            if (hasImage) {
+                imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
+            }
         }
-
     }
 
     @Transactional
     @Override
     public List<ProductCategory> getAllProductCategories() {
         List<ProductCategory> allProductCategories = productCategoryRepository.findAllProductCategories();
-        allProductCategories.forEach((e) -> {
-            e.getExtrascategoriesList().size(); // force JPA to prefetch these ( works in combination with the @Transactional )
-            e.getProductsList().size(); // force JPA to prefetch these as well
-        });
         return allProductCategories;
     }
 
     @Transactional
     @Override
     public ProductCategory getProductCategoryById(int categoryId) {
-        ProductCategory productCategory = productCategoryRepository.findProductCategoryById(categoryId);
-        productCategory.getExtrascategoriesList().size();// force JPA to prefetch these
-        productCategory.getProductsList().size();// force JPA to prefetch these
-        return productCategory;
+        return productCategoryRepository.findProductCategoryById(categoryId);
     }
 
     @Override
@@ -101,6 +121,33 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     public List<ProductCategory> getAllProductCategoriesByExtraCategoryId(int extraCategoryId) {
         return productCategoryRepository.findAllProductCategoriesByExtraCategoryId(extraCategoryId);
+    }
+
+    @Transactional
+    @Override
+    public void addExtraCategoriesToProductCategory(ProductCategory productCategory) {
+        List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
+        int productCategoryId = productCategory.getId();
+        List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategoryList = new ArrayList();
+        extraCategoriesList.forEach((extraCategory) -> {
+            extrasCategoryProductsCategoryList
+                    .add(new ExtrasCategoryProductsCategory(extraCategory.getId(), productCategoryId));
+        });
+        extrasCategoryProductsCategoryService
+                .addAllExtrasToCategoryProductsCategory(extrasCategoryProductsCategoryList);
+    }
+
+    @Transactional
+    @Override
+    public void addPoductsToProductCategory(ProductCategory productCategory) {
+        List<Product> productsList = productCategory.getProductsList();
+        int productCategoryId = productCategory.getId();
+        List<ProductCategoryProduct> productcategoriesProductsList = new ArrayList();
+        for (Product product : productsList) {
+            productcategoriesProductsList.add(new ProductCategoryProduct(productCategoryId, product.getId()));
+        }
+        productCategoryProductService
+                .addAllProductToProductsCategory(productcategoriesProductsList);
     }
 
 }

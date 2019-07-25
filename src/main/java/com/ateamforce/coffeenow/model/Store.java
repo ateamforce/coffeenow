@@ -5,7 +5,7 @@
  */
 package com.ateamforce.coffeenow.model;
 
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +20,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -67,7 +70,6 @@ public class Store extends AppUser {
     @Size(min = 1, max = 255)
     @Column(name = "logo")
     private String logo;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -96,34 +98,31 @@ public class Store extends AppUser {
     @NotNull
     @Column(name = "latitude")
     private double latitude;
-    
-    @JoinTable(name = "stores_paymenttypes", joinColumns = {
-        @JoinColumn(name = "storeid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<PaymentType> paymenttypesCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "storeid")
-    private Collection<StoreMedia> storemediaCollection;
-    
-    @ManyToMany(mappedBy = "storesCollection")
-    private Collection<Client> clientsCollection;
-    
+
+    @Transient
+    private List<PaymentType> paymenttypesList;
+
+    @Transient
+    private List<StoreMedia> storemediaList;
+
+    @Transient
+    private List<Client> clientsList;
+
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private AppUser appusers;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<StoreExtra> storesExtrasCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<StoreProduct> storesProductsCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stores")
-    private Collection<Rating> ratingsCollection;
-    
-    @OneToMany(mappedBy = "storeid")
-    private Collection<AppOrder> ordersCollection;
+
+    @Transient
+    private List<StoreExtra> storesExtrasList;
+
+    @Transient
+    private List<StoreProduct> storesProductsList;
+
+    @Transient
+    private List<Rating> ratingsList;
+
+    @Transient
+    private List<AppOrder> ordersList;
 
     public Store() {
     }
@@ -208,82 +207,81 @@ public class Store extends AppUser {
         this.latitude = latitude;
     }
 
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<Client> getClientsCollection() {
-//        return clientsCollection;
-//    }
-//
-//    public void setClientsCollection(Collection<Client> clientsCollection) {
-//        this.clientsCollection = clientsCollection;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<PaymentType> getPaymenttypesCollection() {
-//        return paymenttypesCollection;
-//    }
-//
-//    public void setPaymenttypesCollection(Collection<PaymentType> paymenttypesCollection) {
-//        this.paymenttypesCollection = paymenttypesCollection;
-//    }
-//
-//    public AppUser getAppusers() {
-//        return appusers;
-////    }
-//
-//    public void setAppusers(AppUser appusers) {
-//        this.appusers = appusers;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<StoreExtra> getStoresExtrasCollection() {
-//        return storesExtrasCollection;
-//    }
-//
-//    public void setStoresExtrasCollection(Collection<StoreExtra> storesExtrasCollection) {
-//        this.storesExtrasCollection = storesExtrasCollection;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<StoreMedia> getStoremediaCollection() {
-//        return storemediaCollection;
-//    }
-//
-//    public void setStoremediaCollection(Collection<StoreMedia> storemediaCollection) {
-//        this.storemediaCollection = storemediaCollection;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<StoreProduct> getStoresProductsCollection() {
-//        return storesProductsCollection;
-//    }
-//
-//    public void setStoresProductsCollection(Collection<StoreProduct> storesProductsCollection) {
-//        this.storesProductsCollection = storesProductsCollection;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<Rating> getRatingsCollection() {
-//        return ratingsCollection;
-//    }
-//
-//    public void setRatingsCollection(Collection<Rating> ratingsCollection) {
-//        this.ratingsCollection = ratingsCollection;
-//    }
-//
-//    @XmlTransient
-//    @JsonIgnore
-//    public Collection<AppOrder> getOrdersCollection() {
-//        return ordersCollection;
-//    }
-//
-//    public void setOrdersCollection(Collection<AppOrder> ordersCollection) {
-//        this.ordersCollection = ordersCollection;
-//    }
-//    }
+    @XmlTransient
+    @JsonIgnore
+    public List<Client> getClientsList() {
+        return clientsList;
     }
+
+    public void setClientsList(List<Client> clientsList) {
+        this.clientsList = clientsList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<PaymentType> getPaymenttypesList() {
+        return paymenttypesList;
+    }
+
+    public void setPaymenttypesList(List<PaymentType> paymenttypesList) {
+        this.paymenttypesList = paymenttypesList;
+    }
+
+    public AppUser getAppusers() {
+        return appusers;
+    }
+
+    public void setAppusers(AppUser appusers) {
+        this.appusers = appusers;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<StoreExtra> getStoresExtrasList() {
+        return storesExtrasList;
+    }
+
+    public void setStoresExtrasList(List<StoreExtra> storesExtrasList) {
+        this.storesExtrasList = storesExtrasList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<StoreMedia> getStoremediaList() {
+        return storemediaList;
+    }
+
+    public void setStoremediaList(List<StoreMedia> storemediaList) {
+        this.storemediaList = storemediaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<StoreProduct> getStoresProductsList() {
+        return storesProductsList;
+    }
+
+    public void setStoresProductsList(List<StoreProduct> storesProductsList) {
+        this.storesProductsList = storesProductsList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Rating> getRatingsList() {
+        return ratingsList;
+    }
+
+    public void setRatingsList(List<Rating> ratingsList) {
+        this.ratingsList = ratingsList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<AppOrder> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<AppOrder> ordersList) {
+        this.ordersList = ordersList;
+    }
+}

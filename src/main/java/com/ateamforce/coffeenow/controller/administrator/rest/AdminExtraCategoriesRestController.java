@@ -1,8 +1,7 @@
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
-import com.ateamforce.coffeenow.dto.ExtraCategoryDto;
-import com.ateamforce.coffeenow.dto.service.ExtraCategoryDtoService;
-import com.ateamforce.coffeenow.dto.service.ProductCategoryDtoService;
+
+import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
@@ -24,17 +23,17 @@ public class AdminExtraCategoriesRestController {
     ExtraService extraService;
     
     @Autowired
-    ExtraCategoryDtoService extraCategoryDtoService;
+    ExtraCategoryService extraCategoryService;
     
     @Autowired
-    ProductCategoryDtoService productCategoryDtoService;
+    ProductCategoryService productCategoryService;
     
-    // return a json object containing a single extra category
+    // return a json object containing a single extra category with extras and products categories
     @GetMapping("/administrator/dashboard/extracategories/{extraCategoryId}")
-    public ExtraCategoryDto admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
-        ExtraCategoryDto extraCategory=extraCategoryDtoService.getExtraCategoryDtoById(extraCategoryId);
+    public ExtraCategory admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
+        ExtraCategory extraCategory=extraCategoryService.getExtraCategoryById(extraCategoryId);
         extraCategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extraCategoryId));
-        extraCategory.setProductcategoriesList(productCategoryDtoService.getAllProductCategoriesByExtraCategoryId(extraCategoryId));
+        extraCategory.setProductcategoriesList(productCategoryService.getAllProductCategoriesByExtraCategoryId(extraCategoryId));
         return extraCategory;
     }
 

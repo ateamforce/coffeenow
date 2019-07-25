@@ -6,7 +6,6 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -23,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -64,14 +64,14 @@ public class Product extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @ManyToMany(mappedBy = "productsCollection")
-    private Collection<Client> clientsCollection;
-    @ManyToMany(mappedBy = "productsList")
+    @Transient
+    private List<Client> clientsList;
+    @Transient
     private List<ProductCategory> productcategoriesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productid")
-    private Collection<OrderProduct> ordersProductsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "products")
-    private Collection<StoreProduct> storesProductsCollection;
+    @Transient
+    private List<OrderProduct> ordersProductsList;
+    @Transient
+    private List<StoreProduct> storesProductsList;
 
     public Product() {
     }
@@ -134,12 +134,12 @@ public class Product extends _ImageCarrier implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Client> getClientsCollection() {
-        return clientsCollection;
+    public List<Client> getClientsList() {
+        return clientsList;
     }
 
-    public void setClientsCollection(Collection<Client> clientsCollection) {
-        this.clientsCollection = clientsCollection;
+    public void setClientsList(List<Client> clientsList) {
+        this.clientsList = clientsList;
     }
 
     @XmlTransient
@@ -154,22 +154,22 @@ public class Product extends _ImageCarrier implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<OrderProduct> getOrdersProductsCollection() {
-        return ordersProductsCollection;
+    public List<OrderProduct> getOrdersProductsList() {
+        return ordersProductsList;
     }
 
-    public void setOrdersProductsCollection(Collection<OrderProduct> ordersProductsCollection) {
-        this.ordersProductsCollection = ordersProductsCollection;
+    public void setOrdersProductsList(List<OrderProduct> ordersProductsList) {
+        this.ordersProductsList = ordersProductsList;
     }
 
     @XmlTransient
     @JsonIgnore
-    public Collection<StoreProduct> getStoresProductsCollection() {
-        return storesProductsCollection;
+    public List<StoreProduct> getStoresProductsList() {
+        return storesProductsList;
     }
 
-    public void setStoresProductsCollection(Collection<StoreProduct> storesProductsCollection) {
-        this.storesProductsCollection = storesProductsCollection;
+    public void setStoresProductsList(List<StoreProduct> storesProductsList) {
+        this.storesProductsList = storesProductsList;
     }
 
     @Override

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.dto;
+package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * @author alexa
  */
 @Embeddable
-public class ExtrascategoriesExtrasDtoPK implements Serializable {
+public class ProductCategoryProductPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -24,15 +24,15 @@ public class ExtrascategoriesExtrasDtoPK implements Serializable {
     private int categoryid;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "extraid")
-    private int extraid;
+    @Column(name = "productid")
+    private int productid;
 
-    public ExtrascategoriesExtrasDtoPK() {
+    public ProductCategoryProductPK() {
     }
 
-    public ExtrascategoriesExtrasDtoPK(int categoryid, int extraid) {
+    public ProductCategoryProductPK(int categoryid, int productid) {
         this.categoryid = categoryid;
-        this.extraid = extraid;
+        this.productid = productid;
     }
 
     public int getCategoryid() {
@@ -43,33 +43,33 @@ public class ExtrascategoriesExtrasDtoPK implements Serializable {
         this.categoryid = categoryid;
     }
 
-    public int getExtraid() {
-        return extraid;
+    public int getProductid() {
+        return productid;
     }
 
-    public void setExtraid(int extraid) {
-        this.extraid = extraid;
+    public void setProductid(int productid) {
+        this.productid = productid;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) categoryid;
-        hash += (int) extraid;
+        hash += (int) productid;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ExtrascategoriesExtrasDtoPK)) {
+        if (!(object instanceof ProductCategoryProductPK)) {
             return false;
         }
-        ExtrascategoriesExtrasDtoPK other = (ExtrascategoriesExtrasDtoPK) object;
+        ProductCategoryProductPK other = (ProductCategoryProductPK) object;
         if (this.categoryid != other.categoryid) {
             return false;
         }
-        if (this.extraid != other.extraid) {
+        if (this.productid != other.productid) {
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ public class ExtrascategoriesExtrasDtoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.dto.ExtrascategoriesExtrasDtoPK[ categoryid=" + categoryid + ", extraid=" + extraid + " ]";
+        return "com.ateamforce.coffeenow.model.ProductcategoryProductPK[ categoryid=" + categoryid + ", productid=" + productid + " ]";
     }
     
 }

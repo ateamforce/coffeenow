@@ -52,4 +52,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findRemainigProductsByProductCategoryId(categoryid);
     }
 
+    @Override
+    public List<Product> getAllProductsByProductCategoryId(int categoryid) {
+        return productRepository.findAllProductsByProductCategoryId(categoryid);
+    }
+
 }

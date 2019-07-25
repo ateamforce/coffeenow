@@ -13,12 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -59,12 +57,9 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
-    @JoinTable(name = "extrascategories_extras", joinColumns = {
-        @JoinColumn(name = "categoryid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "extraid", referencedColumnName = "id")})
-    @ManyToMany
+    @Transient
     private List<Extra> extrasList;
-    @ManyToMany(mappedBy = "extrascategoriesList")
+    @Transient
     private List<ProductCategory> productcategoriesList;
 
     public ExtraCategory() {
@@ -118,8 +113,6 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
         this.parent = parent;
     }
 
-    @XmlTransient
-    @JsonIgnore
     public List<Extra> getExtrasList() {
         return extrasList;
     }
@@ -136,8 +129,6 @@ public class ExtraCategory extends _ImageCarrier implements Serializable {
         this.hasimage = hasimage;
     }
 
-    @XmlTransient
-    @JsonIgnore
     public List<ProductCategory> getProductcategoriesList() {
         return productcategoriesList;
     }
