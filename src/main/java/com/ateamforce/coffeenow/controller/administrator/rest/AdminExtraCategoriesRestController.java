@@ -7,6 +7,7 @@ import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +31,7 @@ public class AdminExtraCategoriesRestController {
     ProductCategoryService productCategoryService;
     
     // return a json object containing a single extra category with extras and products categories
-    @GetMapping("/administrator/dashboard/extracategories/{extraCategoryId}")
+    @PostMapping(path = "/administrator/dashboard/extracategories/{extraCategoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ExtraCategory admin_getOneExtraCategoryById_as_json(@PathVariable int extraCategoryId) {
         ExtraCategory extraCategory=extraCategoryService.getExtraCategoryById(extraCategoryId);
         extraCategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extraCategoryId));
