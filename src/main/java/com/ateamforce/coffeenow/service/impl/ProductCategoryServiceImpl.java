@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author alexa
  */
 @Service
+@Transactional
 public class ProductCategoryServiceImpl implements ProductCategoryService {
     
     private final static Logger LOGGER = Logger.getLogger(ProductCategoryServiceImpl.class);
@@ -35,7 +36,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Autowired
     Environment env;
 
-    @Transactional
     @Override
     public ProductCategory addProductCategory(ProductCategory productCategory) {
         
@@ -61,19 +61,19 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return (hasChanged)? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
     }
 
-    @Transactional
     @Override
     public void deleteProductCategoryById(int productCategoryId) {
         
         boolean hasImage = getProductCategoryById(productCategoryId).isHasimage();
         productCategoryRepository.deleteById(productCategoryId);
-        if (hasImage && getProductCategoryById(productCategoryId) == null) {
-            imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
+        try{
+            getProductCategoryById(productCategoryId);
+        } catch ( NullPointerException e ) {
+            if (hasImage) imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
         }
 
     }
 
-    @Transactional
     @Override
     public List<ProductCategory> getAllProductCategories() {
         List<ProductCategory> allProductCategories = productCategoryRepository.findAllProductCategories();
@@ -84,7 +84,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return allProductCategories;
     }
 
-    @Transactional
     @Override
     public ProductCategory getProductCategoryById(int categoryId) {
         ProductCategory productCategory = productCategoryRepository.findProductCategoryById(categoryId);

@@ -10,12 +10,14 @@ import com.ateamforce.coffeenow.model.repository.StoreProductRepository;
 import com.ateamforce.coffeenow.service.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author alexa
  */
 @Repository
+@Transactional
 public class StoreProductServiceImpl implements StoreProductService {
     
     @Autowired

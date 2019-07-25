@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author alexa
  */
 @Service
+@Transactional
 public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
     @Autowired
@@ -31,7 +32,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     @Autowired
     Environment env;
 
-    @Transactional
     @Override
     public ExtraCategory addExtraCategory(ExtraCategory extraCategory) {
         
@@ -57,7 +57,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         return (hasChanged)? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
     }
 
-    @Transactional
     @Override
     public void deleteExtraCategoryById(int extraCategoryId) {
         
@@ -69,7 +68,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         
     }
 
-    @Transactional
     @Override
     public List<ExtraCategory> getAllExtraCategories() {
         List<ExtraCategory> allExtraCategories = extraCategoryRepository.findAllExtraCategories();
@@ -80,7 +78,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         return allExtraCategories;
     }
 
-    @Transactional
     @Override
     public ExtraCategory getExtraCategoryById(int categoryId) {
         ExtraCategory extraCategory = extraCategoryRepository.findExtraCategoryById(categoryId);

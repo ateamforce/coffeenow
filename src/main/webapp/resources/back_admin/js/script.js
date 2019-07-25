@@ -1,9 +1,7 @@
 var currentUrl = window.location.href;
 var mainModal = $("#logoutModal"); // main modal for messages
-var mainTable = $('#mainCategoriesTableCFN'); // Main datatable
-var newOrUpdateButton = $("#newOrUpdateMainTableRowButtonCFN"); // new or update button for main datatable
-var newOrUpdateItemFormCFN = $("#newOrUpdateItemFormCFN"); // form for adding a new main item, or updating an old one
 var toolsSidebar = $("#newOrUpdateItemCardCFN"); // form container
+var toolsSidebarSwitch = $("#newOrUpdateItemCardCFN .switch");
 var actionLayer = $("#actionLayer-98");
 
 // fix language redirect url, which cannot work correctly because of base meta tag
@@ -95,108 +93,25 @@ $(document).on("click", "#userMenuLogoutCNF", function(e){
 
 // handle the clicking of the "open/close tools sidebar"
 $(document).on("click", "#newOrUpdateItemCardCFN .switch", function(e){
-	actionLayer.toggleClass("hidden");
-	toolsSidebar.toggleClass("expandedCFN");
+	if ( toolsSidebar.hasClass("expandedCFN") ) {
+		actionLayer.trigger("click");
+	}
+	else {
+		actionLayer.removeClass("hidden");
+		toolsSidebar.addClass("expandedCFN");
+	}
 });
-
-// close the tools sidebar on clicking outside of it and reset the form
-actionLayer.on("click", function(e){
-	toolsSidebar.removeClass("expandedCFN");
-	actionLayer.addClass("hidden");
-	newOrUpdateButton.removeClass("btn-warning");
-	newOrUpdateButton.addClass("btn-success");
-	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["insert"] +'</span>');
-});
-
-// function that loads a row into the update form and resets the form
-function load(rowId){
-	newOrUpdateButton.removeClass("btn-success");
-	newOrUpdateButton.addClass("btn-warning");
-	newOrUpdateButton.html('<span class="icon text-white"><i class="fas fa-edit"></i></span><span class="text">'+ language_JSON[locale]["update"] +'</span>');
-	actionLayer.removeClass("hidden");
-	toolsSidebar.addClass("expandedCFN");
-}
-
-// function that forwards a yesNo delete message/action
-function deleteRow(rowId){
-	
-		let doDelete = true;
-		
-		// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
-		mainTable.find('tr[role="row"]').each(function(){
-			if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
-				doDelete = false;
-				return false;
-			}
-		});
-		
-		if (doDelete) {
-			yesNo(mainTable.attr("data-cnf-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
-		}
-		else {
-			inform(language_JSON[locale]["cannotDeleteParentWithChildren"]);
-		}
-}
 
 $(document).ready(function() {
-	
-	// productcategories/extrascategories DATATABLE	(id always first)
-	var table = mainTable.DataTable({
-		"language": {
-            "url": language_JSON[locale]["dataTableLanguageURL"]
-        },
-		orderFixed: [1, 'asc'],
-		info: false,
-		responsive: true,
-        rowGroup: {
-			startRender: function ( rows, group ) {
-				var ids = rows.data().pluck(0);
-				var titles = rows.data().pluck(2);
-				var title = "";
-				var i = rows.data().length;
-				for(i; i >= 0; i-- ){
-					if( ids[i] == group ) title = titles[i];
-				}
-				return $('<tr/>')
-                    .append( '<td colspan="'+rows.columns().count()+'"><span class="pad-right-30">'+group+'</span>'+title+'</td>' );
-			},
-			endRender: null,
-            dataSrc: 1
-        },
-		columnDefs: [
-			{ 
-				responsivePriority: 1, 
-				targets: "idHeaderCFN" ,
-				
-			},
-			{ 
-				responsivePriority: 2, 
-				targets: "titleHeaderCFN" ,
-				
-			},
-			{ 
-				responsivePriority: 3, 
-				targets: "imageHeaderCFN" ,
-				
-			},
-			{ "width": "20px", "targets": "idHeaderCFN" },
-			{ "width": "70px", "targets": 3 },// extrasCategories or productCategories
-			{ "width": "70px", "targets": 4 },// products or extras
-			{ "width": "100px", "targets": "imageHeaderCFN" },
-			{ "width": "100px", "targets": "optionsHeaderCFN" }
-		]
-	});
-	
 	// init multi select dropdowns
 	$('.multipleSelectCFN_JS').multiselect({
 		buttonClass: 'btn btn-secondary btn-sm',
 		maxHeight: 200,
-        includeSelectAllOption: true,
+		includeSelectAllOption: true,
 		enableFiltering: true,
 		numberDisplayed : 3,
 		enableCaseInsensitiveFiltering: true
 	});
-	
 });
 
 // windows has loaded, remove loader

@@ -19,6 +19,7 @@ var language_JSON = {
 		"close":"Κλείσιμο",
 		"reset":"Επαναφορά",
 		"cannotDeleteParentWithChildren":"Δεν μπορείς να διαγράψεις κατηγορία με υποκατηγορίες",
+		"somethingWentWrong":"Προέκυψε σφάλμα. Παρακαλούμε προσπαθήστε αργότερα",
 		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/Greek.json"
 	},
 	"en":{
@@ -41,6 +42,7 @@ var language_JSON = {
 		"close":"Close",
 		"reset":"Reset",
 		"cannotDeleteParentWithChildren":"You cannot delete a category with children",
+		"somethingWentWrong":"Something went wrong. Please try again later",
 		"dataTableLanguageURL":"//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json"
 	}
 };

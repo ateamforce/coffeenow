@@ -50,7 +50,7 @@ label.labels-left_CFN {
 
 #userDropdown { padding: 0; }
 #newOrUpdateItemCardCFN {
-	position: absolute;
+	position: fixed;
     z-index: 99;
     webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
     box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
@@ -58,8 +58,9 @@ label.labels-left_CFN {
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
     background: #fff;
-    top: -15px;
+    top: 10vh;
     width: 340px;
+	height: 50vh;
 }
 &:hover, &:focus
 {
@@ -84,10 +85,15 @@ label.labels-left_CFN {
     padding: 7px;
 	color: #1cc88a;
 }
+#newOrUpdateItemCardCFN .switch.open .fas { color: #f6c23e; }
 #newOrUpdateItemCardCFN.expandedCFN {
 	right: 0;
 }
-#newOrUpdateItemCardCFN .col { background: #fff; }
+#newOrUpdateItemCardCFN > .col {
+	background: #fff;
+	height: 100%;
+	overflow: auto;
+}
 
 .newOrUpdateItemFormCFN select, .newOrUpdateItemFormCFN input {
 	max-height: 38px;

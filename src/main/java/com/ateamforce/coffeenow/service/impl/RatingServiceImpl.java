@@ -10,12 +10,14 @@ import com.ateamforce.coffeenow.model.repository.RatingRepository;
 import com.ateamforce.coffeenow.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author alexa
  */
 @Service
+@Transactional
 public class RatingServiceImpl implements RatingService {
     
     @Autowired
