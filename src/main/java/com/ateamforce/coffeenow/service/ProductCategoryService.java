@@ -26,7 +26,7 @@ public interface ProductCategoryService {
     
     public List<ProductCategory> getAllProductCategoriesByExtraCategoryId(int extraCategoryId);
     
-    public void addExtraCategoriesToProductCategory(ProductCategory productCategory);
+    public void addExtrasCategoriesToProductCategory(ProductCategory productCategory);
     
     public void addPoductsToProductCategory(ProductCategory productCategory);
 }

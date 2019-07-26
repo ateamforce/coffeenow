@@ -39,42 +39,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/administrator/dashboard")
 public class AdminController {
-
+    
     @Autowired
     ProductService productService;
-
+    
     @Autowired
     ExtraService extraService;
-
+    
     @Autowired
     AppUserService appUserService;
-
+    
     @Autowired
     ProductCategoryService productCategoryService;
-
+    
     @Autowired
     ExtraCategoryService extraCategoryService;
-
+    
     @Autowired
     AppRoleService appRoleService;
-
+    
     @Autowired
     PaymentTypeService paymentTypeService;
-
-    
-    
 
     // TODO : Gets what?
     // Go to administrator dashboard page
     @RequestMapping
     public String admin_dashboard(ModelMap modelmap) {
-
+        
         modelmap.addAttribute("appRoles", appRoleService.getAllAppRoles());
         modelmap.addAttribute("paymentTypes", paymentTypeService.getAllPaymentTypes());
 
         // add variable to indicate active sidebar
         modelmap.addAttribute("dashboardIsActive", "active");
-
+        
         return "back_admin/dashboard/index";
     }
 
@@ -89,7 +86,7 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productsIsActive", "active");
-
+        
         return "back_admin/dashboard/products";
     }
 
@@ -98,9 +95,9 @@ public class AdminController {
     // Go to administrator productcategories page
     @RequestMapping(value = "/productcategories", method = RequestMethod.GET)
     public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("productCategory") ProductCategory productCategory) {
-        
+
         // add product categories with ExtraCategories and Products
-        List<ProductCategory> productcategories=productCategoryService.getAllProductCategories();
+        List<ProductCategory> productcategories = productCategoryService.getAllProductCategories();
         
         productcategories.stream().map((productcategory) -> {
             productcategory.setExtrascategoriesList(extraCategoryService
@@ -112,16 +109,16 @@ public class AdminController {
         });
         
         modelmap.addAttribute("productcategories", productcategories);
-        
+
         // add products
         modelmap.addAttribute("products", productService.getAllProducts());
-        
+
         // add extras categories
         modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productcategoriesIsActive", "active");
-
+        
         return "back_admin/dashboard/product_categories";
     }
 
@@ -136,7 +133,7 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("extrasIsActive", "active");
-
+        
         return "back_admin/dashboard/extras";
     }
 
@@ -144,17 +141,36 @@ public class AdminController {
     // prepares add new extra category form
     // Go to administrator productcategories page
     @RequestMapping("/extracategories")
-    public String admin_dashboard_extrascategories(ModelMap modelmap, @ModelAttribute("newExtraCategory") ExtraCategory newExtraCategory) {
-
+    public String admin_dashboard_extrascategories(ModelMap modelmap, @ModelAttribute("extraCategory") ExtraCategory extraCategory) {
+        
+        List<ExtraCategory> extracategories = extraCategoryService.getAllExtraCategories();
+        
+        for (ExtraCategory extracategory : extracategories) {
+            
+            extracategory.setExtrasList(extraService
+                    .getAllExtrasByExtraCategoryId(extracategory.getId()));
+            
+            extracategory.setProductcategoriesList(productCategoryService
+                    .getAllProductCategoriesByExtraCategoryId(extracategory.getId()));
+            
+        }
+        
         // add extras categories
-        modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
+        modelmap.addAttribute("extracategories", extracategories);
+        
+        //add all extras
+        modelmap.addAttribute("extras",extraService.getAllExtras());
+        
+        //add all product categories
+        modelmap.addAttribute("productcategories",productCategoryService.getAllProductCategories());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("extracategoriesIsActive", "active");
-
+        
         return "back_admin/dashboard/extra_categories";
     }
-
+    
+    
     @PostMapping("/addapprole")
     public String admin_dashboard_addAppRole(@RequestParam("newAppRoleJson") String newAppRoleJson) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -162,7 +178,7 @@ public class AdminController {
         appRoleService.addAppRole(newAppRole);
         return "redirect:/administrator/dashboard";
     }
-
+    
     @PostMapping("/deleteapprole")
     public String admin_dashboard_deleteAppRole(@RequestParam("appRoleJson") String appRoleJson) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -170,7 +186,7 @@ public class AdminController {
         appRoleService.deleteAppRole(appRole);
         return "redirect:/administrator/dashboard";
     }
-
+    
     @PostMapping("/updateapprole")
     public String admin_dashboard_updateAppRole(@RequestParam("updatedAppRoleJson") String updatedAppRoleJson) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -178,7 +194,7 @@ public class AdminController {
         appRoleService.updateAppRole(updatedAppRole);
         return "redirect:/administrator/dashboard";
     }
-
+    
     @PostMapping("/addpaymenttype")
     public String admin_dashboard_addPaymentType(@RequestParam("newPaymentTypeJson") String newPaymentTypeJson) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -186,13 +202,13 @@ public class AdminController {
         paymentTypeService.addPaymentType(newPaymentType);
         return "redirect:/administrator/dashboard";
     }
-
+    
     @GetMapping("/deletepaymenttype/{paymenttypeId}")
     public String admin_dashboard_deletePaymentType(@PathVariable int paymenttypeId) {
         paymentTypeService.deletePaymentTypeById(paymenttypeId);
         return "redirect:/administrator/dashboard";
     }
-
+    
     @PostMapping("/updatepaymenttype")
     public String admin_dashboard_products_updateProduct(@RequestParam("updatedPaymentTypeJson") String updatedPaymentTypeJson) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -200,5 +216,5 @@ public class AdminController {
         paymentTypeService.updatePaymentType(updatedPaymentType);
         return "redirect:/administrator/dashboard";
     }
-
+    
 }
