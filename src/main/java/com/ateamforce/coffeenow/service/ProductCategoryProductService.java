@@ -13,7 +13,11 @@ import java.util.List;
  * @author alexa
  */
 public interface ProductCategoryProductService {
-    
+
     void addAllProductToProductsCategory(List<ProductCategoryProduct> productCategoryProduct);
-    
+
+    List<ProductCategoryProduct> getAllByProductCategoryid(int productcategoryid);
+
+    public void deleteAllGivenProductCategoryProducts(List<ProductCategoryProduct> productCategoryProduct);
+
 }

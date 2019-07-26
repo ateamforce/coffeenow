@@ -5,8 +5,8 @@
  */
 package com.ateamforce.coffeenow.model.repository;
 
-import com.ateamforce.coffeenow.model.ProductCategoryProduct;
-import com.ateamforce.coffeenow.model.ProductCategoryProductPK;
+import com.ateamforce.coffeenow.model.ExtrascategoryExtra;
+import com.ateamforce.coffeenow.model.ExtrascategoryExtraPK;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,8 +17,9 @@ import org.springframework.stereotype.Repository;
  * @author alexa
  */
 @Repository
-public interface ProductCategoryProductRepository extends JpaRepository<ProductCategoryProduct, ProductCategoryProductPK> {
-
-    List<ProductCategoryProduct> findAllByProductCategoryid(@Param("productcategoryid") int productcategoryid);
-
+public interface ExtrascategoryExtraRepository extends JpaRepository<ExtrascategoryExtra,ExtrascategoryExtraPK> {
+    
+    List<ExtrascategoryExtra>findByExtraCategoryid(@Param("extraCategoryId")int extraCategoryId);
+    
+    
 }

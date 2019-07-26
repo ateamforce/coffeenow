@@ -14,6 +14,11 @@ import java.util.List;
  */
 public interface ExtrasCategoryProductsCategoryService {
 
-    void addAllExtrasToCategoryProductsCategory(List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategory);
+    void addAllExtrasCategoryProductsCategory(List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategory);
 
+    List<ExtrasCategoryProductsCategory> getAllByExtracategoryid(int extracategoryid);
+    
+    List<ExtrasCategoryProductsCategory> getAllByProductcategoryid(int productcategoryid);
+
+    public void deleteAllGivenExtrasCategoriesProductsCategories(List<ExtrasCategoryProductsCategory> extrasCategoriesProductsCategories);
 }

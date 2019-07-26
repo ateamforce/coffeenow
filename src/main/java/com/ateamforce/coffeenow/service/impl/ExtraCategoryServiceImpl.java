@@ -5,11 +5,19 @@
  */
 package com.ateamforce.coffeenow.service.impl;
 
+import com.ateamforce.coffeenow.model.Extra;
 import com.ateamforce.coffeenow.model.ExtraCategory;
+import com.ateamforce.coffeenow.model.ExtrasCategoryProductsCategory;
+import com.ateamforce.coffeenow.model.ExtrascategoryExtra;
+import com.ateamforce.coffeenow.model.ProductCategory;
 import com.ateamforce.coffeenow.model.repository.ExtraCategoryRepository;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
+import com.ateamforce.coffeenow.service.ExtrasCategoryProductsCategoryService;
+import com.ateamforce.coffeenow.service.ExtrascategoryExtraService;
 import com.ateamforce.coffeenow.util.ImageHandlerService;
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -23,8 +31,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
+    private final static Logger LOGGER = Logger.getLogger(ProductCategoryServiceImpl.class);
+
     @Autowired
     ExtraCategoryRepository extraCategoryRepository;
+
+    @Autowired
+    ExtrascategoryExtraService extrascategoryExtraService;
+
+    @Autowired
+    ExtrasCategoryProductsCategoryService extrasCategoryProductsCategoryService;
 
     @Autowired
     ImageHandlerService imageHandlerService;
@@ -54,6 +70,18 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
             hasChanged = true;
         }
 
+        List<Extra> extrasList = extraCategory.getExtrasList();
+        LOGGER.error("extraCategory.getExtrasList() : " + extrasList);
+        if (extraCategory.getExtrasList() != null) {
+            addExtrasToExtraCategory(extraCategory);
+        }
+
+        List<ProductCategory> productCategoriesList = extraCategory.getProductcategoriesList();
+        LOGGER.error("extraCategory.getProductcategoriesList() : " + productCategoriesList);
+        if (extraCategory.getProductcategoriesList() != null) {
+            addProductsCategoriesToExtraCategory(extraCategory);
+        }
+
         return (hasChanged) ? extraCategoryRepository.save(persistedExtraCategory) : persistedExtraCategory;
     }
 
@@ -62,10 +90,13 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
         boolean hasImage = getExtraCategoryById(extraCategoryId).isHasimage();
         extraCategoryRepository.deleteById(extraCategoryId);
-        if (hasImage && getExtraCategoryById(extraCategoryId) == null) {
-            imageHandlerService.deleteImage(env.getProperty("front.images.extras.categories"), extraCategoryId);
+        try {
+            getExtraCategoryById(extraCategoryId);
+        } catch (NullPointerException e) {
+            if (hasImage && getExtraCategoryById(extraCategoryId) == null) {
+                imageHandlerService.deleteImage(env.getProperty("front.images.extras.categories"), extraCategoryId);
+            }
         }
-
     }
 
     @Override
@@ -87,6 +118,51 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     @Override
     public List<ExtraCategory> getAllExtraCategoriesByProductCategoryId(int productCategoryId) {
         return extraCategoryRepository.findAllExtraCategoriesByProductCategoryId(productCategoryId);
+    }
+
+    @Transactional
+    @Override
+    public void addExtrasToExtraCategory(ExtraCategory extraCategory) {
+        int extraCategoryId = extraCategory.getId();
+        try {
+            extrascategoryExtraService
+                    .deleteAllGivenExtrascategoryExtras(extrascategoryExtraService
+                            .getByExtraCategoryid(extraCategoryId));
+        } catch (NullPointerException e) {
+            LOGGER.error("No Extras Found");
+        } finally {
+            List<Extra> extrasList = extraCategory.getExtrasList();
+            List<ExtrascategoryExtra> extrascategoryExtraList = new ArrayList();
+            for (Extra extra : extrasList) {
+                extrascategoryExtraList.add(new ExtrascategoryExtra(extraCategoryId, extra.getId()));
+            }
+            extrascategoryExtraService
+                    .addAllExtrascategoryExtra(extrascategoryExtraList);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void addProductsCategoriesToExtraCategory(ExtraCategory extraCategory) {
+        int extraCategoryId = extraCategory.getId();
+        try {
+
+            extrasCategoryProductsCategoryService
+                    .deleteAllGivenExtrasCategoriesProductsCategories(extrasCategoryProductsCategoryService
+                            .getAllByExtracategoryid(extraCategoryId));
+        } catch (NullPointerException e) {
+            LOGGER.error("No Product Categories Found");
+        } finally {
+            List<ProductCategory> productCategoriesList = extraCategory.getProductcategoriesList();
+            List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategoryList = new ArrayList();
+            for (ProductCategory productCategory : productCategoriesList) {
+                extrasCategoryProductsCategoryList
+                        .add(new ExtrasCategoryProductsCategory(extraCategoryId, productCategory.getId()));
+            }
+            extrasCategoryProductsCategoryService
+                    .addAllExtrasCategoryProductsCategory(extrasCategoryProductsCategoryList);
+        }
+
     }
 
 }

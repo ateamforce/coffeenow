@@ -72,14 +72,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
         LOGGER.error("productCategory.getExtrascategoriesList() : " + extraCategoriesList);
-        if (productCategory.getExtrascategoriesList() != null && !extraCategoriesList.isEmpty()) {
-            addExtraCategoriesToProductCategory(productCategory);
+        if (productCategory.getExtrascategoriesList() != null) {
+            addExtrasCategoriesToProductCategory(productCategory);
+            hasChanged = true;
         }
 
         List<Product> productsList = productCategory.getProductsList();
         LOGGER.error("productCategory.getProductsList() : " + productsList);
-        if (productCategory.getProductsList() != null && !productsList.isEmpty()) {
+        if (productCategory.getProductsList() != null) {
             addPoductsToProductCategory(productCategory);
+            hasChanged = true;
         }
 
         return (hasChanged) ? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
@@ -122,29 +124,45 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Transactional
     @Override
-    public void addExtraCategoriesToProductCategory(ProductCategory productCategory) {
-        List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
+    public void addExtrasCategoriesToProductCategory(ProductCategory productCategory) {
         int productCategoryId = productCategory.getId();
-        List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategoryList = new ArrayList();
-        extraCategoriesList.forEach((extraCategory) -> {
-            extrasCategoryProductsCategoryList
-                    .add(new ExtrasCategoryProductsCategory(extraCategory.getId(), productCategoryId));
-        });
-        extrasCategoryProductsCategoryService
-                .addAllExtrasToCategoryProductsCategory(extrasCategoryProductsCategoryList);
+        try {
+            extrasCategoryProductsCategoryService
+                    .deleteAllGivenExtrasCategoriesProductsCategories(extrasCategoryProductsCategoryService
+                            .getAllByProductcategoryid(productCategoryId));
+        } catch (NullPointerException e) {
+            LOGGER.error("No Extra Categories Found");
+        } finally {
+            List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
+            List<ExtrasCategoryProductsCategory> extrasCategoryProductsCategoryList = new ArrayList();
+            extraCategoriesList.forEach((extraCategory) -> {
+                extrasCategoryProductsCategoryList
+                        .add(new ExtrasCategoryProductsCategory(extraCategory.getId(), productCategoryId));
+            });
+            extrasCategoryProductsCategoryService
+                    .addAllExtrasCategoryProductsCategory(extrasCategoryProductsCategoryList);
+        }
     }
 
     @Transactional
     @Override
     public void addPoductsToProductCategory(ProductCategory productCategory) {
-        List<Product> productsList = productCategory.getProductsList();
         int productCategoryId = productCategory.getId();
-        List<ProductCategoryProduct> productcategoriesProductsList = new ArrayList();
-        for (Product product : productsList) {
-            productcategoriesProductsList.add(new ProductCategoryProduct(productCategoryId, product.getId()));
+        try {
+            productCategoryProductService
+                    .deleteAllGivenProductCategoryProducts(productCategoryProductService
+                            .getAllByProductCategoryid(productCategoryId));
+        } catch (NullPointerException e) {
+            LOGGER.error("No Products Found");
+        } finally {
+            List<Product> productsList = productCategory.getProductsList();
+            List<ProductCategoryProduct> productcategoriesProductsList = new ArrayList();
+            for (Product product : productsList) {
+                productcategoriesProductsList.add(new ProductCategoryProduct(productCategoryId, product.getId()));
+            }
+            productCategoryProductService
+                    .addAllProductToProductsCategory(productcategoriesProductsList);
         }
-        productCategoryProductService
-                .addAllProductToProductsCategory(productcategoriesProductsList);
     }
 
 }

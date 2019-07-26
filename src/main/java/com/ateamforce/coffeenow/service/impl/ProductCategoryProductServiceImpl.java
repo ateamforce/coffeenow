@@ -18,13 +18,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductCategoryProductServiceImpl implements ProductCategoryProductService {
-
+    
     @Autowired
     ProductCategoryProductRepository productCategoryProductRepository;
-
+    
     @Override
     public void addAllProductToProductsCategory(List<ProductCategoryProduct> productCategoryProduct) {
         productCategoryProductRepository.saveAll(productCategoryProduct);
     }
-
+    
+    @Override
+    public List<ProductCategoryProduct> getAllByProductCategoryid(int productcategoryid) {
+        return productCategoryProductRepository.findAllByProductCategoryid(productcategoryid);
+    }
+    
+    @Override
+    public void deleteAllGivenProductCategoryProducts(List<ProductCategoryProduct> productCategoryProduct) {
+        productCategoryProductRepository.deleteAll(productCategoryProduct);
+    }
+    
 }

@@ -17,12 +17,17 @@ public interface ExtraCategoryService {
     ExtraCategory addExtraCategory(ExtraCategory extraCategory);
 
     void deleteExtraCategoryById(int extraCategoryId);
-    
-    List<ExtraCategory>getAllExtraCategories();
-    
+
+    List<ExtraCategory> getAllExtraCategories();
+
     ExtraCategory getExtraCategoryById(int categoryId);
-    
+
     List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId);
-    
+
     public List<ExtraCategory> getAllExtraCategoriesByProductCategoryId(int productCategoryId);
+
+    public void addExtrasToExtraCategory(ExtraCategory extraCategory);
+
+    public void addProductsCategoriesToExtraCategory(ExtraCategory extraCategory);
+    
 }

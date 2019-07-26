@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ExtrasCategoryProductsCategory.findAll", query = "SELECT e FROM ExtrasCategoryProductsCategory e")
-    , @NamedQuery(name = "ExtrasCategoryProductsCategory.findByExtracategoryid", query = "SELECT e FROM ExtrasCategoryProductsCategory e WHERE e.extrasCategoryProductsCategoryPK.extracategoryid = :extracategoryid")
-    , @NamedQuery(name = "ExtrasCategoryProductsCategory.findByProductcategoryid", query = "SELECT e FROM ExtrasCategoryProductsCategory e WHERE e.extrasCategoryProductsCategoryPK.productcategoryid = :productcategoryid")})
+    , @NamedQuery(name = "ExtrasCategoryProductsCategory.findAllByExtracategoryid", query = "SELECT e FROM ExtrasCategoryProductsCategory e WHERE e.extrasCategoryProductsCategoryPK.extracategoryid = :extracategoryid")
+    , @NamedQuery(name = "ExtrasCategoryProductsCategory.findAllByProductcategoryid", query = "SELECT e FROM ExtrasCategoryProductsCategory e WHERE e.extrasCategoryProductsCategoryPK.productcategoryid = :productcategoryid")})
 public class ExtrasCategoryProductsCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
