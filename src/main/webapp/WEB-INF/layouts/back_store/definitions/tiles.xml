@@ -4,24 +4,43 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<!-- template definition -->
-	<definition name="baseLayout_store" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
-		<put-attribute name="navigation" value="/WEB-INF/layouts/back_store/template/navigation.jsp" />
-		<put-attribute name="content" value="" />
-		<put-attribute name="leftsidebar" value="" />
-		<put-attribute name="footer" value="/WEB-INF/layouts/back_store/template/footer.jsp" />
+
+	<!-- ############################################################################ -->
+
+
+	<!-- Admin login template definition -->
+	<definition name="loginLayout_store" template="/WEB-INF/layouts/back_store/template/loginLayout.jsp">
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css,css/store/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/sb-admin-2.js" />
 	</definition>
 	
-	<!-- definition name = request mapping return string | all attributes can change, except the name="content" one -->
-	<definition name="back_store/index" extends="baseLayout_store">
-		<put-attribute name="navigation" value="" />
+	<!-- Admin Login Page -->
+	<definition name="back_store/index" extends="loginLayout_store">
 		<put-attribute name="content" value="/WEB-INF/views/back_store/index.jsp" />
-		<put-attribute name="footer" value="" />
 	</definition>
 	
+	
+	<!-- ############################################################################ -->
+	
+	
+	<!-- Admin main template definition -->
+	<definition name="baseLayout_store" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css,css/store/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/script.js,js/store/script.js" />
+	
+		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_store/template/sidebar-left.jsp" />
+		<put-attribute name="navbar" value="/WEB-INF/layouts/back_store/template/navbar.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/back_store/template/footer.jsp" />
+		<put-attribute name="utils" value="/WEB-INF/layouts/back_store/template/utils.jsp" />
+	</definition>
+	
+	<!-- Admin Dashboard Page -->
 	<definition name="back_store/dashboard/index" extends="baseLayout_store">
 		<put-attribute name="content" value="/WEB-INF/views/back_store/dashboard/index.jsp" />
-		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_store/template/sidebar-left.jsp" />
 	</definition>
+	
+	
+	<!-- ############################################################################ -->
+	
 	
 </tiles-definitions>

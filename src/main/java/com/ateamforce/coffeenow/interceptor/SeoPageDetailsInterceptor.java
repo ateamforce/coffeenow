@@ -86,6 +86,7 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         pageDetails.put("/administrator/dashboard/extracategories", new String[]{"Extras Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store", new String[]{"Store Login | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/profile", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
     }
     
     private void postSeoTitle(HttpServletRequest request, String mapping){

@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.StoreMedia;
+import java.util.List;
 
 /**
  *
@@ -16,4 +17,6 @@ public interface StoreMediaService {
     void addStoreMedia(StoreMedia storeMedia);
 
     void deleteStoreMedia(StoreMedia storeMedia);
+    
+    List<StoreMedia> findAllByStoreId(int storeId);
 }
