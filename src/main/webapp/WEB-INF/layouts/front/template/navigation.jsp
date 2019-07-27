@@ -6,8 +6,8 @@
 	<div class="header">
 		<ul class="nav nav-pills pull-right">
 			<li><a href='<spring:url value="/"/>' class="active">Home</a></li>
-			<li><a href='<spring:url value="/administrator/"/>'>Admin</a></li>
-			<li><a href='<spring:url value="/store/"/>'>Store</a></li>
+			<li><a href='<spring:url value="/administrator/dashboard/"/>'>Admin</a></li>
+			<li><a href='<spring:url value="/store/dashboard/"/>'>Store</a></li>
 		</ul>
 	</div>
 </div>

@@ -22,6 +22,8 @@ public interface ProductCategoryService {
     
     ProductCategory getProductCategoryById(int categoryId);
     
+    public List<ProductCategory> getAllProductCategoriesByProductId(int productId);
+    
     List<ProductCategory> getRemainigProductCategoriesByProductId(int productId);
     
     public List<ProductCategory> getAllProductCategoriesByExtraCategoryId(int extraCategoryId);

@@ -18,13 +18,13 @@ public interface ProductService {
 
     void deleteProductByid(int productId);
 
-    void updateProduct(Product updatedProduct);
-    
     Product getProductById(int productId);
 
     List<Product> getAllProducts();
-    
-    List<Product>getRemainigProductsByProductCategoryId(int categoryid);
-    
+
+    List<Product> getRemainigProductsByProductCategoryId(int categoryid);
+
     public List<Product> getAllProductsByProductCategoryId(int categoryid);
+
+    public void addPoductCategoriessToProduct(Product product);
 }
