@@ -18,6 +18,8 @@ public interface ProductCategoryProductService {
 
     List<ProductCategoryProduct> getAllByProductCategoryid(int productcategoryid);
 
+    List<ProductCategoryProduct> getAllByProductid(int productid);
+
     public void deleteAllGivenProductCategoryProducts(List<ProductCategoryProduct> productCategoryProduct);
 
 }
