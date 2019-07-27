@@ -60,7 +60,7 @@
 														<form:select id="itemExtrasCategoriesCFN" multiple="true" path="extrascategoriesList" items="${extracategories}" itemLabel="title" itemValue="id" name="extrascategoriesList" class="multipleSelectCFN_JS"></form:select>
 													</div>
 													<div class="col-lg-6 col-sm-12 text-left">
-														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="products"/></label>
+														<label class="labels-left_CFN" for="itemProductsCFN"><spring:message code="admin.menu.products"/></label>
 														<form:select id="itemProductsCFN" multiple="true" path="productsList" items="${products}" itemLabel="title" itemValue="id" name="productsList" class="multipleSelectCFN_JS"></form:select>
 													</div>
 												</div>
@@ -97,14 +97,14 @@
 				<div class="card shadow mb-4">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table data-cnf-delUrl="administrator/dashboard/productcategories/delete/" data-cnf-getOneUrl="administrator/dashboard/productcategories/" class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
+							<table data-cfn-delUrl="administrator/dashboard/productcategories/delete/" data-cfn-getOneUrl="administrator/dashboard/productcategories/" class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<th class="idHeaderCFN">Id</th>
 										<th class="hidden">Parent</th>
 										<th class="titleHeaderCFN">Title</th>
 										<th><spring:message code="admin.menu.extras"/></th>
-										<th><spring:message code="products"/></th>
+										<th><spring:message code="admin.menu.products"/></th>
 										<th class="imageHeaderCFN">Image</th>
 										<th class="optionsHeaderCFN"><spring:message code="options"/></th>
 									</tr>
@@ -115,7 +115,7 @@
 										<th class="hidden">Parent</th>
 										<th>Title</th>
 										<th><spring:message code="admin.menu.extras"/></th>
-										<th><spring:message code="products"/></th>
+										<th><spring:message code="admin.menu.products"/></th>
 										<th>Image</th>
 										<th><spring:message code="options"/></th>
 									</tr>

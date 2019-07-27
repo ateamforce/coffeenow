@@ -56,11 +56,11 @@
                                             </div>
                                             <div class="form-group row margin-top-2">
                                                 <div class="col-lg-6 col-sm-12 text-left">
-                                                    <label class="labels-left_CFN" for="itemProductsCategoriesCFN"><spring:message code="admin.menu.productcategories"/></label>
+                                                    <label class="labels-left_CFN" for="itemProductsCategoriesCFN"><spring:message code="admin.menu.products"/></label>
                                                     <form:select id="itemProductsCategoriesCFN" multiple="true" path="productcategoriesList" items="${productcategories}" itemLabel="title" itemValue="id" name="productcategoriesList" class="multipleSelectCFN_JS"></form:select>
                                                     </div>
                                                     <div class="col-lg-6 col-sm-12 text-left">
-                                                        <label class="labels-left_CFN" for="itemExtrasCFN"><spring:message code="extras"/></label>
+                                                        <label class="labels-left_CFN" for="itemExtrasCFN"><spring:message code="admin.menu.extras"/></label>
                                                     <form:select id="itemExtrasCFN" multiple="true" path="extrasList" items="${extras}" itemLabel="title" itemValue="id" name="extrasList" class="multipleSelectCFN_JS"></form:select>
                                                     </div>
                                                 </div>
@@ -97,14 +97,14 @@
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table data-cnf-delUrl="administrator/dashboard/extracategories/delete/" data-cnf-getOneUrl="administrator/dashboard/extracategories/" class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
+                        <table data-cfn-delUrl="administrator/dashboard/extracategories/delete/" data-cfn-getOneUrl="administrator/dashboard/extracategories/" class="table table-bordered responsive no-wrap" id="mainCategoriesTableCFN" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th class="idHeaderCFN">Id</th>
                                     <th class="hidden">Parent</th>
                                     <th class="titleHeaderCFN">Title</th>
-                                    <th><spring:message code="admin.menu.productcategories"/></th>
-                                    <th><spring:message code="extras"/></th>
+                                    <th><spring:message code="admin.menu.products"/></th>
+                                    <th><spring:message code="admin.menu.extras"/></th>
                                     <th class="imageHeaderCFN">Image</th>
                                     <th class="optionsHeaderCFN"><spring:message code="options"/></th>
                                 </tr>
@@ -114,8 +114,8 @@
                                     <th>Id</th>
                                     <th class="hidden">Parent</th>
                                     <th>Title</th>
-                                    <th><spring:message code="admin.menu.productcategories"/></th>
-                                    <th><spring:message code="extras"/></th>
+                                    <th><spring:message code="admin.menu.products"/></th>
+                                    <th><spring:message code="admin.menu.extras"/></th>
                                     <th>Image</th>
                                     <th><spring:message code="options"/></th>
                                 </tr>

@@ -37,7 +37,7 @@ function load(rowId){
 	// make ajax call to get row's needed data
 	$.ajax({
 		type: 'POST',
-		url: mainTable.attr("data-cnf-getOneUrl") + rowId,
+		url: mainTable.attr("data-cfn-getOneUrl") + rowId,
 		error: function error(data) {
 			inform(language_JSON[locale]["somethingWentWrong"]);
 		},
@@ -106,7 +106,7 @@ function deleteRow(rowId){
 	});
 	
 	if (doDelete) {
-		yesNo(mainTable.attr("data-cnf-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
+		yesNo(mainTable.attr("data-cfn-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
 	}
 	else {
 		inform(language_JSON[locale]["cannotDeleteParentWithChildren"]);
