@@ -25,7 +25,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- Admin main template definition -->
 	<definition name="baseLayout_store" template="/WEB-INF/layouts/back_store/template/baseLayout.jsp">
-		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/store/style.css" />
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css,css/store/style.css" />
 		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/script.js,js/store/script.js" />
 	
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_store/template/sidebar-left.jsp" />

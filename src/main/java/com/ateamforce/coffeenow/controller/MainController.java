@@ -2,6 +2,7 @@ package com.ateamforce.coffeenow.controller;
 
 import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
+import com.ateamforce.coffeenow.model.Store;
 import com.ateamforce.coffeenow.service.impl.AppUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,29 @@ public class MainController {
 //        appUser.setContactname("dadada");
 //        appUser.setState("adada");
 //        appUser.setZip(145);
+        ausimp.addAppUser(appUser);
+    return "front/login";
+    }
+    
+    @RequestMapping("/addstore")
+    public String addstore(){
+        Store appUser=new Store();
+        appUser.setEmail("sakellariou28@gmail.com");
+        appUser.setPassword("123");
+        AppRole role=new AppRole();
+        role.setApprole("store");
+        appUser.setApprole(role);
+
+        appUser.setAddress("adadada");
+        appUser.setLongitude(1212154.45);
+        appUser.setLatitude(84.545445);
+        appUser.setPhone("12254");
+        appUser.setVat(45454544);
+        appUser.setStorename("aek");
+        appUser.setLogo("dadad");
+        appUser.setContactname("dadada");
+        appUser.setState("adada");
+        appUser.setZip(145);
         ausimp.addAppUser(appUser);
     return "front/login";
     }

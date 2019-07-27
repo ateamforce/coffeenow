@@ -22,7 +22,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4"><spring:message code="admin.login.welcome"/></h1>
                   </div>
-				  <spring:url value="administrator/dashboard/check" var="loginUrl"/>
+				  <spring:url value="store/dashboard/check" var="loginUrl"/>
                   <form action=${loginUrl} method="post" class="user">
 					<c:choose>
 						<c:when test="${param.error != null}">
@@ -67,7 +67,7 @@
                     <a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
                   </div>
 				  <div class="text-center">
-                    <a class="small" href="administrator?language=el">Ελληνικά</a> | <a class="small" href="administrator?language=en">English</a>
+                    <a class="small" href="store?language=el">Ελληνικά</a> | <a class="small" href="store?language=en">English</a>
                   </div>
                 </div>
               </div>

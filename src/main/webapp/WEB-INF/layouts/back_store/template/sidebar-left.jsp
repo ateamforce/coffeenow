@@ -6,7 +6,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="administrator/dashboard">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="store/dashboard">
         <img src="img/common/logo-medium-white-min.png" />
     </a>
 
@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item ${dashboardIsActive}">
-        <a class="nav-link" href="administrator/dashboard">
+        <a class="nav-link" href="store/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span><spring:message code="admin.dashboard"/></span></a>
     </li>
@@ -23,32 +23,25 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 	
-    <!-- Product Categories -->
-    <li class="nav-item ${productcategoriesIsActive}">
-        <a class="nav-link" href="administrator/dashboard/productcategories">
-            <i class="fas fa-fw fa-folder-open"></i>
-            <span><spring:message code="admin.menu.productcategories"/></span></a>
-    </li>
-
     <!-- Products -->
     <li class="nav-item ${productsIsActive}">
-        <a class="nav-link" href="administrator/dashboard/products">
+        <a class="nav-link" href="store/dashboard/products">
             <i class="fas fa-fw fa-mug-hot"></i>
             <span><spring:message code="admin.menu.products"/></span></a>
     </li>
 
-    <!-- Extras Categories -->
-    <li class="nav-item ${extracategoriesIsActive}">
-        <a class="nav-link" href="administrator/dashboard/extracategories">
-            <i class="fas fa-fw fa-folder-open"></i>
-            <span><spring:message code="admin.menu.extrascategories"/></span></a>
-    </li>
-	
 	<!-- Extras -->
     <li class="nav-item ${extrasIsActive}">
-        <a class="nav-link" href="administrator/dashboard/extras">
+        <a class="nav-link" href="store/dashboard/extras">
             <i class="fas fa-fw fa-fill-drip"></i>
             <span><spring:message code="admin.menu.extras"/></span></a>
+    </li>
+
+    <!-- Orders -->
+    <li class="nav-item ${ordersIsActive}">
+        <a class="nav-link" href="store/dashboard/orders">
+            <i class="fas fa-fw fa-folder-open"></i>
+            <span><spring:message code="admin.menu.orders"/></span></a>
     </li>
 
     <!-- Divider -->

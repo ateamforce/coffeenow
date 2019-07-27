@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.StoreProduct;
+import java.util.List;
 
 /**
  *
@@ -16,4 +17,6 @@ public interface StoreProductService {
     void addStoreProduct(StoreProduct storeProduct);
     
     void deleteStoreProduct(StoreProduct storeProduct);
+    
+    List<StoreProduct> findAllByStoreId(int storeId);
 }
