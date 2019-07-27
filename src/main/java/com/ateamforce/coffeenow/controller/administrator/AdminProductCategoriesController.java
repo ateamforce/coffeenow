@@ -62,8 +62,15 @@ public class AdminProductCategoriesController {
     ) throws IOException {
         
         if (result.hasErrors()) {
+            
+            List<ProductCategory> productcategories = productCategoryService.getAllProductCategories();
+            for (ProductCategory productcategory : productcategories) {
+                productcategory.setProductsList(productService.getAllProductsByProductCategoryId(productcategory.getId()));
+                productcategory.setExtrascategoriesList(extraCategoryService.getAllExtraCategoriesByProductCategoryId(productcategory.getId()));
+            }
+            
             modelmap.addAttribute("mainFormHasErrors", true);
-            modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+            modelmap.addAttribute("productcategories", productcategories);
             modelmap.addAttribute("products", productService.getAllProducts());
             modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
             modelmap.addAttribute("productcategoriesIsActive", "active");

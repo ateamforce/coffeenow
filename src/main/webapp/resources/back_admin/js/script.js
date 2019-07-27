@@ -77,7 +77,7 @@ $(document).on("click", "#yesNoFormCFN .no", function(e){
 });
 
 // injecting logout form in modal on click
-$(document).on("click", "#userMenuLogoutCNF", function(e){
+$(document).on("click", "#userMenuLogoutCFN", function(e){
 	
 	e.preventDefault;
 	yesNo(

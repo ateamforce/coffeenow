@@ -40,7 +40,7 @@
 			</a>
 			<!-- Dropdown - User Information -->
 			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-				<a class="dropdown-item" id="userMenuLogoutCNF" href="administrator/dashboard/logout" data-toggle="modal" data-target="#logoutModal">
+				<a class="dropdown-item" id="userMenuLogoutCFN" href="administrator/dashboard/logout" data-toggle="modal" data-target="#logoutModal">
 					<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 					<spring:message code="logout"/>
 				</a>

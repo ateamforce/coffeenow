@@ -60,8 +60,15 @@ public class AdminExtraCategoriesController {
     ) throws IOException {
         
         if (result.hasErrors()) {
+            
+            List<ExtraCategory> extracategories = extraCategoryService.getAllExtraCategories();
+            for (ExtraCategory extracategory : extracategories) {
+                extracategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extracategory.getId()));
+                extracategory.setProductcategoriesList(productCategoryService.getAllProductCategoriesByExtraCategoryId(extracategory.getId()));
+            }
+            
             modelmap.addAttribute("mainFormHasErrors", true);
-            modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
+            modelmap.addAttribute("extracategories", extracategories);
             modelmap.addAttribute("extras", extraService.getAllExtras());
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
             modelmap.addAttribute("extracategoriesIsActive", "active");

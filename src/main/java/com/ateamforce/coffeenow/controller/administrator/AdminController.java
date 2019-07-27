@@ -98,15 +98,10 @@ public class AdminController {
 
         // add product categories with ExtraCategories and Products
         List<ProductCategory> productcategories = productCategoryService.getAllProductCategories();
-        
-        productcategories.stream().map((productcategory) -> {
-            productcategory.setExtrascategoriesList(extraCategoryService
-                    .getAllExtraCategoriesByProductCategoryId(productcategory.getId()));
-            return productcategory;
-        }).forEachOrdered((productcategory) -> {
-            productcategory.setProductsList(productService
-                    .getAllProductsByProductCategoryId(productcategory.getId()));
-        });
+        for (ProductCategory productcategory : productcategories) {
+            productcategory.setProductsList(productService.getAllProductsByProductCategoryId(productcategory.getId()));
+            productcategory.setExtrascategoriesList(extraCategoryService.getAllExtraCategoriesByProductCategoryId(productcategory.getId()));
+        }
         
         modelmap.addAttribute("productcategories", productcategories);
 
@@ -144,15 +139,9 @@ public class AdminController {
     public String admin_dashboard_extrascategories(ModelMap modelmap, @ModelAttribute("extraCategory") ExtraCategory extraCategory) {
         
         List<ExtraCategory> extracategories = extraCategoryService.getAllExtraCategories();
-        
         for (ExtraCategory extracategory : extracategories) {
-            
-            extracategory.setExtrasList(extraService
-                    .getAllExtrasByExtraCategoryId(extracategory.getId()));
-            
-            extracategory.setProductcategoriesList(productCategoryService
-                    .getAllProductCategoriesByExtraCategoryId(extracategory.getId()));
-            
+            extracategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extracategory.getId()));
+            extracategory.setProductcategoriesList(productCategoryService.getAllProductCategoriesByExtraCategoryId(extracategory.getId()));
         }
         
         // add extras categories
