@@ -29,12 +29,6 @@ public class MainController {
     public String store_login(ModelMap modelmap) {
         return "back_store/index";
     }
-
-    // TODO : Move this to the store controller, when it is created (like in AdministratorController)
-    @RequestMapping("/store/dashboard")
-    public String store_dashboard(ModelMap modelmap) {
-        return "back_store/dashboard/index";
-    }
     
     // TODO: FOR TESTING PURPOSES - TO BE REMOVED
     @Autowired

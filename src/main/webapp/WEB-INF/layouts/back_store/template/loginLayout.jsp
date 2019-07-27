@@ -35,7 +35,7 @@
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="webjars/font-awesome/css/all.css">
 		
-			<c:set var="styles"><tiles:getAsString name="styles" /></c:set>
+            <c:set var="styles"><tiles:getAsString name="styles" /></c:set>
 			<c:forTokens items="${styles}" delims="," var="style">
 				${cache:bust(style, "css", realPath)}
 			</c:forTokens>
@@ -59,51 +59,13 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	
-	<body id="page-top">
-
-		<div id="contentPreLoaderCFN"><img src="img/administrator/mainloader.gif" /></div>
-		
-		<!-- Set toggling class for layer visibility, depending on errors or not -->
-		<c:set var="layerVisible" value="hidden" scope="page" />
-		<c:if test="${mainFormHasErrors == true}">
-			<c:set var="layerVisible" value="" scope="page" />
-		</c:if>
-		<div id="actionLayer-98" class="${layerVisible}"></div>
-	
-		<!-- Page Wrapper -->
-		<div id="wrapper">
-		
-			<tiles:insertAttribute name="leftsidebar" />
-		
-			<!-- Content Wrapper -->
-			<div id="content-wrapper" class="d-flex flex-column">
-			
-				<!-- Main Content -->
-				<div id="content">
-					
-					<tiles:insertAttribute name="navbar" />
-					<tiles:insertAttribute name="content" />
-					
-				</div>
-				<!-- End of Main Content -->
-				
-				<tiles:insertAttribute name="footer" />
-			
-			</div>
-			<!-- End of Content Wrapper -->
-			
-		</div>
-		<!-- End of Page Wrapper -->
-		
-		<tiles:insertAttribute name="utils" />
-		
-	</body>
+	<tiles:insertAttribute name="content" />
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
-	<script src="webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
 	<script src="webjars/jquery-easing/jquery.easing.min.js"></script>
 	
-		<c:set var="scripts"><tiles:getAsString name="scripts" /></c:set>
+        <c:set var="scripts"><tiles:getAsString name="scripts" /></c:set>
 		<c:forTokens items="${scripts}" delims="," var="script">
 			${cache:bust(script, "js", realPath)}
 		</c:forTokens>
