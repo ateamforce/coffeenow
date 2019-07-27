@@ -70,18 +70,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             hasChanged = true;
         }
 
-        List<ExtraCategory> extraCategoriesList = productCategory.getExtrascategoriesList();
-        LOGGER.error("productCategory.getExtrascategoriesList() : " + extraCategoriesList);
         if (productCategory.getExtrascategoriesList() != null) {
             addExtrasCategoriesToProductCategory(productCategory);
-            hasChanged = true;
         }
 
-        List<Product> productsList = productCategory.getProductsList();
-        LOGGER.error("productCategory.getProductsList() : " + productsList);
         if (productCategory.getProductsList() != null) {
             addPoductsToProductCategory(productCategory);
-            hasChanged = true;
         }
 
         return (hasChanged) ? productCategoryRepository.save(persistedProductCategory) : persistedProductCategory;
@@ -122,7 +116,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return productCategoryRepository.findAllProductCategoriesByExtraCategoryId(extraCategoryId);
     }
 
-    @Transactional
     @Override
     public void addExtrasCategoriesToProductCategory(ProductCategory productCategory) {
         int productCategoryId = productCategory.getId();
@@ -144,7 +137,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
     }
 
-    @Transactional
     @Override
     public void addPoductsToProductCategory(ProductCategory productCategory) {
         int productCategoryId = productCategory.getId();

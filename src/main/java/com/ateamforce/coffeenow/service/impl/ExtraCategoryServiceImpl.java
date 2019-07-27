@@ -70,14 +70,10 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
             hasChanged = true;
         }
 
-        List<Extra> extrasList = extraCategory.getExtrasList();
-        LOGGER.error("extraCategory.getExtrasList() : " + extrasList);
         if (extraCategory.getExtrasList() != null) {
             addExtrasToExtraCategory(extraCategory);
         }
 
-        List<ProductCategory> productCategoriesList = extraCategory.getProductcategoriesList();
-        LOGGER.error("extraCategory.getProductcategoriesList() : " + productCategoriesList);
         if (extraCategory.getProductcategoriesList() != null) {
             addProductsCategoriesToExtraCategory(extraCategory);
         }
@@ -120,7 +116,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         return extraCategoryRepository.findAllExtraCategoriesByProductCategoryId(productCategoryId);
     }
 
-    @Transactional
     @Override
     public void addExtrasToExtraCategory(ExtraCategory extraCategory) {
         int extraCategoryId = extraCategory.getId();
@@ -141,7 +136,6 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
         }
     }
 
-    @Transactional
     @Override
     public void addProductsCategoriesToExtraCategory(ExtraCategory extraCategory) {
         int extraCategoryId = extraCategory.getId();
