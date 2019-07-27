@@ -30,7 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreMedia.findAll", query = "SELECT s FROM StoreMedia s")
-    , @NamedQuery(name = "StoreMedia.findStoreMediaById", query = "SELECT s FROM StoreMedia s WHERE s.id = :storeMediaId")})
+    , @NamedQuery(name = "StoreMedia.findStoreMediaById", query = "SELECT s FROM StoreMedia s WHERE s.id = :storeMediaId")
+    , @NamedQuery(name = "StoreMedia.findAllByStoreId", query = "SELECT s FROM StoreMedia s WHERE s.storeid = :storeId")})
 public class StoreMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
