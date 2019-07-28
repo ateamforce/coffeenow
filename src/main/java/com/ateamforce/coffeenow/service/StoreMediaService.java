@@ -18,5 +18,5 @@ public interface StoreMediaService {
 
     void deleteStoreMedia(StoreMedia storeMedia);
     
-    List<StoreMedia> findAllByStoreId(int storeId);
+    List<StoreMedia> findByStore(int storeid);
 }

@@ -18,8 +18,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StoreMediaRepository extends JpaRepository<StoreMedia,Integer> {
     
-    StoreMedia findStoreMediaById(@Param("storeMediaId") int storeMediaId);
+    StoreMedia findById(@Param("id") int id);
     
-    List<StoreMedia> findAllByStoreId(@Param("storeId") int storeId);
+    List<StoreMedia> findByStore(@Param("storeid") int storeid);
     
 }

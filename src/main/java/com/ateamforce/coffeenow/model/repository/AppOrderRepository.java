@@ -20,8 +20,8 @@ public interface AppOrderRepository extends JpaRepository<AppOrder,Integer> {
     
     AppOrder findById(@Param("id") int id);
     
-    List<AppOrder> findByStoreId(@Param("storeid") int storeid);
+    List<AppOrder> findByStore(@Param("storeid") int storeid);
     
-    List<AppOrder> findByClientId(@Param("clientid") int clientid);
+    List<AppOrder> findByClient(@Param("clientid") int clientid);
     
 }

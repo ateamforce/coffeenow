@@ -23,4 +23,6 @@ public interface AppUserService extends UserDetailsService {
     
     @Override
     UserDetails loadUserByUsername(String email);
+    
+    AppUser findAppUserById(int appUserId);
 }

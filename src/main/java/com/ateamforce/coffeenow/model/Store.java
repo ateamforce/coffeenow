@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -98,6 +99,7 @@ public class Store extends AppUser {
     @Transient
     private List<PaymentType> paymenttypesList;
 
+    @OneToMany(mappedBy = "storeid")
     @Transient
     private List<StoreMedia> storemediaList;
 
@@ -117,6 +119,7 @@ public class Store extends AppUser {
     @Transient
     private List<Rating> ratingsList;
 
+    @OneToMany(mappedBy = "storeid")
     @Transient
     private List<AppOrder> ordersList;
 
