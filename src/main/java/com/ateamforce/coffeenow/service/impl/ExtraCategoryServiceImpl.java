@@ -107,6 +107,11 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
     }
 
     @Override
+    public List<ExtraCategory> getAllExtraCategoriesByExtraId(int extraId) {
+        return extraCategoryRepository.findAllExtraCategoriesByExtraId(extraId);
+    }
+
+    @Override
     public List<ExtraCategory> getRemainigExtraCategoriesByExtraId(int extraId) {
         return extraCategoryRepository.findRemainigExtraCategoriesByExtraId(extraId);
     }

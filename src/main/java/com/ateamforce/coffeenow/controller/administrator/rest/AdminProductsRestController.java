@@ -25,7 +25,7 @@ public class AdminProductsRestController {
     @Autowired
     ProductService productService;
     
-    // return a json object containing a single product category with products and extra categories
+    // return a json object containing a single product with product categories
     @PostMapping(path = "/administrator/dashboard/products/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Product admin_getOneProductById_as_json(@PathVariable int productId) {
         Product product = productService.getProductById(productId);
