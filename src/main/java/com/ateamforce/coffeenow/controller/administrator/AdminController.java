@@ -131,9 +131,18 @@ public class AdminController {
     // Go to administrator products page
     @RequestMapping("/extras")
     public String admin_dashboard_extras(ModelMap modelmap, @ModelAttribute("newExtra") Extra newExtra) {
+        
+        List<Extra> extras = extraService.getAllExtras();
+
+        extras.forEach((extra) -> {
+            extra.setExtracategoriesList(extraCategoryService
+                    .getAllExtraCategoriesByExtraId(extra.getId()));
+        });
 
         // add extras
-        modelmap.addAttribute("extras", extraService.getAllExtras());
+        modelmap.addAttribute("extras", extras);
+        
+        modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("extrasIsActive", "active");

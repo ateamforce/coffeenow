@@ -21,5 +21,7 @@ public interface ExtrascategoryExtraRepository extends JpaRepository<Extrascateg
     
     List<ExtrascategoryExtra>findByExtraCategoryid(@Param("extraCategoryId")int extraCategoryId);
     
+    List<ExtrascategoryExtra>findByExtraid(@Param("extraId")int extraId);
+    
     
 }

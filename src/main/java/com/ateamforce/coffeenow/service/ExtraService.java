@@ -17,14 +17,16 @@ public interface ExtraService {
     Extra addExtra(Extra extra);
 
     void deleteExtraById(int extraId);
-    
+
     void updateExtra(Extra updatedExtra);
-    
+
     Extra getExtraById(int extraId);
 
     List<Extra> getAllExtras();
-    
-    List<Extra>getRemainigExtrasByExtraCategoryId(int categoryid);
-    
+
+    List<Extra> getRemainigExtrasByExtraCategoryId(int categoryid);
+
     public List<Extra> getAllExtrasByExtraCategoryId(int categoryid);
+
+    public void addExtraCategoriesToExtra(Extra extra);
 }

@@ -18,23 +18,28 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ExtrascategoryExtraServiceImpl implements ExtrascategoryExtraService {
-    
+
     @Autowired
     ExtrascategoryExtraRepository extrascategoryExtraRepository;
-    
+
     @Override
     public void addAllExtrascategoryExtra(List<ExtrascategoryExtra> extrascategoryExtralist) {
         extrascategoryExtraRepository.saveAll(extrascategoryExtralist);
     }
-    
+
+    @Override
+    public List<ExtrascategoryExtra> getByExtraid(int extraId) {
+        return extrascategoryExtraRepository.findByExtraid(extraId);
+    }
+
     @Override
     public List<ExtrascategoryExtra> getByExtraCategoryid(int extraCategoryId) {
         return extrascategoryExtraRepository.findByExtraCategoryid(extraCategoryId);
     }
-    
+
     @Override
     public void deleteAllGivenExtrascategoryExtras(List<ExtrascategoryExtra> extrascategoryExtra) {
         extrascategoryExtraRepository.deleteAll(extrascategoryExtra);
     }
-    
+
 }

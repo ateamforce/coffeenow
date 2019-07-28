@@ -68,7 +68,7 @@ public class MainController {
     @RequestMapping("/addstore")
     public String addstore(){
         Store appUser=new Store();
-        appUser.setEmail("sakellariou28@gmail.com");
+        appUser.setEmail("store@gmail.com");
         appUser.setPassword("123");
         AppRole role=new AppRole();
         role.setApprole("store");

@@ -106,18 +106,15 @@ public class Extra extends _ImageCarrier implements Serializable {
         this.hasimage = hasimage;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<ExtraCategory> getExtraCategoriesList() {
+    public List<ExtraCategory> getExtracategoriesList() {
         return extracategoriesList;
     }
 
-    public void setExtracategoriesList(List<ExtraCategory> extrascategoriesList) {
-        this.extracategoriesList = extrascategoriesList;
+    public void setExtracategoriesList(List<ExtraCategory> extracategoriesList) {
+        this.extracategoriesList = extracategoriesList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+
     public List<StoreExtra> getStoresExtrasList() {
         return storesExtrasList;
     }
@@ -126,8 +123,6 @@ public class Extra extends _ImageCarrier implements Serializable {
         this.storesExtrasList = storesExtrasList;
     }
 
-    @XmlTransient
-    @JsonIgnore
     public List<OrderProduct> getOrdersProductsList() {
         return ordersProductsList;
     }
