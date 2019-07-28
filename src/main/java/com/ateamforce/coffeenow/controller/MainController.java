@@ -7,6 +7,7 @@ import com.ateamforce.coffeenow.service.impl.AppUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -33,7 +34,7 @@ public class MainController {
     
     // Store Backend Register Page
     @RequestMapping("/store/register")
-    public String store_register(ModelMap modelmap) {
+    public String store_register(ModelMap modelmap, @ModelAttribute("store") Store store) {
         return "back_store/register";
     }
     

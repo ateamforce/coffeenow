@@ -11650,13 +11650,15 @@ a:focus {
 .bg-register-image {
   background: url("../../img/common/logo-square.png");
   background-position: center;
-  background-size: cover;
+  background-size: 60%;
+  background-repeat: no-repeat;
 }
 
 .bg-password-image {
   background: url("../../img/common/logo-square.png");
   background-position: center;
-  background-size: cover;
+  background-size: 60%;
+  background-repeat: no-repeat;
 }
 
 form.user .custom-checkbox.small label {

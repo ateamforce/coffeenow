@@ -56,7 +56,7 @@
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="rememberMe">
+                        <input type="checkbox" class="custom-control-input" id="rememberMe" name="remember-me">
                         <label class="custom-control-label" for="rememberMe"><spring:message code="login.rememberme"/></label>
                       </div>
                     </div>
