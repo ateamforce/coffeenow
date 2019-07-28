@@ -20,8 +20,8 @@ public interface AppOrderService {
     
     AppOrder findById(int id);
     
-    List<AppOrder> findByStoreId(int storeId);
+    List<AppOrder> findByStoreId(int storeid);
     
-    List<AppOrder> findByClientId(int clientId);
+    List<AppOrder> findByClientId(int clientid);
     
 }

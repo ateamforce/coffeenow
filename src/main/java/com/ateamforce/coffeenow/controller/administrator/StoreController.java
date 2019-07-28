@@ -76,7 +76,7 @@ public class StoreController {
         modelmap.addAttribute("paytypes", storePaymentTypeService.findAllByStoreId(currentUser.getId()));
         
         // add store media
-        // modelmap.addAttribute("allMedia", storeMediaService.findAllByStoreId(currentUser.getId()));
+        //modelmap.addAttribute("allMedia", storeMediaService.findAllByStoreId(currentUser.getId()));
         
         return "back_store/dashboard/profile";
     }

@@ -38,8 +38,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "AppOrder.findAll", query = "SELECT o FROM AppOrder o")
     , @NamedQuery(name = "AppOrder.findById", query = "SELECT o FROM AppOrder o WHERE o.id = :id")
-    , @NamedQuery(name = "AppOrder.findByStoreId", query = "SELECT o FROM AppOrder o WHERE o.storeid = :storeId")
-    , @NamedQuery(name = "AppOrder.findByClientId", query = "SELECT o FROM AppOrder o WHERE o.clientid = :clientId")
+    , @NamedQuery(name = "AppOrder.findByStoreId", query = "SELECT o FROM AppOrder o WHERE o.storeid = :storeid")
+    , @NamedQuery(name = "AppOrder.findByClientId", query = "SELECT o FROM AppOrder o WHERE o.clientid = :clientid")
     , @NamedQuery(name = "AppOrder.findByMode", query = "SELECT o FROM AppOrder o WHERE o.mode = :mode")
     , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT o FROM AppOrder o WHERE o.total = :total")
     , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})

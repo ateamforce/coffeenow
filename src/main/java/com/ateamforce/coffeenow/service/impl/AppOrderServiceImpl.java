@@ -40,13 +40,13 @@ public class AppOrderServiceImpl implements AppOrderService {
     }
 
     @Override
-    public List<AppOrder> findByStoreId(int storeId) {
-        return appOrderRepository.findByStoreId(storeId);
+    public List<AppOrder> findByStoreId(int storeid) {
+        return appOrderRepository.findByStoreId(storeid);
     }
 
     @Override
-    public List<AppOrder> findByClientId(int clientId) {
-        return appOrderRepository.findByClientId(clientId);
+    public List<AppOrder> findByClientId(int clientid) {
+        return appOrderRepository.findByClientId(clientid);
     }
     
 }
