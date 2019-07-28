@@ -36,8 +36,8 @@ public class StoreMediaServiceImpl implements StoreMediaService {
     }
 
     @Override
-    public List<StoreMedia> findAllByStoreId(int storeId) {
-        return storeMediaRepository.findAllByStoreId(storeId);
+    public List<StoreMedia> findByStore(int storeid) {
+        return storeMediaRepository.findByStore(storeid);
     }
     
 }

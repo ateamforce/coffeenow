@@ -1,15 +1,10 @@
 package com.ateamforce.coffeenow.interceptor;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -78,28 +73,33 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         
         pageDetails = new HashMap<>();
         pageDetails.put("/", new String[]{"HomePage | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator", new String[]{"Administrator Login | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator/dashboard", new String[]{"Administrator Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator/dashboard/products", new String[]{"Products | Administrator Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator/dashboard/productcategories", new String[]{"Product Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator/dashboard/extras", new String[]{"Extras | Administrator Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/administrator/dashboard/extracategories", new String[]{"Extras Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/store", new String[]{"Store Login | CoffeeNow",defaultDescription});
-        pageDetails.put("/store/dashboard", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
-        pageDetails.put("/store/dashboard/profile", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/", new String[]{"Administrator Login | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/", new String[]{"Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/products/", new String[]{"Products | Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/productcategories/", new String[]{"Product Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/extras/", new String[]{"Extras | Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/extracategories/", new String[]{"Extras Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/", new String[]{"Store Login | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/profile/", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/products/", new String[]{"Your Products | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/extras/", new String[]{"Your Extras | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/orders/", new String[]{"Your Orders | CoffeeNow",defaultDescription});
     }
     
     private void postSeoTitle(HttpServletRequest request, String mapping){
         //  <title>${SEO_pageTitle}</title>
         if (request.getAttribute("SEO_pageTitle") == null) {
-            request.setAttribute("SEO_pageTitle", (pageDetails.containsKey(mapping) || pageDetails.containsKey(mapping + "/")) ?  pageDetails.get(mapping)[0] : pageDetails.get("/")[0]);
+            if ( pageDetails.containsKey(mapping) ) request.setAttribute("SEO_pageTitle", pageDetails.get(mapping)[0]);
+            else if (pageDetails.containsKey(mapping + "/")) request.setAttribute("SEO_pageTitle", pageDetails.get(mapping + "/")[0]);
         }
     }
     
     private void postSeoDescription(HttpServletRequest request, String mapping){
         //  <title>${SEO_pageDescription}</title>
         if (request.getAttribute("SEO_pageDescription") == null) {
-            request.setAttribute("SEO_pageDescription", (pageDetails.containsKey(mapping) || pageDetails.containsKey(mapping + "/")) ?  pageDetails.get(mapping)[1] : pageDetails.get("/")[1]);
+            if ( pageDetails.containsKey(mapping) ) request.setAttribute("SEO_pageDescription", pageDetails.get(mapping)[1]);
+            else if (pageDetails.containsKey(mapping + "/")) request.setAttribute("SEO_pageDescription", pageDetails.get(mapping + "/")[1]);
         }
     }
     

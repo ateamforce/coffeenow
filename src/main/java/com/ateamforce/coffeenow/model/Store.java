@@ -7,14 +7,11 @@ package com.ateamforce.coffeenow.model;
 
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -102,6 +99,7 @@ public class Store extends AppUser {
     @Transient
     private List<PaymentType> paymenttypesList;
 
+    @OneToMany(mappedBy = "storeid")
     @Transient
     private List<StoreMedia> storemediaList;
 
@@ -121,6 +119,7 @@ public class Store extends AppUser {
     @Transient
     private List<Rating> ratingsList;
 
+    @OneToMany(mappedBy = "storeid")
     @Transient
     private List<AppOrder> ordersList;
 

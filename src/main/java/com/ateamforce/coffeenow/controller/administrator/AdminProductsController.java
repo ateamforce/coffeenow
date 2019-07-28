@@ -61,7 +61,7 @@ public class AdminProductsController {
             modelmap.addAttribute("mainFormHasErrors", true);
             modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
             modelmap.addAttribute("products", products);
-            modelmap.addAttribute("productcategoriesIsActive", "active");
+            modelmap.addAttribute("productsIsActive", "active");
             return "back_admin/dashboard/products";
         }
 

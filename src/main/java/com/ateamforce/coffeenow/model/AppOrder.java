@@ -6,11 +6,9 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,7 +37,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AppOrder.findAll", query = "SELECT o FROM AppOrder o")
-    , @NamedQuery(name = "AppOrder.findAppOrderById", query = "SELECT o FROM AppOrder o WHERE o.id = :appOrderId")
+    , @NamedQuery(name = "AppOrder.findById", query = "SELECT o FROM AppOrder o WHERE o.id = :id")
+    , @NamedQuery(name = "AppOrder.findByStore", query = "SELECT o FROM AppOrder o WHERE o.store.id = :storeid")
+    , @NamedQuery(name = "AppOrder.findByClient", query = "SELECT o FROM AppOrder o WHERE o.client.id = :clientid")
     , @NamedQuery(name = "AppOrder.findByMode", query = "SELECT o FROM AppOrder o WHERE o.mode = :mode")
     , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT o FROM AppOrder o WHERE o.total = :total")
     , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})
@@ -71,10 +70,10 @@ public class AppOrder implements Serializable {
     private List<OrderProduct> ordersProductsList;
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne
-    private Client clientid;
+    private Client client;
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
-    private Store storeid;
+    private Store store;
 
     public AppOrder() {
     }
@@ -110,19 +109,19 @@ public class AppOrder implements Serializable {
     }
 
     public Client getClientid() {
-        return clientid;
+        return client;
     }
 
     public void setClientid(Client clientid) {
-        this.clientid = clientid;
+        this.client = clientid;
     }
 
     public Store getStoreid() {
-        return storeid;
+        return store;
     }
 
-    public void setStoreid(Store storeid) {
-        this.storeid = storeid;
+    public void setStoreid(Store store) {
+        this.store = store;
     }
 
     public String getMode() {

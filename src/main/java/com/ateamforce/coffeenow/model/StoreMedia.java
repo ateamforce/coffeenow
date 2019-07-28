@@ -30,8 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StoreMedia.findAll", query = "SELECT s FROM StoreMedia s")
-    , @NamedQuery(name = "StoreMedia.findStoreMediaById", query = "SELECT s FROM StoreMedia s WHERE s.id = :storeMediaId")
-    , @NamedQuery(name = "StoreMedia.findAllByStoreId", query = "SELECT s FROM StoreMedia s WHERE s.storeid = :storeId")})
+    , @NamedQuery(name = "StoreMedia.findById", query = "SELECT s FROM StoreMedia s WHERE s.id = :id")
+    , @NamedQuery(name = "StoreMedia.findByStore", query = "SELECT s FROM StoreMedia s WHERE s.store.id = :storeid")})
 public class StoreMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +42,7 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
     private Integer id;
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Store storeid;
+    private Store store;
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
@@ -68,11 +68,11 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
     }
 
     public Store getStoreid() {
-        return storeid;
+        return store;
     }
 
     public void setStoreid(Store storeid) {
-        this.storeid = storeid;
+        this.store = storeid;
     }
 
     public boolean isHasimage() {

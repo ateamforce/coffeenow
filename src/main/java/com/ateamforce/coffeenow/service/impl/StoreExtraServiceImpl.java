@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.StoreExtra;
 import com.ateamforce.coffeenow.model.repository.StoreExtraRepository;
 import com.ateamforce.coffeenow.service.StoreExtraService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,11 @@ public class StoreExtraServiceImpl implements StoreExtraService {
     @Override
     public void deleteStoreExtra(StoreExtra storeExtra) {
         storeExtraRepository.delete(storeExtra);
+    }
+
+    @Override
+    public List<StoreExtra> findByStoreid(int storeid) {
+        return storeExtraRepository.findByStoreid(storeid);
     }
     
 }

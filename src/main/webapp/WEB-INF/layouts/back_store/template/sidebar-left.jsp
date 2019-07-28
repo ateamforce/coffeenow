@@ -40,7 +40,7 @@
     <!-- Orders -->
     <li class="nav-item ${ordersIsActive}">
         <a class="nav-link" href="store/dashboard/orders">
-            <i class="fas fa-fw fa-folder-open"></i>
+            <i class="fas fa-fw fa-book-reader"></i>
             <span><spring:message code="admin.menu.orders"/></span></a>
     </li>
 
