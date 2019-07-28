@@ -58,7 +58,7 @@ public class Product extends _ImageCarrier implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, max = 65535, message = "{description.size.restriction.message}")
     @Column(name = "description")
     private String description;
     @Column(name = "hasimage")

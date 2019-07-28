@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.service;
 
 import com.ateamforce.coffeenow.model.AppOrder;
+import java.util.List;
 
 /**
  *
@@ -16,5 +17,11 @@ public interface AppOrderService {
     void addAppOrder(AppOrder appOrder);
     
     void deleteAppOrder(AppOrder appOrder);
+    
+    AppOrder findById(int id);
+    
+    List<AppOrder> findByStoreId(int storeId);
+    
+    List<AppOrder> findByClientId(int clientId);
     
 }

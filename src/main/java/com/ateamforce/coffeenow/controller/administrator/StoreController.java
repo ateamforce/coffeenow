@@ -7,9 +7,13 @@ package com.ateamforce.coffeenow.controller.administrator;
 
 
 import com.ateamforce.coffeenow.model.Store;
+import com.ateamforce.coffeenow.model.StoreExtra;
 import com.ateamforce.coffeenow.model.StoreMedia;
 import com.ateamforce.coffeenow.model.StoreProduct;
+import com.ateamforce.coffeenow.service.AppOrderService;
+import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.ProductService;
+import com.ateamforce.coffeenow.service.StoreExtraService;
 import com.ateamforce.coffeenow.service.StoreMediaService;
 import com.ateamforce.coffeenow.service.StorePaymentTypeService;
 import com.ateamforce.coffeenow.service.StoreProductService;
@@ -39,7 +43,16 @@ public class StoreController {
     StoreProductService storeProductService;
     
     @Autowired
+    StoreExtraService storeExtraService;
+    
+    @Autowired
+    AppOrderService orderService;
+    
+    @Autowired
     ProductService productService;
+    
+    @Autowired
+    ExtraService extraService;
 
     // DASHBOARD
     @RequestMapping
@@ -73,7 +86,7 @@ public class StoreController {
     public String store_dashboard_products(
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
-            @ModelAttribute("newStoreProduct") StoreProduct newStoreProduct
+            @ModelAttribute("storeProduct") StoreProduct storeProduct
     ) {
 
         // add store products
@@ -86,6 +99,42 @@ public class StoreController {
         modelmap.addAttribute("productsIsActive", "active");
         
         return "back_store/dashboard/products";
+    }
+    
+    // EXTRAS
+    @RequestMapping(value = "/extras", method = RequestMethod.GET)
+    public String store_dashboard_extras(
+            @SessionAttribute(name = "currentUser") Store currentUser, 
+            ModelMap modelmap, 
+            @ModelAttribute("storeExtra") StoreExtra storeExtra
+    ) {
+
+        // add store extras
+        modelmap.addAttribute("storeExtras", storeExtraService.findByStoreid(currentUser.getId()));
+        
+        // add extras
+        modelmap.addAttribute("extras", extraService.getAllExtras());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("extrasIsActive", "active");
+        
+        return "back_store/dashboard/extras";
+    }
+    
+    // ORDERS
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public String store_dashboard_orders(
+            @SessionAttribute(name = "currentUser") Store currentUser, 
+            ModelMap modelmap
+    ) {
+
+        // add store extras
+        modelmap.addAttribute("storeOrders", orderService.findByStoreId(currentUser.getId()));
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("ordersIsActive", "active");
+        
+        return "back_store/dashboard/extras";
     }
     
 }
