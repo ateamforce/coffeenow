@@ -16,7 +16,9 @@ public interface ExtrascategoryExtraService {
 
     public void addAllExtrascategoryExtra(List<ExtrascategoryExtra> extrascategoryExtra);
 
-    List<ExtrascategoryExtra> getByExtraCategoryid(int extraCategoryId);
+    public List<ExtrascategoryExtra> getByExtraCategoryid(int extraCategoryId);
+    
+    public List<ExtrascategoryExtra>getByExtraid(int extraId);
 
     public void deleteAllGivenExtrascategoryExtras(List<ExtrascategoryExtra> extrascategoryExtra);
 }
