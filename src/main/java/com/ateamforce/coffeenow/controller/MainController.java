@@ -31,6 +31,12 @@ public class MainController {
         return "back_store/index";
     }
     
+    // Store Backend Register Page
+    @RequestMapping("/store/register")
+    public String store_register(ModelMap modelmap) {
+        return "back_store/register";
+    }
+    
     // TODO: FOR TESTING PURPOSES - TO BE REMOVED
     @Autowired
     AppUserServiceImpl ausimp;

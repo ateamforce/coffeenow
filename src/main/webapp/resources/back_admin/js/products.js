@@ -90,24 +90,8 @@ $(document).ready(function() {
 		"language": {
             "url": language_JSON[locale]["dataTableLanguageURL"]
         },
-		orderFixed: [1, 'asc'],
 		info: false,
 		responsive: true,
-        rowGroup: {
-			startRender: function ( rows, group ) {
-				var ids = rows.data().pluck(0);
-				var titles = rows.data().pluck(2);
-				var title = "";
-				var i = rows.data().length;
-				for(i; i >= 0; i-- ){
-					if( ids[i] == group ) title = titles[i];
-				}
-				return $('<tr/>')
-                    .append( '<td colspan="'+rows.columns().count()+'"><span class="pad-right-30">'+group+'</span>'+title+'</td>' );
-			},
-			endRender: null,
-            dataSrc: 1
-        },
 		columnDefs: [
 			{ 
 				responsivePriority: 1, 
@@ -116,7 +100,7 @@ $(document).ready(function() {
 			},
 			{ 
 				responsivePriority: 2, 
-				targets: "itemDescriptionCFN" ,
+				targets: "titleHeaderCFN" ,
 				
 			},
 			{ 
@@ -129,12 +113,11 @@ $(document).ready(function() {
 				targets: "imageHeaderCFN" ,
 				
 			},
-			{ "width": "50px", "targets": "idHeaderCFN" },
-			{ "width": "70px", "targets": "titleHeaderCFN" },// extrasCategories or productCategories
-			{ "width": "100px", "targets": "descriptionHeaderCFN" },// products or extras
+			{ "width": "20px", "targets": "idHeaderCFN" },
+			{ "width": "300px", "targets": "descriptionHeaderCFN" },
 			{ "width": "100px", "targets": "imageHeaderCFN" },
 			{ "width": "100px", "targets": "optionsHeaderCFN" },
-			{ "width": "50px", "targets": 3 }
+			{ "width": "70px", "targets": 3 }
 		]
 	});
 	

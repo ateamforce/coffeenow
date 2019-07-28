@@ -112,13 +112,9 @@
 									<th class="idHeaderCFN">Id</th>
 									<th class="titleHeaderCNF">Title</th>
 									<th class="descriptionHeaderCFN">Description</th>
-									<th>
-										<spring:message code="admin.menu.productcategories" />
-									</th>
+									<th><spring:message code="admin.menu.productcategories" /></th>
 									<th class="imageHeaderCFN">Image</th>
-									<th class="optionsHeaderCFN">
-										<spring:message code="options" />
-									</th>
+									<th class="optionsHeaderCFN"><spring:message code="options" /></th>
 								</tr>
 							</thead>
 							<tfoot>

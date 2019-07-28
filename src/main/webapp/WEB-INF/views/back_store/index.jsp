@@ -67,6 +67,9 @@
                     <a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
                   </div>
 				  <div class="text-center">
+                    <a class="small" href="store/register"><spring:message code="register"/></a>
+                  </div>
+				  <div class="text-center">
                     <a class="small" href="store?language=el">Ελληνικά</a> | <a class="small" href="store?language=en">English</a>
                   </div>
                 </div>

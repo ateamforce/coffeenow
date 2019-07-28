@@ -19,6 +19,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/back_store/index.jsp" />
 	</definition>
 	
+	<!-- Store Register Page -->
+	<definition name="back_store/register" extends="loginLayout_store">
+		<put-attribute name="content" value="/WEB-INF/views/back_store/register.jsp" />
+	</definition>
+	
 	
 	<!-- ############################################################################ -->
 	

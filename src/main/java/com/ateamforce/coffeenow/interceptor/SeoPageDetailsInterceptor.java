@@ -80,6 +80,7 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         pageDetails.put("/administrator/dashboard/extras/", new String[]{"Extras | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/dashboard/extracategories/", new String[]{"Extras Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store/", new String[]{"Store Login | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/register/", new String[]{"Store Registration | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/profile/", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/products/", new String[]{"Your Products | CoffeeNow",defaultDescription});

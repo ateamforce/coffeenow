@@ -122,6 +122,7 @@ button.multiselect-clear-filter {
 body {
 	font-family: 'Source Sans Pro', sans-serif;
 }
+form.user .btn-user { margin: 0; }
 .btn.disabled, .btn:disabled { cursor: not-allowed; }
 .table th, .table td {
 	padding: 5px;
