@@ -54,12 +54,6 @@
 					  <spring:message code="passwordPlaceholder" var="passwordPlaceholder"/>
                       <input type="password" class="form-control form-control-user" id="password" placeholder="${passwordPlaceholder}" name="password" required>
                     </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="rememberMe">
-                        <label class="custom-control-label" for="rememberMe"><spring:message code="login.rememberme"/></label>
-                      </div>
-                    </div>
 					<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="login"/></button>
                   </form>
                   <hr>

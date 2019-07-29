@@ -69,6 +69,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extra_categories.jsp" />
 
 	</definition>
+	
+	<!-- Admin Stores Page -->
+	<definition name="back_admin/dashboard/stores" extends="baseLayout_admin">
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/administrator/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/administrator/script.js,js/administrator/stores.js" />
+
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/stores.jsp" />
+
+	</definition>
 
 
 	<!-- ############################################################################ -->

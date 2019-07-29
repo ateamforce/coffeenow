@@ -38,7 +38,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Store.findByVat", query = "SELECT s FROM Store s WHERE s.vat = :vat")
     , @NamedQuery(name = "Store.findByStorename", query = "SELECT s FROM Store s WHERE s.storename = :storename")
     , @NamedQuery(name = "Store.findByContactname", query = "SELECT s FROM Store s WHERE s.contactname = :contactname")
-    , @NamedQuery(name = "Store.findByLogo", query = "SELECT s FROM Store s WHERE s.logo = :logo")
     , @NamedQuery(name = "Store.findByPhone", query = "SELECT s FROM Store s WHERE s.phone = :phone")
     , @NamedQuery(name = "Store.findByState", query = "SELECT s FROM Store s WHERE s.state = :state")
     , @NamedQuery(name = "Store.findByZip", query = "SELECT s FROM Store s WHERE s.zip = :zip")
@@ -62,11 +61,6 @@ public class Store extends AppUser {
     @Size(min = 1, max = 255)
     @Column(name = "contactname")
     private String contactname;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "logo")
-    private String logo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -148,14 +142,6 @@ public class Store extends AppUser {
 
     public void setContactname(String contactname) {
         this.contactname = contactname;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
     }
 
     public String getPhone() {
