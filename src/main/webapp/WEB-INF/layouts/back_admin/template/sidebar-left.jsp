@@ -23,6 +23,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 	
+	<!-- Stores -->
+    <li class="nav-item ${storesIsActive}">
+        <a class="nav-link" href="administrator/dashboard/stores">
+            <i class="fas fa-fw fa-store"></i>
+            <span><spring:message code="admin.menu.stores"/></span></a>
+    </li>
+	
+	<!-- Divider -->
+    <hr class="sidebar-divider">
+	
     <!-- Product Categories -->
     <li class="nav-item ${productcategoriesIsActive}">
         <a class="nav-link" href="administrator/dashboard/productcategories">

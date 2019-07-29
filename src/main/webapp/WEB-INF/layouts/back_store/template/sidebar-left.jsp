@@ -17,31 +17,51 @@
     <li class="nav-item ${dashboardIsActive}">
         <a class="nav-link" href="store/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span><spring:message code="admin.dashboard"/></span></a>
+            <span><spring:message code="admin.dashboard"/></span>
+		</a>
+    </li>
+	
+	<!-- Divider -->
+    <hr class="sidebar-divider">
+	
+	<!-- Orders -->
+    <li class="nav-item ${ordersIsActive}">
+        <a class="nav-link" href="store/dashboard/orders">
+            <i class="fas fa-fw fa-book-reader"></i>
+            <span><spring:message code="admin.menu.orders"/></span>
+		</a>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 	
+	<!-- Heading -->
+	<div class="sidebar-heading">
+		<spring:message code="settings"/>
+	</div>
+	
+	<!-- Profile -->
+    <li class="nav-item ${profileIsActive}">
+        <a class="nav-link" href="store/dashboard/profile">
+            <i class="fas fa-fw fa-store"></i>
+            <span><spring:message code="profile"/></span>
+		</a>
+    </li>
+	
     <!-- Products -->
     <li class="nav-item ${productsIsActive}">
-        <a class="nav-link" href="store/dashboard/products">
+        <a class="nav-link" href="store/dashboard/profile/products">
             <i class="fas fa-fw fa-mug-hot"></i>
-            <span><spring:message code="admin.menu.products"/></span></a>
+            <span><spring:message code="admin.menu.products"/></span>
+		</a>
     </li>
 
 	<!-- Extras -->
     <li class="nav-item ${extrasIsActive}">
-        <a class="nav-link" href="store/dashboard/extras">
+        <a class="nav-link" href="store/dashboard/profile/extras">
             <i class="fas fa-fw fa-fill-drip"></i>
-            <span><spring:message code="admin.menu.extras"/></span></a>
-    </li>
-
-    <!-- Orders -->
-    <li class="nav-item ${ordersIsActive}">
-        <a class="nav-link" href="store/dashboard/orders">
-            <i class="fas fa-fw fa-book-reader"></i>
-            <span><spring:message code="admin.menu.orders"/></span></a>
+            <span><spring:message code="admin.menu.extras"/></span>
+		</a>
     </li>
 
     <!-- Divider -->

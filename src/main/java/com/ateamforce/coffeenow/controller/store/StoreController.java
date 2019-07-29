@@ -78,11 +78,14 @@ public class StoreController {
         // add store media
         modelmap.addAttribute("allMedia", storeMediaService.findByStore(currentUser.getId()));
         
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("profileIsActive", "active");
+        
         return "back_store/dashboard/profile";
     }
     
     // PRODUCTS
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/products", method = RequestMethod.GET)
     public String store_dashboard_products(
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
@@ -102,7 +105,7 @@ public class StoreController {
     }
     
     // EXTRAS
-    @RequestMapping(value = "/extras", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/extras", method = RequestMethod.GET)
     public String store_dashboard_extras(
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
@@ -134,7 +137,7 @@ public class StoreController {
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("ordersIsActive", "active");
         
-        return "back_store/dashboard/extras";
+        return "back_store/dashboard/orders";
     }
     
 }

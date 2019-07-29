@@ -18,6 +18,7 @@ import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.service.PaymentTypeService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
+import com.ateamforce.coffeenow.service.StoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
@@ -54,6 +55,9 @@ public class AdminController {
 
     @Autowired
     ExtraCategoryService extraCategoryService;
+    
+    @Autowired
+    StoreService storeService;
 
     @Autowired
     AppRoleService appRoleService;
@@ -175,6 +179,19 @@ public class AdminController {
         modelmap.addAttribute("extracategoriesIsActive", "active");
 
         return "back_admin/dashboard/extra_categories";
+    }
+    
+    // Gets all stores and enables editing them
+    @RequestMapping("/stores")
+    public String admin_dashboard_stores(ModelMap modelmap) {
+        
+        //add all stores
+        modelmap.addAttribute("stores", storeService.findAll());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("storesIsActive", "active");
+
+        return "back_admin/dashboard/stores";
     }
 
     @PostMapping("/addapprole")

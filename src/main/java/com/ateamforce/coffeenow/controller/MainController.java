@@ -1,14 +1,19 @@
 package com.ateamforce.coffeenow.controller;
 
+import com.ateamforce.coffeenow.dto.NewStoreDto;
 import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
 import com.ateamforce.coffeenow.model.Store;
 import com.ateamforce.coffeenow.service.impl.AppUserServiceImpl;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/")
@@ -32,10 +37,31 @@ public class MainController {
         return "back_store/index";
     }
     
-    // Store Backend Register Page
-    @RequestMapping("/store/register")
-    public String store_register(ModelMap modelmap, @ModelAttribute("store") Store store) {
+    // Store Backend Registration form Page
+    @RequestMapping(value = "/store/register", method = RequestMethod.GET)
+    public String store_register_form(ModelMap modelmap, @ModelAttribute("newStore") NewStoreDto newStore) {
         return "back_store/register";
+    }
+    
+    // Store Backend register parse
+    @RequestMapping(value = "/store/register", method = RequestMethod.POST)
+    public String store_register_parse(
+        ModelMap modelmap, 
+        @ModelAttribute("newStore") @Valid NewStoreDto newStore, 
+        BindingResult result
+    ) {
+        
+        if (result.hasErrors()) {
+            return "back_store/register";
+        }
+        
+        String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: "
+                    + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
+        
+        return "redirect:/store/dashboard";
     }
     
     // TODO: FOR TESTING PURPOSES - TO BE REMOVED
@@ -81,7 +107,6 @@ public class MainController {
         appUser.setPhone("12254");
         appUser.setVat(45454544);
         appUser.setStorename("aek");
-        appUser.setLogo("dadad");
         appUser.setContactname("dadada");
         appUser.setState("adada");
         appUser.setZip(145);

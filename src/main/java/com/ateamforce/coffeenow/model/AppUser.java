@@ -20,9 +20,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -41,24 +47,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AppUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{email.notempty.restriction.message}")
+    @NotEmpty(message = "{email.notempty.restriction.message}")
+    @NotBlank(message = "{email.notempty.restriction.message}")
     @Size(min = 1, max = 255)
     @Column(name = "email", nullable = false, unique = true)
+    @Email(message = "{email.wrongformat.restriction.message}")
     private String email;
+    
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{password.notempty.restriction.message}")
+    @NotEmpty(message = "{password.notempty.restriction.message}")
+    @NotBlank(message = "{password.notempty.restriction.message}")
+    @Size(min = 8, max = 255, message = "{password.size.restriction.message}")
+    @Pattern( regexp = "(?=.*[0-9]).+", message = "{password.number.restriction.message}" )
+    @Pattern( regexp = "(?=.*[a-z]).+", message = "{password.small.restriction.message}" )
+    @Pattern( regexp = "(?=.*[A-Z]).+", message = "{password.capital.restriction.message}" )
+    @Pattern( regexp = "(?=.*[!@#$%^&*+=?-_()/\"\\.,<>~`;:]).+", message = "{password.special.restriction.message}" )
+    @Pattern( regexp = "(?=\\S+$).+", message = "{password.nospaces.restriction.message}" )
     @Column(name = "password")
     private String password;
+    
+    @NotNull(message = "{passwordRepeat.notempty.restriction.message}")
+    @NotEmpty(message = "{passwordRepeat.notempty.restriction.message}")
+    @NotBlank(message = "{passwordRepeat.notempty.restriction.message}")
+    @Transient
+    private String passwordRepeat;
+    
     @JoinColumn(name = "approle", referencedColumnName = "approle", insertable = false, updatable = false)
     @ManyToOne
     private AppRole approle;
+    
+    @Column(name = "enabled")
+    @Type(type= "org.hibernate.type.NumericBooleanType")
+    private boolean enabled;
 
     public AppUser() {
     }
@@ -97,12 +127,28 @@ public class AppUser implements Serializable {
         this.password = password;
     }
 
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
+
     public AppRole getApprole() {
         return approle;
     }
 
     public void setApprole(AppRole approle) {
         this.approle = approle;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 
