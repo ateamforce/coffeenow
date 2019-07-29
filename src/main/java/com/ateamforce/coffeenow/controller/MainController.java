@@ -1,9 +1,12 @@
 package com.ateamforce.coffeenow.controller;
 
 import com.ateamforce.coffeenow.dto.NewStoreDto;
+import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
 import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
+import com.ateamforce.coffeenow.model.AppUser;
 import com.ateamforce.coffeenow.model.Store;
+import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.service.impl.AppUserServiceImpl;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    @Autowired
+    AppUserService appUserService;
 
     // Home Page
     @RequestMapping
@@ -36,48 +42,68 @@ public class MainController {
     public String store_login(ModelMap modelmap) {
         return "back_store/index";
     }
-    
+
     // Store Backend Registration form Page
     @RequestMapping(value = "/store/register", method = RequestMethod.GET)
     public String store_register_form(ModelMap modelmap, @ModelAttribute("newStore") NewStoreDto newStore) {
         return "back_store/register";
     }
-    
+
     // Store Backend register parse
     @RequestMapping(value = "/store/register", method = RequestMethod.POST)
     public String store_register_parse(
-        ModelMap modelmap, 
-        @ModelAttribute("newStore") @Valid NewStoreDto newStore, 
-        BindingResult result
+            ModelMap modelmap,
+            @ModelAttribute("newStore") @Valid NewStoreDto newStore,
+            BindingResult result
     ) {
-        
+
+        AppUser registered = new AppUser();
+
+
+        if (!result.hasErrors()) {
+            registered = createUserAccount(newStore, result);
+        }
+        if (registered == null) {
+            result.rejectValue("email", "email.exists");
+        }
+
         if (result.hasErrors()) {
             return "back_store/register";
         }
-        
+
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Attempting to bind disallowed fields: "
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
-        
+
         return "redirect:/store/dashboard";
     }
-    
+
+    private AppUser createUserAccount(NewStoreDto newStore, BindingResult result) {
+        AppUser registered = null;
+        try {
+            registered = appUserService.registerNewStore(newStore);
+        } catch (UserAlreadyExistException e) {
+            return null;
+        }
+        return registered;
+    }
+
     // TODO: FOR TESTING PURPOSES - TO BE REMOVED
     @Autowired
-    AppUserServiceImpl ausimp;
-    
+    AppUserService ausimp;
+
     @RequestMapping("/add")
-    public String add(){
-        Administrator appUser=new Administrator();
+    public String add() {
+        Administrator appUser = new Administrator();
         appUser.setEmail("sakellariou23@hotmail.com");
         appUser.setPassword("123");
-        AppRole role=new AppRole();
+        AppRole role = new AppRole();
         role.setApprole("admin");
         appUser.setApprole(role);
         appUser.setName("akis");
-        
+
 //        appUser.setAddress("adadada");
 //        appUser.setLongitude(1212154.45);
 //        appUser.setLatitude(84.545445);
@@ -89,15 +115,15 @@ public class MainController {
 //        appUser.setState("adada");
 //        appUser.setZip(145);
         ausimp.addAppUser(appUser);
-    return "front/login";
+        return "front/login";
     }
-    
+
     @RequestMapping("/addstore")
-    public String addstore(){
-        Store appUser=new Store();
+    public String addstore() {
+        Store appUser = new Store();
         appUser.setEmail("store@gmail.com");
         appUser.setPassword("123");
-        AppRole role=new AppRole();
+        AppRole role = new AppRole();
         role.setApprole("store");
         appUser.setApprole(role);
 
@@ -111,7 +137,7 @@ public class MainController {
         appUser.setState("adada");
         appUser.setZip(145);
         ausimp.addAppUser(appUser);
-    return "front/login";
+        return "front/login";
     }
     /////////////////////////////////////////////////////////
 

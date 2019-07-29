@@ -5,6 +5,7 @@
  */
 package com.ateamforce.coffeenow.service;
 
+import com.ateamforce.coffeenow.dto.NewStoreDto;
 import com.ateamforce.coffeenow.model.AppUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,15 +15,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author alexa
  */
 public interface AppUserService extends UserDetailsService {
-    
-    void addAppUser(AppUser appUser);
-    
+
+    AppUser addAppUser(AppUser appUser);
+
     void deleteAppUser(AppUser appUser);
-    
+
     AppUser getUserByEmail(String email);
-    
+
     @Override
     UserDetails loadUserByUsername(String email);
-    
+
     AppUser findAppUserById(int appUserId);
+
+    AppUser registerNewStore(NewStoreDto newStore);
 }
