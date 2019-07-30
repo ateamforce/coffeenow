@@ -28,7 +28,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.Type;
 
 /**
  *
@@ -87,8 +86,7 @@ public class AppUser implements Serializable {
     private AppRole approle;
     
     @Column(name = "enabled")
-    @Type(type= "org.hibernate.type.NumericBooleanType")
-    private boolean enabled;
+    private int enabled;
 
     public AppUser() {
     }
@@ -143,11 +141,11 @@ public class AppUser implements Serializable {
         this.approle = approle;
     }
 
-    public boolean isEnabled() {
+    public int getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 

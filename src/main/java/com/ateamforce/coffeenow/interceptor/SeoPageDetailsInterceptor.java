@@ -75,6 +75,7 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         pageDetails.put("/", new String[]{"HomePage | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/", new String[]{"Administrator Login | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/dashboard/", new String[]{"Administrator Dashboard | CoffeeNow",defaultDescription});
+        pageDetails.put("/administrator/dashboard/stores/", new String[]{"Stores | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/dashboard/products/", new String[]{"Products | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/dashboard/productcategories/", new String[]{"Product Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/administrator/dashboard/extras/", new String[]{"Extras | Administrator Dashboard | CoffeeNow",defaultDescription});
@@ -83,8 +84,8 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         pageDetails.put("/store/register/", new String[]{"Store Registration | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/profile/", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
-        pageDetails.put("/store/dashboard/products/", new String[]{"Your Products | CoffeeNow",defaultDescription});
-        pageDetails.put("/store/dashboard/extras/", new String[]{"Your Extras | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/profile/products/", new String[]{"Your Products | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/dashboard/profile/extras/", new String[]{"Your Extras | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/orders/", new String[]{"Your Orders | CoffeeNow",defaultDescription});
     }
     

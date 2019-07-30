@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,45 +50,60 @@ public class Store extends AppUser {
     private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{vat.notempty.restriction.message}")
     @Column(name = "vat")
     private long vat;
+    
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{storename.notempty.restriction.message}")
+    @NotEmpty(message = "{storename.notempty.restriction.message}")
+    @NotBlank(message = "{storename.notempty.restriction.message}")
+    @Size(min = 2, max = 30, message = "{storename.size.restriction.message}")
     @Column(name = "storename")
     private String storename;
+    
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{contactname.notempty.restriction.message}")
+    @NotEmpty(message = "{contactname.notempty.restriction.message}")
+    @NotBlank(message = "{contactname.notempty.restriction.message}")
+    @Size(min = 3, max = 30, message = "{contactname.size.restriction.message}")
     @Column(name = "contactname")
     private String contactname;
+    
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{phone.notempty.restriction.message}")
+    @NotEmpty(message = "{phone.notempty.restriction.message}")
+    @NotBlank(message = "{phone.notempty.restriction.message}")
+    @Size(min = 10, max = 10, message = "{phone.size.restriction.message}")
     @Column(name = "phone")
     private String phone;
+    
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @NotNull(message = "{address.notempty.restriction.message}")
+    @NotEmpty(message = "{address.notempty.restriction.message}")
+    @NotBlank(message = "{address.notempty.restriction.message}")
     @Column(name = "address")
     private String address;
+    
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{state.notempty.restriction.message}")
+    @NotEmpty(message = "{state.notempty.restriction.message}")
+    @NotBlank(message = "{state.notempty.restriction.message}")
     @Size(min = 1, max = 255)
     @Column(name = "state")
     private String state;
+    
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{zip.notempty.restriction.message}")
     @Column(name = "zip")
     private int zip;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "longitude")
     private double longitude;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "latitude")
     private double latitude;
 

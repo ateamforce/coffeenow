@@ -7,7 +7,6 @@ package com.ateamforce.coffeenow.service.impl;
 
 import com.ateamforce.coffeenow.dto.NewStoreDto;
 import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
-import com.ateamforce.coffeenow.model.AppRole;
 import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.model.AppUser;
 import com.ateamforce.coffeenow.model.Store;
@@ -15,7 +14,6 @@ import com.ateamforce.coffeenow.model.repository.AppUserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

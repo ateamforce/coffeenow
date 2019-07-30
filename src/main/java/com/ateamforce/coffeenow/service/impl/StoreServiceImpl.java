@@ -29,4 +29,14 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findAll();
     }
 
+    @Override
+    public void deleteById(int storeId) {
+        storeRepository.deleteById(storeId);
+    }
+
+    @Override
+    public void enableStoreById(int enabled, int storeId) {
+        storeRepository.enableStoreById(enabled, storeId);
+    }
+
 }
