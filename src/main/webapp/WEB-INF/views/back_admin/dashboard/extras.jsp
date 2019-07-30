@@ -102,27 +102,19 @@
 							<thead>
 								<tr>
 									<th class="idHeaderCFN">Id</th>
-									<th class="titleHeaderCNF">Title</th>
-									<th>
-										<spring:message code="admin.menu.extrascategories" />
-									</th>
-									<th class="imageHeaderCFN">Image</th>
-									<th class="optionsHeaderCFN">
-										<spring:message code="options" />
-									</th>
+									<th class="titleHeaderCNF"><spring:message code="title" /></th>
+									<th><spring:message code="admin.menu.extrascategories" /></th>
+									<th class="imageHeaderCFN"><spring:message code="image" /></th>
+									<th class="optionsHeaderCFN"><spring:message code="options" /></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th>Id</th>
-									<th>Title</th>
-									<th>
-										<spring:message code="admin.menu.extrascategories" />
-									</th>
-									<th>Image</th>
-									<th>
-										<spring:message code="options" />
-									</th>
+									<th><spring:message code="title" /></th>
+									<th><spring:message code="admin.menu.extrascategories" /></th>
+									<th><spring:message code="image" /></th>
+									<th><spring:message code="options" /></th>
 								</tr>
 							</tfoot>
 							<tbody>

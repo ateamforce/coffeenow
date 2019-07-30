@@ -101,22 +101,22 @@
 								<thead>
 									<tr>
 										<th class="idHeaderCFN">Id</th>
-										<th class="hidden">Parent</th>
-										<th class="titleHeaderCFN">Title</th>
+										<th class="hidden"><spring:message code="parent" /></th>
+										<th class="titleHeaderCFN"><spring:message code="title" /></th>
 										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="admin.menu.products"/></th>
-										<th class="imageHeaderCFN">Image</th>
+										<th class="imageHeaderCFN"><spring:message code="image" /></th>
 										<th class="optionsHeaderCFN"><spring:message code="options"/></th>
 									</tr>
 								</thead>
 								<tfoot>
 									<tr>
 										<th>Id</th>
-										<th class="hidden">Parent</th>
-										<th>Title</th>
+										<th class="hidden"><spring:message code="parent" /></th>
+										<th><spring:message code="title" /></th>
 										<th><spring:message code="admin.menu.extras"/></th>
 										<th><spring:message code="admin.menu.products"/></th>
-										<th>Image</th>
+										<th><spring:message code="image" /></th>
 										<th><spring:message code="options"/></th>
 									</tr>
 								</tfoot>

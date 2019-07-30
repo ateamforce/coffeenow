@@ -57,9 +57,6 @@
 					<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="login"/></button>
                   </form>
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
-                  </div>
 				  <div class="text-center">
                     <a class="small" href="administrator?language=el">Ελληνικά</a> | <a class="small" href="administrator?language=en">English</a>
                   </div>

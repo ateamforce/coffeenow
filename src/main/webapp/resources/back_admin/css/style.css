@@ -118,6 +118,8 @@ button.multiselect-clear-filter {
 }
 #newOrUpdateMainTableRowButtonCFN { margin: 20px 0 0 0; }
 
+.accountStatusToggleCFN { display: none; }
+
 /* overrides */
 body {
 	font-family: 'Source Sans Pro', sans-serif;

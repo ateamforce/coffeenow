@@ -12,5 +12,9 @@ public interface StoreService {
     Store findById(int id);
     
     List<Store> findAll();
+    
+    void deleteById(int storeId);
+    
+    void enableStoreById(int enabled, int storeId);
 
 }
