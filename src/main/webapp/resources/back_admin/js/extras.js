@@ -60,23 +60,7 @@ function load(rowId){
 
 // function that forwards a yesNo delete message/action
 function deleteRow(rowId){
-	
-	let doDelete = true;
-	
-	// TODO: find a beter way to do this. possibly need to access the data from the "table" variable
-	mainTable.find('tr[role="row"]').each(function(){
-		if (($(this).find(".rowIdCFN").html() != rowId) &&  ($(this).find(".parentIdCFN").html() == rowId)) {
-			doDelete = false;
-			return false;
-		 }
-	});
-	
-	if (doDelete) {
-		yesNo(mainTable.attr("data-cfn-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
-	}
-	else {
-		inform(language_JSON[locale]["cannotDeleteParentWithChildren"]);
-	}
+	yesNo(mainTable.attr("data-cfn-delUrl") + rowId, true, language_JSON[locale]["deleteInform"]);
 }
 
 $(document).ready(function() {
