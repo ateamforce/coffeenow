@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,17 +36,24 @@ import org.springframework.web.multipart.MultipartFile;
 public class StoreMedia extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Store store;
+    
     @Column(name = "hasimage")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean hasimage;
+    
+    @Column(name = "type")
+    @Pattern(regexp = "gallery|logo|profile", flags = Pattern.Flag.CASE_INSENSITIVE)
+    private String type;
 
     public StoreMedia() {
     }
@@ -81,6 +89,14 @@ public class StoreMedia extends _ImageCarrier implements Serializable {
 
     public void setHasimage(boolean hasimage) {
         this.hasimage = hasimage;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
