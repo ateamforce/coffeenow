@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<body class="bg-gradient-light">
+<body class="bg-gradient-primary">
 
   <div class="container">
 

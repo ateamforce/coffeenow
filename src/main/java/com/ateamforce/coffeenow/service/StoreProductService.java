@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface StoreProductService {
     
-    void addStoreProduct(StoreProduct storeProduct);
+    StoreProduct addStoreProduct(StoreProduct storeProduct);
     
     void deleteStoreProduct(StoreProduct storeProduct);
     

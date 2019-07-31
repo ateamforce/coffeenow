@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface PaymentTypeService {
 
-    void addPaymentType(PaymentType paymentType);
+    PaymentType addPaymentType(PaymentType paymentType);
 
     void deletePaymentTypeById(int paymentTypeId);
 

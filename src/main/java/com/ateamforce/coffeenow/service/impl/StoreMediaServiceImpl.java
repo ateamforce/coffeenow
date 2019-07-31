@@ -8,9 +8,11 @@ package com.ateamforce.coffeenow.service.impl;
 import com.ateamforce.coffeenow.model.StoreMedia;
 import com.ateamforce.coffeenow.model.repository.StoreMediaRepository;
 import com.ateamforce.coffeenow.service.StoreMediaService;
+import com.ateamforce.coffeenow.util.ImageHandlerService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +26,32 @@ public class StoreMediaServiceImpl implements StoreMediaService {
     
     @Autowired
     StoreMediaRepository storeMediaRepository;
+    
+    @Autowired
+    ImageHandlerService imageHandlerService;
+    
+    @Autowired
+    Environment env;
 
     @Override
-    public void addStoreMedia(StoreMedia storeMedia) {
-        storeMediaRepository.save(storeMedia);
+    public StoreMedia addStoreMedia(StoreMedia storeMedia) {
+        
+        boolean hasChanged = false;
+
+        StoreMedia persistedStoreMedia = storeMediaRepository.save(storeMedia);
+
+        if (!storeMedia.getImage().isEmpty()) {
+            persistedStoreMedia.setHasimage(
+                    imageHandlerService.saveImage(
+                            env.getProperty("front.images.stores") + "media/" + persistedStoreMedia.getStoreid() + "/",
+                            persistedStoreMedia.getId(),
+                            storeMedia
+                    )
+            );
+            hasChanged = true;
+        }
+
+        return (hasChanged) ? storeMediaRepository.save(persistedStoreMedia) : persistedStoreMedia;
     }
 
     @Override
@@ -38,6 +62,21 @@ public class StoreMediaServiceImpl implements StoreMediaService {
     @Override
     public List<StoreMedia> findByStore(int storeid) {
         return storeMediaRepository.findByStore(storeid);
+    }
+
+    @Override
+    public void deleteStoreMediaByid(int storeMediaId) {
+        
+        StoreMedia storeMedia = storeMediaRepository.findById(storeMediaId);
+        boolean hasImage = storeMedia.isHasimage();
+        storeMediaRepository.deleteById(storeMediaId);
+        try {
+            storeMediaRepository.findById(storeMediaId);
+        } catch (NullPointerException e) {
+            if (hasImage) {
+                imageHandlerService.deleteImage(env.getProperty("front.images.stores") + "media/" + storeMedia.getStoreid() + "/", storeMediaId);
+            }
+        }
     }
     
 }

@@ -1,13 +1,10 @@
 package com.ateamforce.coffeenow.controller.administrator.rest;
 
 import com.ateamforce.coffeenow.model.Product;
-import com.ateamforce.coffeenow.model.ProductCategory;
-import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

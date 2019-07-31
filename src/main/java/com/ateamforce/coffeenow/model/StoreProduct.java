@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -33,31 +34,41 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "StoreProduct.findByProductid", query = "SELECT s FROM StoreProduct s WHERE s.storeProductPK.productid = :productid")
     , @NamedQuery(name = "StoreProduct.findByPrice", query = "SELECT s FROM StoreProduct s WHERE s.price = :price")
     , @NamedQuery(name = "StoreProduct.findByDiscount", query = "SELECT s FROM StoreProduct s WHERE s.discount = :discount")})
-public class StoreProduct implements Serializable {
+public class StoreProduct extends _ImageCarrier implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @EmbeddedId
     protected StoreProductPK storeProductPK;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "price")
     private float price;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "discount")
     private int discount;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "description")
     private String description;
+    
     @JoinColumn(name = "productid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Product products;
+    
     @JoinColumn(name = "storeid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Store stores;
+    
+    @Column(name = "hasimage")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean hasimage;
 
     public StoreProduct() {
     }
@@ -123,6 +134,14 @@ public class StoreProduct implements Serializable {
 
     public void setStores(Store stores) {
         this.stores = stores;
+    }
+
+    public boolean isHasimage() {
+        return hasimage;
+    }
+
+    public void setHasimage(boolean hasimage) {
+        this.hasimage = hasimage;
     }
 
     @Override

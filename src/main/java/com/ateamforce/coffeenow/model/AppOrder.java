@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -44,36 +45,46 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT o FROM AppOrder o WHERE o.total = :total")
     , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})
 public class AppOrder implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 8)
     @Column(name = "mode")
     private String mode;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "total")
     private float total;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-
-    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Transient
     private List<OrderProduct> ordersProductsList;
+    
     @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne
     private Client client;
+    
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
     private Store store;
+    
+    @Column(name = "status")
+    @Pattern(regexp = "waiting|completed|canceled", flags = Pattern.Flag.CASE_INSENSITIVE)
+    private String status;
 
     public AppOrder() {
     }
@@ -96,7 +107,6 @@ public class AppOrder implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     @XmlTransient
     @JsonIgnore
@@ -146,6 +156,14 @@ public class AppOrder implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     

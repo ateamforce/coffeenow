@@ -14,9 +14,11 @@ import java.util.List;
  */
 public interface StoreMediaService {
 
-    void addStoreMedia(StoreMedia storeMedia);
+    StoreMedia addStoreMedia(StoreMedia storeMedia);
 
     void deleteStoreMedia(StoreMedia storeMedia);
+    
+    void deleteStoreMediaByid(int storeMediaId);
     
     List<StoreMedia> findByStore(int storeid);
 }
