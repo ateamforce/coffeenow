@@ -54,13 +54,21 @@ public class ImageHandler implements ImageHandlerService {
             try {
 
                 BufferedImage originalImage = ImageIO.read(businessObj.getImage().getInputStream());
-                int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-                
+                int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+
                 // TODO: only keep one of the two on live environment. or put a new path entirely.
                 // Copy image in both destinations, because tomcat has a delay in copying from the first to the 2nd automatically,
                 // so when the page loads, the image that is supposed to load is at the 2nd path, but tomcat, hasn't put it there yet
+                BufferedImage newImageJpg = new BufferedImage(originalImage.getWidth(),
+                        originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+                newImageJpg.createGraphics().drawImage(originalImage, 0, 0,Color.WHITE, null);
 
-                BufferedImage resizeImageJpg = resizeImage(originalImage, type);
+                localFile = new File(pathArr[0] + "/src/main/webapp" + path + id.toString() + ".jpg");
+                ImageIO.write(newImageJpg,
+                        "jpg", localFile);
+                BufferedImage resizeImageJpg = ImageIO.read(localFile);
+                resizeImageJpg=resizeImage(resizeImageJpg,type);
+                
                 
                 localFile = new File(pathArr[0] + "/src/main/webapp" + path + id.toString() + ".jpg");
                 ImageIO.write(resizeImageJpg,
@@ -79,23 +87,23 @@ public class ImageHandler implements ImageHandlerService {
         return (!localFile.equals(new File("/")) && localFile.exists());
     }
 
-    private static BufferedImage resizeImage(BufferedImage originalImage, int type){
-		
-	BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
-	Graphics2D g = resizedImage.createGraphics();
-	g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
-	g.dispose();	
-	g.setComposite(AlphaComposite.Src);
+    private static BufferedImage resizeImage(BufferedImage originalImage, int type) {
 
-	g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-	RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	g.setRenderingHint(RenderingHints.KEY_RENDERING,
-	RenderingHints.VALUE_RENDER_QUALITY);
-	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-	RenderingHints.VALUE_ANTIALIAS_ON);
-	
-	return resizedImage;
-    }	
+        BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT,Color.WHITE, null);
+        g.dispose();
+        g.setComposite(AlphaComposite.Src);
+
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        return resizedImage;
+    }
 
     @Override
     public void deleteImage(String path, Integer id) {

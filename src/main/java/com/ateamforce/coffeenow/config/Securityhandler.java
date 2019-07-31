@@ -51,34 +51,28 @@ public class Securityhandler extends SavedRequestAwareAuthenticationSuccessHandl
 
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        AppUser currentUser = new AppUser();
-
         Collection<GrantedAuthority> authorities = authUser.getAuthorities();
-        
+
         String targetUrl = "";
 
         for (GrantedAuthority authority : authorities) {
 
             if (authority.getAuthority().equals("admin")) {
-                currentUser = (Administrator) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/administrator/dashboard";
             } else if (authority.getAuthority().equals("store")) {
-                currentUser = (Store) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/store/dashboard";
             } else if (authority.getAuthority().equals("client")) {
-                currentUser = (Client) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/client/dashboard";
             }
 
         }
 
-        HttpSession session = request.getSession();
-        session.setAttribute("currentUser", currentUser);
-
         clearAuthenticationAttributes(request);
 
         // Use the DefaultSavedRequest URL
-        
         if (savedRequest != null) {
             targetUrl = savedRequest.getRedirectUrl();
         }
