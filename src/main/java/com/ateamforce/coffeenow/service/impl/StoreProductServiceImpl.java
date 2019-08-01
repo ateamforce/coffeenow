@@ -22,19 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class StoreProductServiceImpl implements StoreProductService {
-    
+
     @Autowired
     StoreProductRepository storeProductRepository;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
-    
+
     @Override
     public StoreProduct addStoreProduct(StoreProduct storeProduct) {
-        
+
         boolean hasChanged = false;
 
         StoreProduct persistedStoreProduct = storeProductRepository.save(storeProduct);
@@ -52,22 +52,19 @@ public class StoreProductServiceImpl implements StoreProductService {
 
         return (hasChanged) ? storeProductRepository.save(persistedStoreProduct) : persistedStoreProduct;
     }
-    
+
     @Override
     public void deleteStoreProduct(StoreProduct storeProduct) {
         boolean hasImage = storeProductRepository.findById(storeProduct.getStoreProductPK()).get().isHasimage();
         storeProductRepository.deleteById(storeProduct.getStoreProductPK());
-        try {
-            storeProductRepository.findById(storeProduct.getStoreProductPK());
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(
-                        env.getProperty("front.images.stores") + "products/" + 
-                                + storeProduct.getStoreProductPK().getStoreid() 
-                                + "/", 
-                        storeProduct.getStoreProductPK().getProductid()
-                );
-            }
+
+        if ((storeProductRepository.findById(storeProduct.getStoreProductPK())) == null && hasImage) {
+            imageHandlerService.deleteImage(
+                    env.getProperty("front.images.stores") + "products/"
+                    + +storeProduct.getStoreProductPK().getStoreid()
+                    + "/",
+                    storeProduct.getStoreProductPK().getProductid()
+            );
         }
     }
 

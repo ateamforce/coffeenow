@@ -25,16 +25,16 @@ public class PaymentTypeServiceImpl implements PaymentTypeService {
 
     @Autowired
     PaymentTypeRepository paymentTypeRepository;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
 
     @Override
     public PaymentType addPaymentType(PaymentType paymentType) {
-        
+
         boolean hasChanged = false;
 
         PaymentType persistedPaymentType = paymentTypeRepository.save(paymentType);
@@ -57,12 +57,10 @@ public class PaymentTypeServiceImpl implements PaymentTypeService {
     public void deletePaymentTypeById(int paymentTypeId) {
         boolean hasImage = paymentTypeRepository.findPaymentTypeById(paymentTypeId).isHasimage();
         paymentTypeRepository.deleteById(paymentTypeId);
-        try {
-            paymentTypeRepository.findPaymentTypeById(paymentTypeId);
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.paymenttypes"), paymentTypeId);
-            }
+
+        if ((getPaymentTypeById(paymentTypeId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.paymenttypes"), paymentTypeId);
         }
     }
 

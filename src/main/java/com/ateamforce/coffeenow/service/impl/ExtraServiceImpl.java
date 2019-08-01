@@ -70,12 +70,10 @@ public class ExtraServiceImpl implements ExtraService {
     public void deleteExtraById(int extraId) {
         boolean hasImage = getExtraById(extraId).isHasimage();
         extraRepository.deleteById(extraId);
-        try {
-            getExtraById(extraId);
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.extras.items"), extraId);
-            }
+
+        if ((getExtraById(extraId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.extras.items"), extraId);
         }
     }
 

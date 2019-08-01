@@ -58,8 +58,13 @@
                       <input type="password" class="form-control form-control-user" id="password"
                         placeholder="${passwordPlaceholder}" name="password" required>
                     </div>
-                    <label for="remember-me"><b>Remember me</b></label>
-                    <input type="checkbox" name="remember-me" />
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="rememberMe" name="remember-me">
+                        <label class="custom-control-label" for="rememberMe">
+                          <spring:message code="login.rememberme" /></label>
+                      </div>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                       <spring:message code="login" /></button>
                   </form>

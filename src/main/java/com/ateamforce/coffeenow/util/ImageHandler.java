@@ -23,8 +23,8 @@ public class ImageHandler implements ImageHandlerService {
 
     private final static Logger LOGGER = Logger.getLogger(ImageHandler.class);
 
-    private static final int IMG_WIDTH = 100;
-    private static final int IMG_HEIGHT = 100;
+    private static final int IMG_WIDTH = 350;
+    private static final int IMG_HEIGHT = 350;
 
     /**
      * Saves an image to path with id as filename

@@ -5,17 +5,12 @@
  */
 package com.ateamforce.coffeenow.config;
 
-import com.ateamforce.coffeenow.model.Administrator;
-import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.Client;
-import com.ateamforce.coffeenow.model.Store;
 import com.ateamforce.coffeenow.service.AppUserService;
 import java.io.IOException;
 import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
