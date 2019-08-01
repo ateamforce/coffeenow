@@ -110,8 +110,8 @@
 							<thead>
 								<tr>
 									<th class="idHeaderCFN">Id</th>
-									<th class="titleHeaderCNF"><spring:message code="title" /></th>
-									<th class="descriptionHeaderCFN"><spring:message code="description" /></th>
+									<th class="titleHeaderCNF"><spring:message code="thisTitle" /></th>
+									<th class="descriptionHeaderCFN"><spring:message code="thisDescription" /></th>
 									<th><spring:message code="admin.menu.productcategories" /></th>
 									<th class="imageHeaderCFN"><spring:message code="image" /></th>
 									<th class="optionsHeaderCFN"><spring:message code="options" /></th>
@@ -120,8 +120,8 @@
 							<tfoot>
 								<tr>
 									<th>Id</th>
-									<th><spring:message code="title" /></th>
-									<th><spring:message code="description" /></th>
+									<th><spring:message code="thisTitle" /></th>
+									<th><spring:message code="thisDescription" /></th>
 									<th><spring:message code="admin.menu.productcategories" /></th>
 									<th><spring:message code="image" /></th>
 									<th><spring:message code="options" /></th>
