@@ -102,7 +102,7 @@
                                 <tr>
                                     <th class="idHeaderCFN">Id</th>
                                     <th class="hidden"><spring:message code="parent" /></th>
-                                    <th class="titleHeaderCFN"><spring:message code="title" /></th>
+                                    <th class="titleHeaderCFN"><spring:message code="thisTitle" /></th>
                                     <th><spring:message code="admin.menu.products"/></th>
                                     <th><spring:message code="admin.menu.extras"/></th>
                                     <th class="imageHeaderCFN"><spring:message code="image" /></th>
@@ -113,7 +113,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th class="hidden"><spring:message code="parent" /></th>
-                                    <th><spring:message code="title" /></th>
+                                    <th><spring:message code="thisTitle" /></th>
                                     <th><spring:message code="admin.menu.products"/></th>
                                     <th><spring:message code="admin.menu.extras"/></th>
                                     <th><spring:message code="image" /></th>
