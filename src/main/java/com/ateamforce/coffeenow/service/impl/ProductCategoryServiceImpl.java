@@ -86,12 +86,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         boolean hasImage = getProductCategoryById(productCategoryId).isHasimage();
         productCategoryRepository.deleteById(productCategoryId);
-        try {
-            getProductCategoryById(productCategoryId);
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.products.categories"), productCategoryId);
-            }
+
+        if ((getProductCategoryById(productCategoryId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.products.categories"), productCategoryId);
         }
     }
 

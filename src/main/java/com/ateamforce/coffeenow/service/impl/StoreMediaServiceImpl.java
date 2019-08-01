@@ -23,19 +23,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class StoreMediaServiceImpl implements StoreMediaService {
-    
+
     @Autowired
     StoreMediaRepository storeMediaRepository;
-    
+
     @Autowired
     ImageHandlerService imageHandlerService;
-    
+
     @Autowired
     Environment env;
 
     @Override
     public StoreMedia addStoreMedia(StoreMedia storeMedia) {
-        
+
         boolean hasChanged = false;
 
         StoreMedia persistedStoreMedia = storeMediaRepository.save(storeMedia);
@@ -66,17 +66,15 @@ public class StoreMediaServiceImpl implements StoreMediaService {
 
     @Override
     public void deleteStoreMediaByid(int storeMediaId) {
-        
+
         StoreMedia storeMedia = storeMediaRepository.findById(storeMediaId);
         boolean hasImage = storeMedia.isHasimage();
         storeMediaRepository.deleteById(storeMediaId);
-        try {
-            storeMediaRepository.findById(storeMediaId);
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.stores") + "media/" + storeMedia.getStoreid() + "/", storeMediaId);
-            }
+
+        if ((storeMediaRepository.findById(storeMediaId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.stores") + "media/" + storeMedia.getStoreid() + "/", storeMediaId);
         }
     }
-    
+
 }

@@ -16,7 +16,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  *
@@ -25,6 +28,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     Securityhandler successHandler;
@@ -40,14 +46,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(appUserService);
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+
+        // Setting Service to find User in the database.
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        System.out.println(userDetailsService);
     }
 
     @Override
@@ -85,6 +94,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
 
+        http.authorizeRequests().and() //
+                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
+        return memory;
     }
 
     @Configuration
@@ -129,8 +148,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .csrf().disable();
 
+            http.authorizeRequests().and() //
+                    .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+                    .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+
         }
 
-    }
+        @Bean
+        public PersistentTokenRepository persistentTokenRepository() {
+            InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
+            return memory;
 
+        }
+    }
 }

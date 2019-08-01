@@ -1,5 +1,6 @@
 package com.ateamforce.coffeenow.config;
 
+import com.ateamforce.coffeenow.interceptor.CurrentUserInterseptor;
 import com.ateamforce.coffeenow.interceptor.SeoPageDetailsInterceptor;
 import com.ateamforce.coffeenow.validator.ImageValidator;
 import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
@@ -37,10 +38,10 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @PropertySource("classpath:custom.properties")
 @ComponentScan("com.ateamforce.coffeenow")
 public class WebApplicationContextConfig implements WebMvcConfigurer {
-    
+
     public MessageSource messageSource;
     public LocaleResolver localeResolver;
-    
+
     @Autowired
     Environment env;
 
@@ -83,7 +84,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     // the root directory during build)
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        
+
         // COMMON IMAGES
         // Common boilerplate (template) images (uploaded manually)
         registry.addResourceHandler("/img/common/**").addResourceLocations(env.getProperty("common.images"))
@@ -165,6 +166,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
 
+    @Bean
+    public CurrentUserInterseptor currentUserInterseptorCreate() {
+        return new CurrentUserInterseptor();
+    }
+
     // add interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -174,6 +180,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("language");
         registry.addInterceptor(localeChangeInterceptor);
         registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver));
+        registry.addInterceptor(currentUserInterseptorCreate());
 
     }
 
@@ -204,15 +211,15 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     public Validator getValidator() {
         return validator();
     }
-    
+
     // bean for the spring validator ProductCategoryValidator (basically merging JSR-303 with spring validation)
     @Bean
     public ProductCategoryValidator productCategoryValidator() {
-            Set<Validator> springValidators = new HashSet();
-            springValidators.add(new ImageValidator());
-            ProductCategoryValidator productCategoryValidator = new ProductCategoryValidator();
-            productCategoryValidator.setSpringValidators(springValidators);
-            return productCategoryValidator;
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ProductCategoryValidator productCategoryValidator = new ProductCategoryValidator();
+        productCategoryValidator.setSpringValidators(springValidators);
+        return productCategoryValidator;
     }
 
 }

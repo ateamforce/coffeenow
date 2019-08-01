@@ -20,45 +20,58 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4"><spring:message code="admin.login.welcome"/></h1>
+                    <h1 class="h4 text-gray-900 mb-4">
+                      <spring:message code="admin.login.welcome" />
+                    </h1>
                   </div>
-				  <spring:url value="administrator/dashboard/check" var="loginUrl"/>
+                  <spring:url value="administrator/dashboard/check" var="loginUrl" />
                   <form action=${loginUrl} method="post" class="user">
-					<c:choose>
-						<c:when test="${param.error != null}">
-							<div class="alert alert-danger">
-								<spring:message code="admin.login.invalid"/>
-							</div>
-						</c:when>
-						<c:when test="${param.logout != null}">
-							<div class="alert alert-success">
-								<spring:message code="admin.login.loggedout"/>
-							</div>
-						</c:when>
-						<c:when test="${param.accessDenied != null}">
-							<div class="alert alert-danger">
-								<spring:message code="admin.login.denied"/>
-							</div>
-						</c:when>
-						<c:when test="${param.sessionExpired != null}">
-							<div class="alert alert-danger">
-								<spring:message code="admin.login.sessionexpired"/>
-							</div>
-						</c:when>
-					</c:choose>
+                    <c:choose>
+                      <c:when test="${param.error != null}">
+                        <div class="alert alert-danger">
+                          <spring:message code="admin.login.invalid" />
+                        </div>
+                      </c:when>
+                      <c:when test="${param.logout != null}">
+                        <div class="alert alert-success">
+                          <spring:message code="admin.login.loggedout" />
+                        </div>
+                      </c:when>
+                      <c:when test="${param.accessDenied != null}">
+                        <div class="alert alert-danger">
+                          <spring:message code="admin.login.denied" />
+                        </div>
+                      </c:when>
+                      <c:when test="${param.sessionExpired != null}">
+                        <div class="alert alert-danger">
+                          <spring:message code="admin.login.sessionexpired" />
+                        </div>
+                      </c:when>
+                    </c:choose>
                     <div class="form-group">
-					  <spring:message code="enterEmailAddress" var="enterEmailAddress"/>
-                      <input type="email" class="form-control form-control-user" id="userId" aria-describedby="emailHelp" placeholder="${enterEmailAddress}" name="username" required>
+                      <spring:message code="enterEmailAddress" var="enterEmailAddress" />
+                      <input type="email" class="form-control form-control-user" id="userId"
+                        aria-describedby="emailHelp" placeholder="${enterEmailAddress}" name="username" required>
                     </div>
                     <div class="form-group">
-					  <spring:message code="passwordPlaceholder" var="passwordPlaceholder"/>
-                      <input type="password" class="form-control form-control-user" id="password" placeholder="${passwordPlaceholder}" name="password" required>
+                      <spring:message code="passwordPlaceholder" var="passwordPlaceholder" />
+                      <input type="password" class="form-control form-control-user" id="password"
+                        placeholder="${passwordPlaceholder}" name="password" required>
                     </div>
-					<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="login"/></button>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="rememberMe" name="remember-me">
+                        <label class="custom-control-label" for="rememberMe">
+                          <spring:message code="login.rememberme" /></label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                      <spring:message code="login" /></button>
                   </form>
                   <hr>
-				  <div class="text-center">
-                    <a class="small" href="administrator?language=el">Ελληνικά</a> | <a class="small" href="administrator?language=en">English</a>
+                  <div class="text-center">
+                    <a class="small" href="administrator?language=el">Ελληνικά</a> | <a class="small"
+                      href="administrator?language=en">English</a>
                   </div>
                 </div>
               </div>

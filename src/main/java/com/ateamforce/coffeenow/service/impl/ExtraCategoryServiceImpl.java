@@ -86,12 +86,11 @@ public class ExtraCategoryServiceImpl implements ExtraCategoryService {
 
         boolean hasImage = getExtraCategoryById(extraCategoryId).isHasimage();
         extraCategoryRepository.deleteById(extraCategoryId);
-        try {
-            getExtraCategoryById(extraCategoryId);
-        } catch (NullPointerException e) {
-            if (hasImage && getExtraCategoryById(extraCategoryId) == null) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.extras.categories"), extraCategoryId);
-            }
+
+        if ((getExtraCategoryById(extraCategoryId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.extras.categories"), extraCategoryId);
+
         }
     }
 

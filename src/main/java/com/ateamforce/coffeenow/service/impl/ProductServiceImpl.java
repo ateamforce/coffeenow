@@ -71,12 +71,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductByid(int productId) {
         boolean hasImage = getProductById(productId).isHasimage();
         productRepository.deleteById(productId);
-        try {
-            getProductById(productId);
-        } catch (NullPointerException e) {
-            if (hasImage) {
-                imageHandlerService.deleteImage(env.getProperty("front.images.products.items"), productId);
-            }
+
+        if ((getProductById(productId)) == null && hasImage) {
+            imageHandlerService.deleteImage(env
+                    .getProperty("front.images.products.items"), productId);
         }
     }
 

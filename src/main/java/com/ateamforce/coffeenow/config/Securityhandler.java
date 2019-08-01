@@ -5,17 +5,12 @@
  */
 package com.ateamforce.coffeenow.config;
 
-import com.ateamforce.coffeenow.model.Administrator;
-import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.Client;
-import com.ateamforce.coffeenow.model.Store;
 import com.ateamforce.coffeenow.service.AppUserService;
 import java.io.IOException;
 import java.util.Collection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -51,34 +46,28 @@ public class Securityhandler extends SavedRequestAwareAuthenticationSuccessHandl
 
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        AppUser currentUser = new AppUser();
-
         Collection<GrantedAuthority> authorities = authUser.getAuthorities();
-        
+
         String targetUrl = "";
 
         for (GrantedAuthority authority : authorities) {
 
             if (authority.getAuthority().equals("admin")) {
-                currentUser = (Administrator) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/administrator/dashboard";
             } else if (authority.getAuthority().equals("store")) {
-                currentUser = (Store) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/store/dashboard";
             } else if (authority.getAuthority().equals("client")) {
-                currentUser = (Client) appUserService.getUserByEmail(authUser.getUsername());
+
                 targetUrl = "/client/dashboard";
             }
 
         }
 
-        HttpSession session = request.getSession();
-        session.setAttribute("currentUser", currentUser);
-
         clearAuthenticationAttributes(request);
 
         // Use the DefaultSavedRequest URL
-        
         if (savedRequest != null) {
             targetUrl = savedRequest.getRedirectUrl();
         }
