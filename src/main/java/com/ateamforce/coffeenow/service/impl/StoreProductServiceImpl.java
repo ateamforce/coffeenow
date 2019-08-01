@@ -42,8 +42,8 @@ public class StoreProductServiceImpl implements StoreProductService {
         if (!storeProduct.getImage().isEmpty()) {
             persistedStoreProduct.setHasimage(
                     imageHandlerService.saveImage(
-                            env.getProperty("front.images.stores") + "products/" + persistedStoreProduct.getStoreProductPK().getStoreid() + "/",
-                            persistedStoreProduct.getStoreProductPK().getProductid(),
+                            env.getProperty("front.images.stores") + "products/" + persistedStoreProduct.getStoreid() + "/",
+                            persistedStoreProduct.getProductid(),
                             storeProduct
                     )
             );
@@ -55,15 +55,15 @@ public class StoreProductServiceImpl implements StoreProductService {
 
     @Override
     public void deleteStoreProduct(StoreProduct storeProduct) {
-        boolean hasImage = storeProductRepository.findById(storeProduct.getStoreProductPK()).get().isHasimage();
-        storeProductRepository.deleteById(storeProduct.getStoreProductPK());
+        boolean hasImage = storeProductRepository.findById(storeProduct.getId()).get().isHasimage();
+        storeProductRepository.deleteById(storeProduct.getId());
 
-        if ((storeProductRepository.findById(storeProduct.getStoreProductPK())) == null && hasImage) {
+        if ((storeProductRepository.findById(storeProduct.getId())) == null && hasImage) {
             imageHandlerService.deleteImage(
                     env.getProperty("front.images.stores") + "products/"
-                    + +storeProduct.getStoreProductPK().getStoreid()
+                    + +storeProduct.getStoreid()
                     + "/",
-                    storeProduct.getStoreProductPK().getProductid()
+                    storeProduct.getProductid()
             );
         }
     }

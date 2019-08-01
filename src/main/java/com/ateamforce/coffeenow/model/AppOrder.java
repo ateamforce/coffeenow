@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,54 +39,51 @@ import javax.validation.constraints.Pattern;
 @Table(name = "orders")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AppOrder.findAll", query = "SELECT o FROM AppOrder o")
-    , @NamedQuery(name = "AppOrder.findById", query = "SELECT o FROM AppOrder o WHERE o.id = :id")
-    , @NamedQuery(name = "AppOrder.findByStore", query = "SELECT o FROM AppOrder o WHERE o.store.id = :storeid")
-    , @NamedQuery(name = "AppOrder.findByClient", query = "SELECT o FROM AppOrder o WHERE o.client.id = :clientid")
-    , @NamedQuery(name = "AppOrder.findByMode", query = "SELECT o FROM AppOrder o WHERE o.mode = :mode")
-    , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT o FROM AppOrder o WHERE o.total = :total")
-    , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT o FROM AppOrder o WHERE o.date = :date")})
+    @NamedQuery(name = "AppOrder.findAll", query = "SELECT a FROM AppOrder a")
+    , @NamedQuery(name = "AppOrder.findById", query = "SELECT a FROM AppOrder a WHERE a.id = :id")
+    , @NamedQuery(name = "AppOrder.findByStore", query = "SELECT a FROM AppOrder a WHERE a.store.id = :storeid")
+    , @NamedQuery(name = "AppOrder.findByClient", query = "SELECT a FROM AppOrder a WHERE a.client.id = :clientid")
+    , @NamedQuery(name = "AppOrder.findByMode", query = "SELECT a FROM AppOrder a WHERE a.mode = :mode")
+    , @NamedQuery(name = "AppOrder.findByTotal", query = "SELECT a FROM AppOrder a WHERE a.total = :total")
+    , @NamedQuery(name = "AppOrder.findByDate", query = "SELECT a FROM AppOrder a WHERE a.date = :date")
+    , @NamedQuery(name = "AppOrder.findByStatus", query = "SELECT a FROM AppOrder a WHERE a.status = :status")})
 public class AppOrder implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 8)
-    @Column(name = "mode")
-    private String mode;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "total")
-    private float total;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-    
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
-    @Transient
-    private List<OrderProduct> ordersProductsList;
-    
-    @JoinColumn(name = "clientid", referencedColumnName = "id")
-    @ManyToOne
-    private Client client;
-    
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
     private Store store;
-    
+    @JoinColumn(name = "client", referencedColumnName = "id")
+    @ManyToOne
+    private Client client;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 8)
+    @Column(name = "mode")
+    private String mode;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "total")
+    private float total;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+    @Transient
+    private List<OrderProduct> ordersProductsList;
     @Column(name = "status")
-    @Pattern(regexp = "waiting|completed|canceled", flags = Pattern.Flag.CASE_INSENSITIVE)
     private String status;
+    @JoinColumn(name = "storepaymenttypeid", referencedColumnName = "id")
+    @ManyToOne
+    private StorePaymenttype storepaymenttypeid;
+    @Transient
+    private List<OrderProduct> orderProductList;
 
     public AppOrder() {
     }
@@ -93,12 +92,27 @@ public class AppOrder implements Serializable {
         this.id = id;
     }
 
-    public AppOrder(Integer id, String mode, float total, Date date) {
+    public AppOrder(Integer id, String mode, float total, Date date, String status) {
         this.id = id;
         this.mode = mode;
         this.total = total;
         this.date = date;
+        this.status = status;
     }
+
+    public AppOrder(Integer id, Store store, Client client, String mode, float total, Date date, String status, StorePaymenttype storepaymenttypeid, List<OrderProduct> orderProductList) {
+        this.id = id;
+        this.store = store;
+        this.client = client;
+        this.mode = mode;
+        this.total = total;
+        this.date = date;
+        this.status = status;
+        this.storepaymenttypeid = storepaymenttypeid;
+        this.orderProductList = orderProductList;
+    }
+    
+    
 
     public Integer getId() {
         return id;
@@ -108,22 +122,20 @@ public class AppOrder implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<OrderProduct> getOrdersProductsList() {
-        return ordersProductsList;
+    public Store getStore() {
+        return store;
     }
 
-    public void setOrdersProductsList(List<OrderProduct> ordersProductsList) {
-        this.ordersProductsList = ordersProductsList;
+    public void setStore(Store store) {
+        this.store = store;
     }
 
-    public Client getClientid() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClientid(Client clientid) {
-        this.client = clientid;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Store getStoreid() {
@@ -165,6 +177,32 @@ public class AppOrder implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public List<OrderProduct> getOrdersProductsList() {
+        return ordersProductsList;
+    }
+
+    public void setOrdersProductsList(List<OrderProduct> ordersProductsList) {
+        this.ordersProductsList = ordersProductsList;
+    }
+
+    public StorePaymenttype getStorepaymenttypeid() {
+        return storepaymenttypeid;
+    }
+
+    public void setStorepaymenttypeid(StorePaymenttype storepaymenttypeid) {
+        this.storepaymenttypeid = storepaymenttypeid;
+    }
+
+    public List<OrderProduct> getOrderProductList() {
+        return orderProductList;
+    }
+
+    public void setOrderProductList(List<OrderProduct> orderProductList) {
+        this.orderProductList = orderProductList;
+    }
+    
+    
 
     
 }
