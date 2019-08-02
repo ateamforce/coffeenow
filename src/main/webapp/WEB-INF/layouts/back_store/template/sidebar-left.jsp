@@ -7,7 +7,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="store/dashboard">
-        <img src="img/common/logo-medium-white-min.png" />
+        <img src="img/common/boilerplate/logo-medium-white-min.png" />
     </a>
 
     <!-- Divider -->

@@ -5,6 +5,7 @@
  */
 package com.ateamforce.coffeenow.controller.administrator;
 
+import com.ateamforce.coffeenow.editor.StringToImageEditor;
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.model.Product;
 import com.ateamforce.coffeenow.model.ProductCategory;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -125,6 +127,8 @@ public class AdminProductCategoriesController {
                 return null;
             }
         });
+        
+        binder.registerCustomEditor(MultipartFile.class, "image", new StringToImageEditor());
             
     }
 

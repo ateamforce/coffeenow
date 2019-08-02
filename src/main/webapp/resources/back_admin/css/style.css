@@ -24,7 +24,7 @@ button { margin: 10px; }
 
 #actionLayer-98 {
 	position: absolute;
-    z-index: 98;
+    z-index: 89;
     background: #000;
 	opacity: 0.5;
     top: 0;
@@ -51,7 +51,7 @@ label.labels-left_CFN {
 #userDropdown { padding: 0; }
 #newOrUpdateItemCardCFN {
 	position: fixed;
-    z-index: 99;
+    z-index: 90;
     webkit-box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
     box-shadow: -3px 0px 5px 0px rgba(0,0,0,0.2);
     right: -345px;
@@ -119,6 +119,12 @@ button.multiselect-clear-filter {
 #newOrUpdateMainTableRowButtonCFN { margin: 20px 0 0 0; }
 
 .accountStatusToggleCFN { display: none; }
+
+#addImageCFN {
+	margin-left: 0;
+	margin-top: 20px;
+}
+#newOrUpdateItemFormCFN #addImageCFN.btn-icon-split.btn-sm .text {width: 130px}
 
 /* overrides */
 body {
