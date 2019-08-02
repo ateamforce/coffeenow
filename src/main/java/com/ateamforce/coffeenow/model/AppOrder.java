@@ -58,7 +58,7 @@ public class AppOrder implements Serializable {
     @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
     private Store store;
-    @JoinColumn(name = "client", referencedColumnName = "id")
+    @JoinColumn(name = "clientid", referencedColumnName = "id")
     @ManyToOne
     private Client client;
     @Basic(optional = false)

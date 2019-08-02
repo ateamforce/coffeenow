@@ -42,7 +42,7 @@ public class StorePaymenttype implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "stroreid", referencedColumnName = "id")
+    @JoinColumn(name = "storeid", referencedColumnName = "id")
     @ManyToOne
     private Store store;
     @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")
