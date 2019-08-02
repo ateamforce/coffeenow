@@ -101,7 +101,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
         // FRONT IMAGES
         // front boilerplate (template) images (uploaded manually)
-        registry.addResourceHandler("/img/front/**").addResourceLocations(env.getProperty("front.images"))
+        registry.addResourceHandler("/images/**").addResourceLocations(env.getProperty("front.images"))
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
         // User specific images (uploaded by clients, saved as /resources/front/images/clients/clientId/imageId-filename )
         registry.addResourceHandler("/img/user/**").addResourceLocations(env.getProperty("front.images.clients"))
@@ -125,10 +125,13 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/img/store/**").addResourceLocations(env.getProperty("front.images.stores"))
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
         // FRONT CSS
-        registry.addResourceHandler("/css/front/**").addResourceLocations(env.getProperty("front.css"))
+        registry.addResourceHandler("/css/**").addResourceLocations(env.getProperty("front.css"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         // FRONT JS
-        registry.addResourceHandler("/js/front/**").addResourceLocations(env.getProperty("front.js"))
+        registry.addResourceHandler("/js/**").addResourceLocations(env.getProperty("front.js"))
+                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+        // FRONT FONTS
+        registry.addResourceHandler("/fonts/**").addResourceLocations(env.getProperty("front.fonts"))
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
         // BACK_ADMIN IMAGES
