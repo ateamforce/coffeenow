@@ -6,12 +6,22 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
-import javax.persistence.EmbeddedId;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -22,37 +32,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "StorePaymenttype.findAll", query = "SELECT s FROM StorePaymenttype s")
-    , @NamedQuery(name = "StorePaymenttype.findByStoreid", query = "SELECT s FROM StorePaymenttype s WHERE s.storePaymenttypePK.storeid = :storeid")
-    , @NamedQuery(name = "StorePaymenttype.findByPaymenttypeid", query = "SELECT s FROM StorePaymenttype s WHERE s.storePaymenttypePK.paymenttypeid = :paymenttypeid")})
+    ,@NamedQuery(name = "StorePaymenttype.findByStoreid", query = "SELECT s FROM StorePaymenttype s WHERE s.store.id = :storeid")
+    , @NamedQuery(name = "StorePaymenttype.findById", query = "SELECT s FROM StorePaymenttype s WHERE s.id = :id")})
 public class StorePaymenttype implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected StorePaymenttypePK storePaymenttypePK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
+    private Integer id;
+    @JoinColumn(name = "storeid", referencedColumnName = "id")
+    @ManyToOne
+    private Store store;
+    @JoinColumn(name = "paymenttypeid", referencedColumnName = "id")
+    @ManyToOne
+    private PaymentType paymentType;
+    @Transient
+    private List<AppOrder> appOrderList;
 
     public StorePaymenttype() {
     }
 
-    public StorePaymenttype(StorePaymenttypePK storePaymenttypePK) {
-        this.storePaymenttypePK = storePaymenttypePK;
+    public StorePaymenttype(Integer id) {
+        this.id = id;
     }
 
-    public StorePaymenttype(int storeid, int paymenttypeid) {
-        this.storePaymenttypePK = new StorePaymenttypePK(storeid, paymenttypeid);
+    public Integer getId() {
+        return id;
     }
 
-    public StorePaymenttypePK getStorePaymenttypePK() {
-        return storePaymenttypePK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setStorePaymenttypePK(StorePaymenttypePK storePaymenttypePK) {
-        this.storePaymenttypePK = storePaymenttypePK;
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+    
+    
+
+    @XmlTransient
+    @JsonIgnore
+    public List<AppOrder> getAppOrderList() {
+        return appOrderList;
+    }
+
+    public void setAppOrderList(List<AppOrder> appOrderList) {
+        this.appOrderList = appOrderList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (storePaymenttypePK != null ? storePaymenttypePK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -63,7 +108,7 @@ public class StorePaymenttype implements Serializable {
             return false;
         }
         StorePaymenttype other = (StorePaymenttype) object;
-        if ((this.storePaymenttypePK == null && other.storePaymenttypePK != null) || (this.storePaymenttypePK != null && !this.storePaymenttypePK.equals(other.storePaymenttypePK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -71,7 +116,7 @@ public class StorePaymenttype implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.StorePaymenttype[ storePaymenttypePK=" + storePaymenttypePK + " ]";
+        return "com.ateamforce.coffeenow.model.StorePaymenttype[ id=" + id + " ]";
     }
     
 }

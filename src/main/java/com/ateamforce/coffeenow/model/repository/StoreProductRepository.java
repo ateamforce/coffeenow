@@ -6,7 +6,7 @@
 package com.ateamforce.coffeenow.model.repository;
 
 import com.ateamforce.coffeenow.model.StoreProduct;
-import com.ateamforce.coffeenow.model.StoreProductPK;
+
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  * @author alexa
  */
 @Repository
-public interface StoreProductRepository extends JpaRepository<StoreProduct,StoreProductPK> {
+public interface StoreProductRepository extends JpaRepository<StoreProduct,Integer> {
     
     List<StoreProduct> findByStoreid(@Param("storeid") int storeid);
     

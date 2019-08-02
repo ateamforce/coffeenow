@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,7 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderProduct.findAll", query = "SELECT o FROM OrderProduct o")
-    , @NamedQuery(name = "OrderProduct.findOrderProductById", query = "SELECT o FROM OrderProduct o WHERE o.id = :orderProductId")})
+    , @NamedQuery(name = "OrderProduct.findById", query = "SELECT o FROM OrderProduct o WHERE o.id = :id")
+    , @NamedQuery(name = "OrderProduct.findByProductprice", query = "SELECT o FROM OrderProduct o WHERE o.productprice = :productprice")
+    , @NamedQuery(name = "OrderProduct.findByProductdiscount", query = "SELECT o FROM OrderProduct o WHERE o.productdiscount = :productdiscount")
+    , @NamedQuery(name = "OrderProduct.findByExtraprice", query = "SELECT o FROM OrderProduct o WHERE o.extraprice = :extraprice")})
 public class OrderProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,21 +41,38 @@ public class OrderProduct implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "extraid", referencedColumnName = "id")
-    @ManyToOne
-    private Extra extraid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "productprice")
+    private float productprice;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "productdiscount")
+    private int productdiscount;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "extraprice")
+    private Float extraprice;
     @JoinColumn(name = "orderid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private AppOrder orderid;
-    @JoinColumn(name = "productid", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Product productid;
+    private AppOrder appOrder;
+    @JoinColumn(name = "storeextraid", referencedColumnName = "id")
+    @ManyToOne
+    private StoreExtra storeextraid;
+    @JoinColumn(name = "stroreproductid", referencedColumnName = "id")
+    @ManyToOne
+    private StoreProduct stroreproductid;
 
     public OrderProduct() {
     }
 
     public OrderProduct(Integer id) {
         this.id = id;
+    }
+
+    public OrderProduct(Integer id, float productprice, int productdiscount) {
+        this.id = id;
+        this.productprice = productprice;
+        this.productdiscount = productdiscount;
     }
 
     public Integer getId() {
@@ -62,28 +83,52 @@ public class OrderProduct implements Serializable {
         this.id = id;
     }
 
-    public Extra getExtraid() {
-        return extraid;
+    public float getProductprice() {
+        return productprice;
     }
 
-    public void setExtraid(Extra extraid) {
-        this.extraid = extraid;
+    public void setProductprice(float productprice) {
+        this.productprice = productprice;
     }
 
-    public AppOrder getOrderid() {
-        return orderid;
+    public int getProductdiscount() {
+        return productdiscount;
     }
 
-    public void setOrderid(AppOrder orderid) {
-        this.orderid = orderid;
+    public void setProductdiscount(int productdiscount) {
+        this.productdiscount = productdiscount;
     }
 
-    public Product getProductid() {
-        return productid;
+    public Float getExtraprice() {
+        return extraprice;
     }
 
-    public void setProductid(Product productid) {
-        this.productid = productid;
+    public void setExtraprice(Float extraprice) {
+        this.extraprice = extraprice;
+    }
+
+    public AppOrder getAppOrder() {
+        return appOrder;
+    }
+
+    public void setAppOrder(AppOrder appOrder) {
+        this.appOrder = appOrder;
+    }
+
+    public StoreExtra getStoreextraid() {
+        return storeextraid;
+    }
+
+    public void setStoreextraid(StoreExtra storeextraid) {
+        this.storeextraid = storeextraid;
+    }
+
+    public StoreProduct getStroreproductid() {
+        return stroreproductid;
+    }
+
+    public void setStroreproductid(StoreProduct stroreproductid) {
+        this.stroreproductid = stroreproductid;
     }
 
     @Override
@@ -108,7 +153,7 @@ public class OrderProduct implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ateamforce.coffeenow.model.OrdersProducts[ id=" + id + " ]";
+        return "com.ateamforce.coffeenow.model.OrderProduct[ id=" + id + " ]";
     }
     
 }
