@@ -46,15 +46,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	
 	<!-- Store Profile Page -->
 	<definition name="back_store/dashboard/profile" extends="baseLayout_store">
-		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/administrator/style.css,css/store/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/administrator/script.js,js/store/script.js,js/store/profile.js" />
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css,css/store/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/store/script.js,js/store/profile.js" />
 		<put-attribute name="content" value="/WEB-INF/views/back_store/dashboard/profile.jsp" />
 	</definition>
 	
 	<!-- Store Products Page -->
 	<definition name="back_store/dashboard/products" extends="baseLayout_store">
-		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/administrator/style.css,css/store/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/administrator/script.js,js/store/script.js,js/store/products.js" />
+		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css,css/store/style.css" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/store/script.js,js/store/products.js" />
 		<put-attribute name="content" value="/WEB-INF/views/back_store/dashboard/products.jsp" />
 	</definition>
 	

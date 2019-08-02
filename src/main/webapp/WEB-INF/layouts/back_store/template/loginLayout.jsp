@@ -9,7 +9,7 @@
 <c:set var="url">${req.requestURL}</c:set>
 <c:set var="uri" value="${req.requestURI}" />
 
-<c:set var="realPath"><%= getServletContext().getRealPath("/") %></c:set>
+<c:set var="realPath" scope="request"><%= getServletContext().getRealPath("/") %></c:set>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@
 		<meta property="og:image:type" content="image/jpeg" />
 		<meta name="description" content='${SEO_pageDescription}'>
 		
-		<link href="img/common/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+		<link href="img/common/boilerplate/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 		
 		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.min.css">
@@ -40,22 +40,22 @@
 				${cache:bust(style, "css", realPath)}
 			</c:forTokens>
 		
-		<link rel="apple-touch-icon" sizes="57x57" href="img/common/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="img/common/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="img/common/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="img/common/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="img/common/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="img/common/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="img/common/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/common/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="img/common/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="img/common/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="img/common/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="img/common/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="img/common/favicon-16x16.png">
-		<link rel="manifest" href="img/common/manifest.json">
+		<link rel="apple-touch-icon" sizes="57x57" href="img/common/boilerplate/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/common/boilerplate/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/common/boilerplate/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/common/boilerplate/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/common/boilerplate/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/common/boilerplate/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/common/boilerplate/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/common/boilerplate/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/common/boilerplate/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="img/common/boilerplate/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/common/boilerplate/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/common/boilerplate/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/common/boilerplate/favicon-16x16.png">
+		<link rel="manifest" href="img/common/boilerplate/manifest.json">
 		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="img/common/ms-icon-144x144.png">
+		<meta name="msapplication-TileImage" content="img/common/boilerplate/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	

@@ -2,6 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="cache" uri="/WEB-INF/coffeenowcustomtags.tld"%>
+<%@ page import = "java.util.ResourceBundle" %>
+<% ResourceBundle resource = ResourceBundle.getBundle("custom");%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <!-- Begin Page Content -->
@@ -48,9 +51,14 @@
 														<label class="labels-left_CFN" for="itemTitleCFN"><spring:message code="writeTitle"/></label>
 														<form:input id="itemTitleCFN" name="title" path="title" type="text" class="form-control form-control-sm newOrUpdateItemFormCFN" />
 													</div>
-													<div class="col-lg-12">
-														<label class="labels-left_CFN" for="itemImageCFN"><spring:message code="addImage"/></label>
-														<form:input id="itemImageCFN" name="image" path="image" type="file" class="form-control form-control-sm newOrUpdateItemFormCFN" />
+													<div class="col-lg-12 text-left">
+														<button id="addImageCFN" type="button" class="btn btn-info btn-icon-split btn-sm">
+															<span class="icon text-white">
+																<i class="fas fa-info-circle"></i>
+															</span>
+															<span class="text"><spring:message code="addImage"/></span>
+														</button>
+														<form:input id="itemImageCFN" name="image" path="image" type="hidden" value="" />
 													</div>
 													<form:input id="itemIdCFN" name="id" path="id" type="hidden" class="form-control form-control-sm" value="" />
 												</div>
@@ -130,7 +138,8 @@
 											<td>${fn:length(productCategory.productsList)}</td>
 											<td class="rowImageCFN">
 												<c:if test="${productCategory.hasimage == true}">
-													<img src="img/product/category/${productCategory.id}.jpg" />
+													<c:set var="thisImage"><%= resource.getString("front.images.products.categories") %>${productCategory.id}.jpg</c:set>
+														<img src="img/product/category/${cache:bustImage(thisImage, realPath)}" />
 												</c:if>
 											</td>
 											<td>

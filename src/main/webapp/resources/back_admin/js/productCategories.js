@@ -4,6 +4,9 @@ var savedParentList = $("#itemParentCFN").html(); //  to be used for saving the 
 
 // close the tools sidebar on clicking outside of it and reset the form
 actionLayer.on("click", function(e){
+	$("#pixieWrapper").addClass("hidden");
+	$("#addImageCFN i").removeClass("fa-check");
+	$("#addImageCFN i").addClass("fa-info-circle");
 	toolsSidebar.removeClass("expandedCFN");
 	actionLayer.addClass("hidden");
 	toolsSidebarSwitch.removeClass("open");
@@ -167,4 +170,39 @@ $(document).ready(function() {
 		]
 	});
 	
+});
+
+// Handle pixie opening
+// handle the clicking of the "open/close tools sidebar"
+$(document).on("click", "#addImageCFN", function(e){
+	
+	$("#pixieWrapper").removeClass("hidden");
+	
+	//initialize pixie
+	var pixie = new Pixie({
+		googleFontsApiKey: 'AIzaSyBGFXVtyLNycSUNkdPTFuSHMffVs1KAtHw',
+		tools: {
+			crop: {
+				replaceDefault: true,
+				items: ['1:1']
+			}
+		},
+		ui: {
+			theme: 'light',
+			mode: 'overlay',
+			showExportPanel: false,
+			openImageDialog: {show: true}
+		},
+		onClose: function() {
+			$("#pixieWrapper").html("<pixie-editor></pixie-editor>");
+		},
+		onSave: function(data, name) {
+			$("#itemImageCFN").val(data);
+			$("#addImageCFN i").removeClass("fa-info-circle");
+			$("#addImageCFN i").addClass("fa-check");
+			pixie.close();
+		}
+		
+	});
+
 });

@@ -5,12 +5,12 @@
  */
 package com.ateamforce.coffeenow.controller.administrator;
 
+import com.ateamforce.coffeenow.editor.StringToImageEditor;
 import com.ateamforce.coffeenow.model.Extra;
 import com.ateamforce.coffeenow.model.ExtraCategory;
 import com.ateamforce.coffeenow.service.ExtraCategoryService;
 import com.ateamforce.coffeenow.service.ExtraService;
 import com.ateamforce.coffeenow.validator.ExtraValidator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -105,6 +105,8 @@ public class AdminExtrasController {
                 return null;
             }
         });
+        
+        binder.registerCustomEditor(MultipartFile.class, "image", new StringToImageEditor());
 
     }
 }

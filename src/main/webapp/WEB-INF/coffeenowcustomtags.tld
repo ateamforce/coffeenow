@@ -18,5 +18,12 @@
             <function-signature>java.lang.String bust(java.lang.String, java.lang.String, java.lang.String)</function-signature>
             <description>Returns a css link tag or a js script tag with the url prepended by the file modified integer, in order to bust client's caching based on file modification</description>
         </function>
+		
+		<function>
+            <name>bustImage</name>
+            <function-class>com.ateamforce.coffeenow.util.CacheBuster</function-class>
+            <function-signature>java.lang.String bustImage(java.lang.String, java.lang.String)</function-signature>
+            <description>Returns an image with file modified appended to the filename</description>
+        </function>
 	
 </taglib>  

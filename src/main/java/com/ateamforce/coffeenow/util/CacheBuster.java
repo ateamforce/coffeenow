@@ -32,6 +32,11 @@ public class CacheBuster {
 
     }
     
+    public static String bustImage(String path, String realPath){
+            File file = new File(realPath + path.replaceFirst("/", ""));
+            return StringUtils.substringAfterLast(path, "/") + "?" + file.lastModified();
+    }
+    
     private static String buildScript(String path)
     {
             return "<script type=\"text/javascript\" src=\"" + path + "\"></script>";
