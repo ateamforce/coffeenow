@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author alexandros
  */
 @Component
-public class CurrentUserInterseptor implements HandlerInterceptor {
+public class CurrentUserInterceptor implements HandlerInterceptor {
 
     @Autowired
     AppUserService appUserService;

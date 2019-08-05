@@ -52,19 +52,14 @@
 												
 													<c:set var="isDisabledSelected2" value="btn-secondary" scope="page" />
 													<c:set var="isEnabledSelected2" value="btn-secondary" scope="page" />
-													<c:set var="isWaitSelected2" value="btn-secondary" scope="page" />
 													<c:choose>
-														<c:when test="${store.enabled == 0}">
+														<c:when test="${store.enabled == false}">
 															<c:set var="isDisabledSelected" value="checked" scope="page" />
 															<c:set var="isDisabledSelected2" value="btn-danger" scope="page" />
 														</c:when>   
-														<c:when test="${store.enabled == 1}">
+														<c:otherwise>
 															<c:set var="isEnabledSelected" value="checked" scope="page" />
 															<c:set var="isEnabledSelected2" value="btn-success" scope="page" />
-														</c:when> 
-														<c:otherwise>
-															<c:set var="isWaitSelected" value="checked" scope="page" />
-															<c:set var="isWaitSelected2" value="btn-warning" scope="page" />
 														</c:otherwise>
 													</c:choose>
 													
@@ -83,14 +78,6 @@
 														<button onclick="selectThis(this, 'statusEnabledCFN')" type="button" class="btn ${isEnabledSelected2} btn-circle btn-sm" title="${statusEnabled}">
 															<span class="icon text-white">
 																<i class="fas fa-check"></i>
-															</span>
-														</button>
-														
-														<input class="accountStatusToggleCFN statusWaitCFN" type="radio" name="enabled" value="2" ${isWaitSelected}>
-														<c:set var="statusWait"><spring:message code="admin.menu.store.statusWait"/></c:set>
-														<button onclick="selectThis(this, 'statusWaitCFN')" type="button" class="btn ${isWaitSelected2} btn-circle btn-sm" title="${statusWait}">
-															<span class="icon text-white">
-																<i class="fas fa-hourglass-half"></i>
 															</span>
 														</button>
 														
