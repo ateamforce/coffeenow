@@ -23,7 +23,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -79,12 +78,6 @@ public class AppUser implements Serializable {
     @Column(name = "password")
     private String password;
     
-    @NotNull(message = "{passwordRepeat.notempty.restriction.message}")
-    @NotEmpty(message = "{passwordRepeat.notempty.restriction.message}")
-    @NotBlank(message = "{passwordRepeat.notempty.restriction.message}")
-    @Transient
-    private String passwordRepeat;
-    
     @JoinColumn(name = "approle", referencedColumnName = "approle", insertable = false, updatable = false)
     @ManyToOne
     private AppRole approle;
@@ -132,14 +125,6 @@ public class AppUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPasswordRepeat() {
-        return passwordRepeat;
-    }
-
-    public void setPasswordRepeat(String passwordRepeat) {
-        this.passwordRepeat = passwordRepeat;
     }
 
     public AppRole getApprole() {

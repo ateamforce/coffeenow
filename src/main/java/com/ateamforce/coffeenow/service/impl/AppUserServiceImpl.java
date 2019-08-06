@@ -74,7 +74,6 @@ public class AppUserServiceImpl implements AppUserService {
 
         store.setEmail(newStore.getEmail());
         store.setPassword(newStore.getPassword());
-        store.setPasswordRepeat(newStore.getPasswordRepeat());
         store.setAddress(newStore.getAddress());
         store.setPhone(newStore.getPhone());
         store.setVat(newStore.getVat());
@@ -123,7 +122,7 @@ public class AppUserServiceImpl implements AppUserService {
         if ((verificationToken.getExpiryDate()
             .getTime()
             - cal.getTime()
-                .getTime()) <= 0) {
+                .getTime()) <= -4) {
             tokenRepository.delete(verificationToken);
             return TOKEN_EXPIRED;
         }

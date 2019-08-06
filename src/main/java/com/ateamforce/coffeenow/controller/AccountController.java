@@ -8,7 +8,6 @@ import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.service.impl.UserDetailsServiceImpl;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -48,6 +50,9 @@ public class AccountController {
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
     
+    @Autowired
+    LocaleResolver localeResolver;
+    
     // Store Backend Registration form Page
     @RequestMapping(value = "/store/register", method = RequestMethod.GET)
     public String store_register_form(ModelMap modelmap, @ModelAttribute("newStore") NewStoreDto newStore) {
@@ -57,28 +62,30 @@ public class AccountController {
     // Store Backend register parse
     @RequestMapping(value = "/store/register", method = RequestMethod.POST)
     public String store_register_parse(
+            HttpServletRequest request,
             ModelMap modelmap,
             @ModelAttribute("newStore") @Valid NewStoreDto newStore,
-            BindingResult result,
-            WebRequest request
+            RedirectAttributes attributes,
+            BindingResult result
     ) {
 
         AppUser registered = new AppUser();
 
 
         if (!result.hasErrors()) {
-            registered = createUserAccount(newStore, result);
+            registered = createUserAccount(newStore);
         }
         if (registered == null) {
             result.rejectValue("email", "email.exists");
         }
-        
-        try {
-            String appUrl = request.getContextPath();
-            eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
-              (registered, request.getLocale(), appUrl));
-        } catch (Exception me) {
-            result.rejectValue("email", "email.exists");
+        else {
+            try {
+                String appUrl = request.getContextPath();
+                eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
+                  (registered, request.getLocale(), appUrl));
+            } catch (Exception me) {
+                result.rejectValue("email", "email.exists");
+            }
         }
 
         if (result.hasErrors()) {
@@ -91,27 +98,32 @@ public class AccountController {
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
 
-        return "redirect:/store/dashboard";
+        attributes.addFlashAttribute("message", messages.getMessage("message.needsToBeVerified", null, localeResolver.resolveLocale(request)));
+        return "redirect:/store";
     }
     
-    @RequestMapping(value = "/store/registerconfirm", method = RequestMethod.GET)
-    public String confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
-        Locale locale = request.getLocale();
-        final String result = appUserService.validateAppUserToken(token);
+    @GetMapping("/store/register/confirm")
+    public String confirmRegistration(
+            final HttpServletRequest request, 
+            final Model model, 
+            @RequestParam("token") final String token, 
+            RedirectAttributes attributes
+    ) throws UnsupportedEncodingException {
+        
+        final AppUser user = appUserService.getUserByToken(token);
+        final String result = appUserService.validateAppUserToken(token); // this also deletes the persisted token if validation is successful 
+                                                                          // or it's expiration date has passed
         if (result.equals("valid")) {
-            final AppUser user = appUserService.getUserByToken(token);
             authWithoutPassword(user);
-            model.addAttribute("message", messages.getMessage("message.accountVerified", null, locale));
-            return "redirect:/store/dashboard?language=" + locale.getLanguage();
+            attributes.addFlashAttribute("message", messages.getMessage("message.accountVerified", null, localeResolver.resolveLocale(request)));
+            return "redirect:/store/dashboard";
         }
 
-        model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
-        model.addAttribute("expired", "expired".equals(result));
-        model.addAttribute("token", token);
-        return "redirect:/store?baduser=true&language=" + locale.getLanguage();
+        attributes.addFlashAttribute("message", messages.getMessage("auth.message." + result, null, localeResolver.resolveLocale(request)));
+        return "redirect:/store";
     }
 
-    private AppUser createUserAccount(NewStoreDto newStore, BindingResult result) {
+    private AppUser createUserAccount(NewStoreDto newStore) {
         AppUser registered = null;
         try {
             registered = appUserService.registerNewStore(newStore);
@@ -123,9 +135,10 @@ public class AccountController {
     
     public void authWithoutPassword(AppUser user) {
 
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetailsServiceImpl.loadUserByUsername(user.getEmail()).getAuthorities();
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(user.getEmail());
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails.getAuthorities();
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

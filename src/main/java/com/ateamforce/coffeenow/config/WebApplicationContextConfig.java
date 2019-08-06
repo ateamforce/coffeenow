@@ -72,6 +72,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
     
+    // Using smtp relay mailjet.com . Atm I have relayed coffeenow_gr@mail.com .  We can relay any other email we can also verify
     @Bean
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
@@ -80,10 +81,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         javaMailSender.setUsername("21f041ee7cd6a1e537f6238b9e377bef");
         
         Properties javaMailProperties = new Properties();
-        javaMailProperties.setProperty("mail.transport.protocol", "SMTP");
-        javaMailProperties.setProperty("mail.smtp.host", "smtp.office365.com");
+        javaMailProperties.setProperty("mail.transport.protocol", "smtp");
+        javaMailProperties.setProperty("mail.smtp.host", "in-v3.mailjet.com");
         javaMailProperties.setProperty("mail.smtp.port", "587");
-        javaMailProperties.setProperty("mail.smtp.starttls.enable", Boolean.toString(true));
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
         javaMailSender.setJavaMailProperties(javaMailProperties);
 
         return javaMailSender;
@@ -192,7 +194,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public CurrentUserInterceptor currentUserInterseptorCreate() {
+    public CurrentUserInterceptor currentUserInterceptorCreate() {
         return new CurrentUserInterceptor();
     }
 
@@ -205,7 +207,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("language");
         registry.addInterceptor(localeChangeInterceptor);
         registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver));
-        registry.addInterceptor(currentUserInterseptorCreate());
+        registry.addInterceptor(currentUserInterceptorCreate());
 
     }
 

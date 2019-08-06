@@ -3,9 +3,9 @@ package com.ateamforce.coffeenow.dto;
 import com.ateamforce.coffeenow.annotations.PasswordMatches;
 import com.ateamforce.coffeenow.model.AppUser;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -59,6 +59,12 @@ public class NewStoreDto extends AppUser {
     @Column(name = "zip")
     @NotNull(message = "{zip.notempty.restriction.message}")
     private int zip;
+    
+    @NotNull(message = "{passwordRepeat.notempty.restriction.message}")
+    @NotEmpty(message = "{passwordRepeat.notempty.restriction.message}")
+    @NotBlank(message = "{passwordRepeat.notempty.restriction.message}")
+    @Transient
+    private String passwordRepeat;
 
     public NewStoreDto() {
     }
@@ -117,6 +123,14 @@ public class NewStoreDto extends AppUser {
 
     public void setZip(int zip) {
         this.zip = zip;
+    }
+    
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
     }
 
 }

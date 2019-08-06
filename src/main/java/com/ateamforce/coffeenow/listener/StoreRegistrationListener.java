@@ -36,24 +36,23 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
     private void confirmRegistration(final OnStoreRegistrationCompleteEvent event) {
         final AppUser user = event.getUser();
         final String token = UUID.randomUUID().toString();
-        
+        service.createTokenForAppUser(user, token);
 
         final SimpleMailMessage email = constructEmailMessage(event, user, token);
         mailSender.send(email);
     }
 
-    //
-
+    // Setup confirmation email
     private final SimpleMailMessage constructEmailMessage(final OnStoreRegistrationCompleteEvent event, final AppUser user, final String token) {
         final String recipientAddress = user.getEmail();
         final String subject = messages.getMessage("message.regConf", null, event.getLocale()) + " - coffeenow.gr";
-        final String confirmationUrl = event.getAppUrl() + "/registerconfirm?token=" + token;
+        final String confirmationUrl = event.getAppUrl() + "/store/register/confirm?token=" + token;
         final String message = messages.getMessage("message.regSucc", null, event.getLocale());
         final SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
         email.setText(message + " \r\n" + confirmationUrl);
-        email.setFrom("coffeenow_gr@hotmail.com");
+        email.setFrom("coffeenow_gr@mail.com");
         return email;
     }
 
