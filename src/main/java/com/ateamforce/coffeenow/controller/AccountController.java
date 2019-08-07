@@ -7,7 +7,6 @@ import com.ateamforce.coffeenow.model.AppUser;
 import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.service.impl.UserDetailsServiceImpl;
 import java.io.UnsupportedEncodingException;
-import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,7 +31,8 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- *
+ * A controller for registration related methods
+ * 
  * @author Sakel
  */
 @Controller
@@ -114,7 +114,7 @@ public class AccountController {
         final String result = appUserService.validateAppUserToken(token); // this also deletes the persisted token if validation is successful 
                                                                           // or it's expiration date has passed
         if (result.equals("valid")) {
-            authWithoutPassword(user);
+            authWithoutPassword(user, request);
             attributes.addFlashAttribute("message", messages.getMessage("message.accountVerified", null, localeResolver.resolveLocale(request)));
             return "redirect:/store/dashboard";
         }
@@ -133,14 +133,12 @@ public class AccountController {
         return registered;
     }
     
-    public void authWithoutPassword(AppUser user) {
-
+    // enable user auto login after validating email
+    public void authWithoutPassword(AppUser user, HttpServletRequest request) {
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(user.getEmail());
-        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails.getAuthorities();
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);      
+        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
     }
 
 }

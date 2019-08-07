@@ -42,7 +42,7 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
         mailSender.send(email);
     }
 
-    // Setup confirmation email
+    // Setup registration confirmation email
     private final SimpleMailMessage constructEmailMessage(final OnStoreRegistrationCompleteEvent event, final AppUser user, final String token) {
         final String recipientAddress = user.getEmail();
         final String subject = messages.getMessage("message.regConf", null, event.getLocale()) + " - coffeenow.gr";
