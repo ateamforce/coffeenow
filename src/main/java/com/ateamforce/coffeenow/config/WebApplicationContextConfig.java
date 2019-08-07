@@ -1,9 +1,11 @@
 package com.ateamforce.coffeenow.config;
 
-import com.ateamforce.coffeenow.interceptor.CurrentUserInterceptor;
 import com.ateamforce.coffeenow.interceptor.SeoPageDetailsInterceptor;
+import com.ateamforce.coffeenow.validator.ExtraCategoryValidator;
+import com.ateamforce.coffeenow.validator.ExtraValidator;
 import com.ateamforce.coffeenow.validator.ImageValidator;
 import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
+import com.ateamforce.coffeenow.validator.ProductValidator;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
@@ -47,7 +49,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Autowired
     Environment env;
 
-    public WebApplicationContextConfig(MessageSource messageSource) {
+    public WebApplicationContextConfig() {
         this.messageSource = messageSource();
         this.localeResolver = localeResolver();
     }
@@ -193,11 +195,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
 
-    @Bean
-    public CurrentUserInterceptor currentUserInterceptorCreate() {
-        return new CurrentUserInterceptor();
-    }
-
     // add interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -205,9 +202,8 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         // for Locale change
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
-        registry.addInterceptor(localeChangeInterceptor);
-        registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver));
-        registry.addInterceptor(currentUserInterceptorCreate());
+        registry.addInterceptor(localeChangeInterceptor).order(0);
+        registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver)).order(1);
 
     }
 
@@ -248,5 +244,37 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         productCategoryValidator.setSpringValidators(springValidators);
         return productCategoryValidator;
     }
+    
+    // bean for the spring validator ExtraCategoryValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ExtraCategoryValidator extraCategoryValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ExtraCategoryValidator extraCategoryValidator = new ExtraCategoryValidator();
+        extraCategoryValidator.setSpringValidators(springValidators);
+        return extraCategoryValidator;
+    }
+    
+    // bean for the spring validator ProductValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ProductValidator productValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ProductValidator productValidator = new ProductValidator();
+        productValidator.setSpringValidators(springValidators);
+        return productValidator;
+    }
+    
+    // bean for the spring validator ExtraValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ExtraValidator extraValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ExtraValidator extraValidator = new ExtraValidator();
+        extraValidator.setSpringValidators(springValidators);
+        return extraValidator;
+    }
+    
+    // TODO: DO NOT FORGET to add beans for all future validators that concern _ImageCarrier objects
 
 }

@@ -138,7 +138,7 @@ public class AccountController {
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(user.getEmail());
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails.getAuthorities();
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
