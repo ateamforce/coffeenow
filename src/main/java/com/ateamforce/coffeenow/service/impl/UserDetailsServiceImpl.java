@@ -6,7 +6,6 @@
 package com.ateamforce.coffeenow.service.impl;
 
 import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.repository.AppUserRepository;
 import com.ateamforce.coffeenow.service.AppUserService;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //Get the User
         AppUser appuser = appUserService.getUserByEmail(email);
 
-        if (appuser == null) {
+        if (appuser == null || !appuser.isEnabled()) {
             throw new UsernameNotFoundException(email);
         }
 

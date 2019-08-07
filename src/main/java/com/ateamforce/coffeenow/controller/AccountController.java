@@ -5,7 +5,6 @@ import com.ateamforce.coffeenow.event.OnStoreRegistrationCompleteEvent;
 import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
 import com.ateamforce.coffeenow.model.AppUser;
 import com.ateamforce.coffeenow.service.AppUserService;
-import com.ateamforce.coffeenow.service.impl.UserDetailsServiceImpl;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +48,7 @@ public class AccountController {
     private MessageSource messages;
     
     @Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
+    private UserDetailsService userDetailsService;
     
     @Autowired
     LocaleResolver localeResolver;
@@ -81,6 +81,9 @@ public class AccountController {
         else {
             try {
                 String appUrl = request.getContextPath();
+                // we publish the event listener, that will send confirmation/activation email, passing request.getLocale() 
+                // which is the browser (client) locale, not the app locale. So the email's lalnguage depends on the browser's
+                // language, not the app's.
                 eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
                   (registered, request.getLocale(), appUrl));
             } catch (Exception me) {
@@ -134,8 +137,9 @@ public class AccountController {
     }
     
     // enable user auto login after validating email
+    // https://stackoverflow.com/questions/36937414/auto-login-spring-security
     public void authWithoutPassword(AppUser user, HttpServletRequest request) {
-        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(user.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);      
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
