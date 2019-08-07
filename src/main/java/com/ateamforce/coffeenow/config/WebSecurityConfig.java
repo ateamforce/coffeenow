@@ -5,7 +5,7 @@
  */
 package com.ateamforce.coffeenow.config;
 
-import com.ateamforce.coffeenow.service.AppUserService;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  *
@@ -31,12 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    Securityhandler successHandler;
-
-    @Autowired
-    private AppUserService appUserService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -56,7 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Setting Service to find User in the database.
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        System.out.println(userDetailsService);
     }
 
     @Override
@@ -81,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/administrator")
                 .loginProcessingUrl("/administrator/dashboard/check")
                 .failureUrl("/administrator?error=true")
-                .successHandler(successHandler)
+                .defaultSuccessUrl("/administrator/dashboard")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
@@ -92,18 +83,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/administrator?accessDenied=true")
                 .and()
+                .rememberMe()
+                .key(UUID.randomUUID().toString())
+                .userDetailsService(userDetailsService)
+                .tokenValiditySeconds(1 * 24 * 60 * 60)
+                .and()
                 .csrf().disable();
 
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
-
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
-        return memory;
     }
 
     @Configuration
@@ -135,7 +121,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/store")
                     .loginProcessingUrl("/store/dashboard/check")
                     .failureUrl("/store?error=true")
-                    .successHandler(successHandler)
+                    .defaultSuccessUrl("/store/dashboard")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .and()
@@ -146,19 +132,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .exceptionHandling()
                     .accessDeniedPage("/store?accessDenied=true")
                     .and()
+                    .rememberMe()
+                    .key(UUID.randomUUID().toString())
+                    .userDetailsService(userDetailsService)
+                    .tokenValiditySeconds(1 * 24 * 60 * 60)
+                    .and()
                     .csrf().disable();
 
-            http.authorizeRequests().and() //
-                    .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                    .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
-
         }
 
-        @Bean
-        public PersistentTokenRepository persistentTokenRepository() {
-            InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
-            return memory;
-
-        }
     }
 }

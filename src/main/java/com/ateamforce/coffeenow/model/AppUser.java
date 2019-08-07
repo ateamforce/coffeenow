@@ -6,6 +6,7 @@
 package com.ateamforce.coffeenow.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -20,7 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -28,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -75,18 +78,17 @@ public class AppUser implements Serializable {
     @Column(name = "password")
     private String password;
     
-    @NotNull(message = "{passwordRepeat.notempty.restriction.message}")
-    @NotEmpty(message = "{passwordRepeat.notempty.restriction.message}")
-    @NotBlank(message = "{passwordRepeat.notempty.restriction.message}")
-    @Transient
-    private String passwordRepeat;
-    
     @JoinColumn(name = "approle", referencedColumnName = "approle", insertable = false, updatable = false)
     @ManyToOne
     private AppRole approle;
     
     @Column(name = "enabled")
-    private int enabled;
+    @Type(type= "org.hibernate.type.NumericBooleanType")
+    private boolean enabled;
+    
+    @Column(name = "regdate", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registrationDate = new Date();
 
     public AppUser() {
     }
@@ -125,14 +127,6 @@ public class AppUser implements Serializable {
         this.password = password;
     }
 
-    public String getPasswordRepeat() {
-        return passwordRepeat;
-    }
-
-    public void setPasswordRepeat(String passwordRepeat) {
-        this.passwordRepeat = passwordRepeat;
-    }
-
     public AppRole getApprole() {
         return approle;
     }
@@ -141,12 +135,20 @@ public class AppUser implements Serializable {
         this.approle = approle;
     }
 
-    public int getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
 

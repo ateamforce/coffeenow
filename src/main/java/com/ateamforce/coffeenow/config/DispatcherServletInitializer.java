@@ -1,5 +1,7 @@
 package com.ateamforce.coffeenow.config;
 
+import com.ateamforce.coffeenow.filter.CurrentUserFilter;
+import javax.servlet.Filter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -25,5 +27,10 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new CurrentUserFilter()};
     }
 }

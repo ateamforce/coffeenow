@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ateamforce.coffeenow.annotations;
+package com.ateamforce.coffeenow.annotation;
 
 import com.ateamforce.coffeenow.validator.PasswordMatchesValidator;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;

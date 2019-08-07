@@ -10,12 +10,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
@@ -31,6 +30,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author alexa
  */
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @DiscriminatorValue("store")
 @Table(name = "stores")
 @XmlRootElement
@@ -116,10 +116,6 @@ public class Store extends AppUser {
 
     @Transient
     private List<Client> clientsList;
-
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private AppUser appusers;
 
     @Transient
     private List<StoreExtra> storesExtrasList;
@@ -227,14 +223,6 @@ public class Store extends AppUser {
 
     public void setPaymenttypesList(List<PaymentType> paymenttypesList) {
         this.paymenttypesList = paymenttypesList;
-    }
-
-    public AppUser getAppusers() {
-        return appusers;
-    }
-
-    public void setAppusers(AppUser appusers) {
-        this.appusers = appusers;
     }
 
     @XmlTransient

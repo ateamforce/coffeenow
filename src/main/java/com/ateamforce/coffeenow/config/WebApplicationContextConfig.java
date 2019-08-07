@@ -1,11 +1,14 @@
 package com.ateamforce.coffeenow.config;
 
-import com.ateamforce.coffeenow.interceptor.CurrentUserInterseptor;
 import com.ateamforce.coffeenow.interceptor.SeoPageDetailsInterceptor;
+import com.ateamforce.coffeenow.validator.ExtraCategoryValidator;
+import com.ateamforce.coffeenow.validator.ExtraValidator;
 import com.ateamforce.coffeenow.validator.ImageValidator;
 import com.ateamforce.coffeenow.validator.ProductCategoryValidator;
+import com.ateamforce.coffeenow.validator.ProductValidator;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -45,7 +49,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Autowired
     Environment env;
 
-    public WebApplicationContextConfig(MessageSource messageSource) {
+    public WebApplicationContextConfig() {
         this.messageSource = messageSource();
         this.localeResolver = localeResolver();
     }
@@ -68,6 +72,25 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         return resolver;
+    }
+    
+    // Using smtp relay mailjet.com . Atm I have relayed coffeenow_gr@mail.com .  We can relay any other email we can also verify
+    @Bean
+    public JavaMailSenderImpl mailSender() {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        
+        javaMailSender.setPassword("8c79e0b39da32a29580ae77829f7791f");
+        javaMailSender.setUsername("21f041ee7cd6a1e537f6238b9e377bef");
+        
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.setProperty("mail.transport.protocol", "smtp");
+        javaMailProperties.setProperty("mail.smtp.host", "in-v3.mailjet.com");
+        javaMailProperties.setProperty("mail.smtp.port", "587");
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
+        javaMailSender.setJavaMailProperties(javaMailProperties);
+
+        return javaMailSender;
     }
 
     // enable messages.properties
@@ -172,11 +195,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
 
-    @Bean
-    public CurrentUserInterseptor currentUserInterseptorCreate() {
-        return new CurrentUserInterseptor();
-    }
-
     // add interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -184,9 +202,8 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         // for Locale change
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
-        registry.addInterceptor(localeChangeInterceptor);
-        registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver));
-        registry.addInterceptor(currentUserInterseptorCreate());
+        registry.addInterceptor(localeChangeInterceptor).order(0);
+        registry.addInterceptor(new SeoPageDetailsInterceptor(messageSource, localeResolver)).order(1);
 
     }
 
@@ -227,5 +244,37 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         productCategoryValidator.setSpringValidators(springValidators);
         return productCategoryValidator;
     }
+    
+    // bean for the spring validator ExtraCategoryValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ExtraCategoryValidator extraCategoryValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ExtraCategoryValidator extraCategoryValidator = new ExtraCategoryValidator();
+        extraCategoryValidator.setSpringValidators(springValidators);
+        return extraCategoryValidator;
+    }
+    
+    // bean for the spring validator ProductValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ProductValidator productValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ProductValidator productValidator = new ProductValidator();
+        productValidator.setSpringValidators(springValidators);
+        return productValidator;
+    }
+    
+    // bean for the spring validator ExtraValidator (basically merging JSR-303 with spring validation)
+    @Bean
+    public ExtraValidator extraValidator() {
+        Set<Validator> springValidators = new HashSet();
+        springValidators.add(new ImageValidator());
+        ExtraValidator extraValidator = new ExtraValidator();
+        extraValidator.setSpringValidators(springValidators);
+        return extraValidator;
+    }
+    
+    // TODO: DO NOT FORGET to add beans for all future validators that concern _ImageCarrier objects
 
 }

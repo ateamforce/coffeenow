@@ -5,20 +5,15 @@
  */
 package com.ateamforce.coffeenow.model;
 
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -26,12 +21,14 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
  * @author alexa
  */
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @DiscriminatorValue("client")
 @Table(name = "clients")
 @XmlRootElement
@@ -43,30 +40,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Client extends AppUser {
 
     private static final long serialVersionUID = 1L;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "firstname")
     private String firstname;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "lastname")
     private String lastname;
+    
     @JoinTable(name = "clientfavoriteproducts", joinColumns = {
         @JoinColumn(name = "clientid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "productid", referencedColumnName = "id")})
     @Transient
     private List<Product> productsList;
+    
     @Transient
     private List<Store> storesList;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private AppUser appusers;
+    
     @Transient
     private List<Rating> ratingsList;
+    
     @Transient
     private List<AppOrder> ordersList;
+    
     @Transient
     private List<ClientMedia> clientmediaList;
 
@@ -108,14 +109,6 @@ public class Client extends AppUser {
 
     public void setStoresList(List<Store> storesList) {
         this.storesList = storesList;
-    }
-
-    public AppUser getAppusers() {
-        return appusers;
-    }
-
-    public void setAppusers(AppUser appusers) {
-        this.appusers = appusers;
     }
 
     @XmlTransient
