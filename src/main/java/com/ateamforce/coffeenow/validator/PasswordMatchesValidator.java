@@ -1,6 +1,6 @@
 package com.ateamforce.coffeenow.validator;
 
-import com.ateamforce.coffeenow.annotations.PasswordMatches;
+import com.ateamforce.coffeenow.annotation.PasswordMatches;
 import com.ateamforce.coffeenow.dto.NewStoreDto;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

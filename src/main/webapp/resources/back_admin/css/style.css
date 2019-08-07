@@ -126,6 +126,31 @@ button.multiselect-clear-filter {
 }
 #newOrUpdateItemFormCFN #addImageCFN.btn-icon-split.btn-sm .text {width: 130px}
 
+@-webkit-keyframes fadeInThenOut {
+      0% { opacity: 1; top: 20px; }   
+     90% { opacity: 1; top: 20px; }
+	100% { opacity: 0; top: -100%; }
+}
+@-moz-keyframes fadeInThenOut {
+      0% { opacity: 1; top: 20px; }   
+     90% { opacity: 1; top: 20px; }
+	100% { opacity: 0; top: -100%; }
+}
+
+#mainMessagePanelCFN {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    right: 0;
+    width: 300px;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.2;
+	opacity: 0;
+    -webkit-animation: fadeInThenOut 7s;
+    -moz-animation: fadeInThenOut 7s;
+}
+
 /* overrides */
 body {
 	font-family: 'Source Sans Pro', sans-serif;

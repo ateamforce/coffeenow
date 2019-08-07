@@ -8,6 +8,7 @@ import com.ateamforce.coffeenow.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -31,7 +32,8 @@ public class MainController {
 
     // Store Backend Login Page
     @RequestMapping("/store")
-    public String store_login(ModelMap modelmap) {
+    public String store_login(ModelMap modelmap, @ModelAttribute("mainMessage") final String msg) {
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
         return "back_store/index";
     }
 

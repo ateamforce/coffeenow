@@ -101,7 +101,7 @@ public class AccountController {
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
 
-        attributes.addFlashAttribute("message", messages.getMessage("message.needsToBeVerified", null, localeResolver.resolveLocale(request)));
+        attributes.addFlashAttribute("mainMessage", messages.getMessage("message.needsToBeVerified", null, localeResolver.resolveLocale(request)));
         return "redirect:/store";
     }
     
@@ -118,11 +118,11 @@ public class AccountController {
                                                                           // or it's expiration date has passed
         if (result.equals("valid")) {
             authWithoutPassword(user, request);
-            attributes.addFlashAttribute("message", messages.getMessage("message.accountVerified", null, localeResolver.resolveLocale(request)));
+            attributes.addFlashAttribute("mainMessage", messages.getMessage("message.accountVerified", null, localeResolver.resolveLocale(request)));
             return "redirect:/store/dashboard";
         }
 
-        attributes.addFlashAttribute("message", messages.getMessage("auth.message." + result, null, localeResolver.resolveLocale(request)));
+        attributes.addFlashAttribute("mainMessage", messages.getMessage("auth.message." + result, null, localeResolver.resolveLocale(request)));
         return "redirect:/store";
     }
 

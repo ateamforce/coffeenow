@@ -1,6 +1,6 @@
 package com.ateamforce.coffeenow.dto;
 
-import com.ateamforce.coffeenow.annotations.PasswordMatches;
+import com.ateamforce.coffeenow.annotation.PasswordMatches;
 import com.ateamforce.coffeenow.model.AppUser;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -8,6 +8,7 @@ package com.ateamforce.coffeenow.controller.store;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,7 +21,9 @@ public class StoreController {
 
     // DASHBOARD
     @RequestMapping
-    public String store_dashboard(ModelMap modelmap) {
+    public String store_dashboard(ModelMap modelmap, @ModelAttribute("mainMessage") final String msg) {
+        
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
         
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("dashboardIsActive", "active");
