@@ -15,8 +15,3 @@
 		</div>
 	</div>
 </div>
-
-<c:if test="${not empty mainMessage}">
-	<!-- MAIN MESSAGE PANEL (ALWAYS HAS TO BE IN UTILS, OR WHEREVER THE CLOSING body TAG IS, IF NO UTILS IS AVAILABLE) -->
-	<div id="mainMessagePanelCFN" class="alert alert-success">${mainMessage}</div>
-</c:if>

@@ -65,29 +65,28 @@ public class AccountController {
             HttpServletRequest request,
             ModelMap modelmap,
             @ModelAttribute("newStore") @Valid NewStoreDto newStore,
-            RedirectAttributes attributes,
-            BindingResult result
+            BindingResult result,
+            RedirectAttributes attributes
     ) {
 
-        AppUser registered = new AppUser();
-
-
         if (!result.hasErrors()) {
+            AppUser registered = new AppUser();
             registered = createUserAccount(newStore);
-        }
-        if (registered == null) {
-            result.rejectValue("email", "email.exists");
-        }
-        else {
-            try {
-                String appUrl = request.getContextPath();
-                // we publish the event listener, that will send confirmation/activation email, passing request.getLocale() 
-                // which is the browser (client) locale, not the app locale. So the email's lalnguage depends on the browser's
-                // language, not the app's.
-                eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
-                  (registered, request.getLocale(), appUrl));
-            } catch (Exception me) {
+            
+            if (registered == null) {
                 result.rejectValue("email", "email.exists");
+            }
+            else {
+                try {
+                    String appUrl = request.getContextPath();
+                    // we publish the event listener, that will send confirmation/activation email, passing request.getLocale() 
+                    // which is the browser (client) locale, not the app locale. So the email's lalnguage depends on the browser's
+                    // language, not the app's.
+                    eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
+                      (registered, request.getLocale(), appUrl));
+                } catch (Exception me) {
+                    result.rejectValue("email", "email.exists");
+                }
             }
         }
 

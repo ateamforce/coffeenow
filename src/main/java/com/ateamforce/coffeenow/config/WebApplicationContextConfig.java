@@ -74,17 +74,18 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
     
-    // Using smtp relay mailjet.com . Atm I have relayed coffeenow_gr@mail.com .  We can relay any other email we can also verify
+    // Using smtp relay https://app.sendgrid.com/ . Atm I have relayed coffeenow_gr@mail.com .  We can relay any other email we can also verify
+    // awesome alternative http://nilhcem.com/FakeSMTP/
     @Bean
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         
-        javaMailSender.setPassword("8c79e0b39da32a29580ae77829f7791f");
-        javaMailSender.setUsername("21f041ee7cd6a1e537f6238b9e377bef");
+        javaMailSender.setPassword("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");
+        javaMailSender.setUsername("apikey");
         
         Properties javaMailProperties = new Properties();
         javaMailProperties.setProperty("mail.transport.protocol", "smtp");
-        javaMailProperties.setProperty("mail.smtp.host", "in-v3.mailjet.com");
+        javaMailProperties.setProperty("mail.smtp.host", "smtp.sendgrid.net");
         javaMailProperties.setProperty("mail.smtp.port", "587");
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
         javaMailProperties.put("mail.smtp.auth", "true");

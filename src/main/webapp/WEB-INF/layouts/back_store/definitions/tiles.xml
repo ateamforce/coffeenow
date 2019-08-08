@@ -24,6 +24,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/back_store/register.jsp" />
 	</definition>
 	
+	<!-- Store Register Resend Confirmation Page -->
+	<definition name="back_store/registerResendConfirm" extends="loginLayout_store">
+		<put-attribute name="content" value="/WEB-INF/views/back_store/registerResendConfirm.jsp" />
+	</definition>
+	
 	
 	<!-- ############################################################################ -->
 	

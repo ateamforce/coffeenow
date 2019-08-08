@@ -59,7 +59,16 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	
-	<tiles:insertAttribute name="content" />
+	<body class="bg-gradient-primary">
+	
+		<tiles:insertAttribute name="content" />
+		
+		<c:if test="${not empty mainMessage}">
+			<!-- MAIN MESSAGE PANEL (ALWAYS HAS TO RIGHT BEFORE CLOSING BODY TAG) -->
+			<div id="mainMessagePanelCFN" class="alert alert-success">${mainMessage}</div>
+		</c:if>
+		
+	</body>
 	
 	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>

@@ -166,6 +166,9 @@
                 <a class="small" href="store"><spring:message code="store.haveAccount"/></a>
               </div>
 			  <div class="text-center">
+                <a class="small" href="store/register/resend/confirm"><spring:message code="store.resendConfirm"/></a>
+              </div>
+			  <div class="text-center">
 				<a class="small" href="store/register?language=el">Ελληνικά</a> | <a class="small" href="store/register?language=en">English</a>
 			  </div>
             </div>
@@ -176,8 +179,4 @@
 
   </div>
 
-<c:if test="${not empty mainMessage}">
-	<!-- MAIN MESSAGE PANEL (ALWAYS HAS TO BE IN UTILS, OR WHEREVER THE CLOSING body TAG IS, IF NO UTILS IS AVAILABLE) -->
-	<div id="mainMessagePanelCFN" class="alert alert-success">${mainMessage}</div>
-</c:if>
 </body>
