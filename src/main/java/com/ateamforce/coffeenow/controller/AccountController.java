@@ -124,6 +124,24 @@ public class AccountController {
         attributes.addFlashAttribute("mainMessage", messages.getMessage("auth.message." + result, null, localeResolver.resolveLocale(request)));
         return "redirect:/store";
     }
+    
+    // Store Backend Resend Registration confirmation/validation email form
+    @RequestMapping(value = "/store/register/resend/confirm", method = RequestMethod.GET)
+    public String store_register_resend_confirmation_form(ModelMap modelmap) {
+        return "back_store/registerResendConfirm";
+    }
+
+    // Store Backend Resend Registration confirmation/validation email parse
+    @RequestMapping(value = "/store/register/resend/confirm", method = RequestMethod.POST)
+    public String store_register_resend_confirmation_parse(
+            HttpServletRequest request,
+            ModelMap modelmap,
+            @RequestParam("email") String email
+    ) {
+
+        
+        return "redirect:/store";
+    }
 
     private AppUser createUserAccount(NewStoreDto newStore) {
         AppUser registered = null;

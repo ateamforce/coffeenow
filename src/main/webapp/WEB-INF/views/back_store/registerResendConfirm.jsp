@@ -15,24 +15,22 @@
           <div class="col-lg-7">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4"><spring:message code="store.createAccount"/></h1>
+                <h1 class="h4 text-gray-900 mb-4"><spring:message code="store.resendConfirm"/></h1>
               </div>
-				<form:form id="storeRegistrationFormCFN" action="store/register/resend/confirm" method="POST" modelAttribute="newStore"
-					class="user" enctype="multipart/form-data">
-					<form:errors path="*" cssClass="alert alert-danger" element="div"/>
+				<form id="storeResendConfirmFormCFN" action="store/register/resend/confirm" method="POST" class="user">
 					<div class="form-group row">
 						<div class="col">
 							<spring:message code="enterEmailAddress" var="enterEmailAddress"/>
-							<form:input name="email" path="email" type="email" class="form-control form-control-user" placeholder="${enterEmailAddress}" required="required" />
+							<input name="email" type="email" class="form-control form-control-user" placeholder="${enterEmailAddress}" required="required" />
 						</div>
 					</div>
 					<hr>
 					<div class="form-group row">
 						<div class="col">
-							<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="register"/></button>
+							<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="send"/></button>
 						</div>
 					</div>
-				</form:form>
+				</form>
               <hr>
               <div class="text-center">
                 <a class="small" href="store"><spring:message code="store.haveAccount"/></a>

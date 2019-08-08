@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ateamforce.coffeenow.controller.administrator;
 
 import com.ateamforce.coffeenow.editor.StringToImageEditor;
@@ -15,9 +10,12 @@ import com.ateamforce.coffeenow.service.ProductCategoryService;
 import com.ateamforce.coffeenow.validator.ExtraCategoryValidator;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -30,6 +28,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -50,13 +50,31 @@ public class AdminExtraCategoriesController {
     
     @Autowired
     ExtraCategoryValidator extraCategoryValidator;
+    
+    @Autowired
+    private MessageSource messages;
+    
+    @Autowired
+    LocaleResolver localeResolver;
 
-    // INSERT/UPDATE a product category
+    /**
+     * INSERT/UPDATE a extra category
+     * 
+     * @param request
+     * @param modelmap
+     * @param extraCategory
+     * @param result
+     * @param attributes
+     * @return
+     * @throws IOException 
+     */
     @PostMapping
     public String admin_dashboard_extraCategories_addExtraCategory(
+            HttpServletRequest request,
             ModelMap modelmap,
             @ModelAttribute("extraCategory") @Valid ExtraCategory extraCategory,
-            BindingResult result
+            BindingResult result, 
+            RedirectAttributes attributes
     ) throws IOException {
         
         if (result.hasErrors()) {
@@ -81,19 +99,51 @@ public class AdminExtraCategoriesController {
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
         }
         
+        // save or update
         extraCategoryService.addExtraCategory(extraCategory);
+        
+        // add main message
+        Locale locale = localeResolver.resolveLocale(request);
+        Object[] item = new Object[] {messages.getMessage("admin.menu.extrascategories", null, locale)};
+        String mainMessage = "items.updated";
+        attributes.addFlashAttribute("mainMessage", messages.getMessage(mainMessage, item, locale));
         
         return "redirect:/administrator/dashboard/extracategories";
     }
 
-    // DELETE a product category by id
+    /**
+     * DELETE an extra category by id
+     * 
+     * @param request
+     * @param extraCategoryId
+     * @param attributes
+     * @return 
+     */
     @GetMapping("/delete/{extraCategoryId}")
-    public String admin_dashboard_productCategories_deleteProductCategory(@PathVariable int extraCategoryId) {
+    public String admin_dashboard_productCategories_deleteProductCategory(
+            HttpServletRequest request,
+            @PathVariable int extraCategoryId, 
+            RedirectAttributes attributes
+    ) {
+        
+        // delete
         extraCategoryService.deleteExtraCategoryById(extraCategoryId);
+        
+        // add main message
+        Locale locale = localeResolver.resolveLocale(request);
+        Object[] item = new Object[] {messages.getMessage("extracategory", null, locale)};
+        String mainMessage = "item.deleted";
+        attributes.addFlashAttribute("mainMessage", messages.getMessage(mainMessage, item, locale));
+        
         return "redirect:/administrator/dashboard/extracategories";
     }
 
-    // allowed fields for the new/update ProductCategory form returned fields
+    /**
+     * Allows fields for the new/update ExtraCategory form returned fields
+     * and transforms Lists of strings to lists of extra and/or product categories
+     * 
+     * @param binder 
+     */
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
 
@@ -104,6 +154,7 @@ public class AdminExtraCategoriesController {
         // setting allowed fields
         binder.setAllowedFields("id", "title", "parent", "image", "productcategoriesList", "extrasList", "language");
         
+        // convert list of strings to list of extras
         binder.registerCustomEditor(List.class, "extrasList", new CustomCollectionEditor(List.class) {
             @Override
             protected Extra convertElement(Object element) {
@@ -114,6 +165,7 @@ public class AdminExtraCategoriesController {
             }
         });
         
+        // convert list of strings to list of product categories
         binder.registerCustomEditor(List.class, "productcategoriesList", new CustomCollectionEditor(List.class) {
             @Override
             protected ProductCategory convertElement(Object element) {
@@ -124,6 +176,7 @@ public class AdminExtraCategoriesController {
             }
         });
         
+        // convert base64 encoded image (string) to MultiPart file
         binder.registerCustomEditor(MultipartFile.class, "image", new StringToImageEditor());
         
     }
