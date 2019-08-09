@@ -56,8 +56,6 @@ public class AppUserServiceImpl implements AppUserService {
         return appUserRepository.findByEmail(email);
     }
 
-
-
     @Override
     public AppUser findAppUserById(int appUserId) {
         return appUserRepository.findAppUserById(appUserId);
@@ -91,9 +89,9 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void createTokenForAppUser(AppUser user, String token) {
+    public AppUserToken createTokenForAppUser(AppUser user, String token) {
         final AppUserToken myToken = new AppUserToken(token, user);
-        tokenRepository.save(myToken);
+        return tokenRepository.save(myToken);
     }
 
     @Override
@@ -102,12 +100,9 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUserToken generateNewAppUserToken(String token) {
-        AppUserToken vToken = tokenRepository.findByToken(token);
-        vToken.updateToken(UUID.randomUUID()
-            .toString());
-        vToken = tokenRepository.save(vToken);
-        return vToken;
+    public AppUserToken generateNewAppUserToken(AppUserToken token) {
+        token.updateToken(UUID.randomUUID().toString());
+        return tokenRepository.save(token);
     }
 
     @Override
@@ -138,6 +133,15 @@ public class AppUserServiceImpl implements AppUserService {
         final AppUserToken token = tokenRepository.findByToken(appUserToken);
         if (token != null) {
             return token.getUser();
+        }
+        return null;
+    }
+    
+    @Override
+    public AppUserToken getAppTokenByUser(AppUser user){
+        final AppUserToken token = tokenRepository.findByUser(user);
+        if (token != null) {
+            return token;
         }
         return null;
     }

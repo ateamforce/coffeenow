@@ -29,11 +29,13 @@ public interface AppUserService  {
 
     AppUser registerNewStore(NewStoreDto newStore);
     
-    void createTokenForAppUser(AppUser user, String token);
+    AppUserToken createTokenForAppUser(AppUser user, String token);
     
     AppUserToken getAppUserToken(String VerificationToken);
 
-    AppUserToken generateNewAppUserToken(String token);
+    AppUserToken generateNewAppUserToken(AppUserToken token);
     
     String validateAppUserToken(String token);
+    
+    AppUserToken getAppTokenByUser(AppUser user);
 }

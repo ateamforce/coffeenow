@@ -65,10 +65,18 @@ public class AdminController {
     @Autowired
     PaymentTypeService paymentTypeService;
 
-    // TODO : Gets what?
-    // Go to administrator dashboard page
+    /**
+     * Go to administrator dashboard page
+     * 
+     * @param modelmap
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping
-    public String admin_dashboard(ModelMap modelmap) {
+    public String admin_dashboard(
+            ModelMap modelmap, 
+            @ModelAttribute("mainMessage") final String msg
+    ) {
 
         modelmap.addAttribute("appRoles", appRoleService.getAllAppRoles());
         modelmap.addAttribute("paymentTypes", paymentTypeService.getAllPaymentTypes());
@@ -79,11 +87,22 @@ public class AdminController {
         return "back_admin/dashboard/index";
     }
 
-    // Gets all products to display them in products page
-    // prepares add new product form
-    // Go to administrator products page
+    /**
+     * Gets all products to display them in products page
+     * prepares add new product form
+     * Go to administrator products page
+     * 
+     * @param modelmap
+     * @param newProduct
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping(value="/products", method = RequestMethod.GET)
-    public String admin_dashboard_products(ModelMap modelmap, @ModelAttribute("newProduct") Product newProduct) {
+    public String admin_dashboard_products(
+            ModelMap modelmap, 
+            @ModelAttribute("newProduct") Product newProduct, 
+            @ModelAttribute("mainMessage") final String msg
+    ) {
 
         List<Product> products = productService.getAllProducts();
 
@@ -99,15 +118,29 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productsIsActive", "active");
+        
+        // add possible main message
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         return "back_admin/dashboard/products";
     }
 
-    // Gets all productcaregories to display them in productcategories page
-    // prepares add new product category form
-    // Go to administrator productcategories page
+    /**
+     * Gets all productcaregories to display them in productcategories page
+     * prepares add new product category form
+     * Go to administrator productcategories page
+     * 
+     * @param modelmap
+     * @param productCategory
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping(value = "/productcategories", method = RequestMethod.GET)
-    public String admin_dashboard_productcategories(ModelMap modelmap, @ModelAttribute("productCategory") ProductCategory productCategory) {
+    public String admin_dashboard_productcategories(
+            ModelMap modelmap, 
+            @ModelAttribute("productCategory") ProductCategory productCategory,
+            @ModelAttribute("mainMessage") final String msg
+    ) {
 
         // add product categories with ExtraCategories and Products
         List<ProductCategory> productcategories = productCategoryService.getAllProductCategories();
@@ -126,15 +159,29 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("productcategoriesIsActive", "active");
+        
+        // add possible main message
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         return "back_admin/dashboard/product_categories";
     }
 
-    // Gets all products to display them in products page
-    // prepares add new extra form
-    // Go to administrator products page
+    /**
+     * Gets all extras to display them in extras page
+     * prepares add new extra form
+     * Go to administrator extras page
+     * 
+     * @param modelmap
+     * @param newExtra
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping("/extras")
-    public String admin_dashboard_extras(ModelMap modelmap, @ModelAttribute("newExtra") Extra newExtra) {
+    public String admin_dashboard_extras(
+            ModelMap modelmap, 
+            @ModelAttribute("newExtra") Extra newExtra, 
+            @ModelAttribute("mainMessage") final String msg
+    ) {
         
         List<Extra> extras = extraService.getAllExtras();
 
@@ -150,15 +197,29 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("extrasIsActive", "active");
+        
+        // add possible main message
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         return "back_admin/dashboard/extras";
     }
 
-    // Gets all productcaregories to display them in productcategories page
-    // prepares add new extra category form
-    // Go to administrator productcategories page
+    /**
+     * Gets all extracaregories to display them in extracaregories page
+     * prepares add new extra category form
+     * Go to administrator extracaregories page
+     * 
+     * @param modelmap
+     * @param extraCategory
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping("/extracategories")
-    public String admin_dashboard_extrascategories(ModelMap modelmap, @ModelAttribute("extraCategory") ExtraCategory extraCategory) {
+    public String admin_dashboard_extrascategories(
+            ModelMap modelmap, 
+            @ModelAttribute("extraCategory") ExtraCategory extraCategory, 
+            @ModelAttribute("mainMessage") final String msg
+    ) {
 
         List<ExtraCategory> extracategories = extraCategoryService.getAllExtraCategories();
         for (ExtraCategory extracategory : extracategories) {
@@ -177,19 +238,34 @@ public class AdminController {
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("extracategoriesIsActive", "active");
+        
+        // add possible main message
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         return "back_admin/dashboard/extra_categories";
     }
     
-    // Gets all stores and enables editing them
+    /**
+     * Gets all stores and enables editing them
+     * 
+     * @param modelmap
+     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
+     * @return 
+     */
     @RequestMapping("/stores")
-    public String admin_dashboard_stores(ModelMap modelmap) {
+    public String admin_dashboard_stores(
+            ModelMap modelmap, 
+            @ModelAttribute("mainMessage") final String msg
+    ) {
         
         //add all stores
         modelmap.addAttribute("stores", storeService.findAll());
 
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("storesIsActive", "active");
+        
+        // add possible main message
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         return "back_admin/dashboard/stores";
     }

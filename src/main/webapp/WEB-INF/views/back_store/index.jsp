@@ -3,27 +3,25 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<body class="bg-gradient-primary">
+<div class="container">
 
-  <div class="container">
+	<!-- Outer Row -->
+	<div class="row justify-content-center">
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
+	  <div class="col-xl-10 col-lg-12 col-md-9">
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4"><spring:message code="admin.login.welcome"/></h1>
-                  </div>
+		<div class="card o-hidden border-0 shadow-lg my-5">
+		  <div class="card-body p-0">
+			<!-- Nested Row within Card Body -->
+			<div class="row">
+			  <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+			  <div class="col-lg-6">
+				<div class="p-5">
+				  <div class="text-center">
+					<h1 class="h4 text-gray-900 mb-4"><spring:message code="admin.login.welcome"/></h1>
+				  </div>
 				  <spring:url value="store/dashboard/check" var="loginUrl"/>
-                  <form action=${loginUrl} method="post" class="user">
+				  <form action=${loginUrl} method="post" class="user">
 					<c:choose>
 						<c:when test="${param.error != null}">
 							<div class="alert alert-danger">
@@ -46,46 +44,40 @@
 							</div>
 						</c:when>
 					</c:choose>
-                    <div class="form-group">
+					<div class="form-group">
 					  <spring:message code="enterEmailAddress" var="enterEmailAddress"/>
-                      <input type="email" class="form-control form-control-user" id="userId" aria-describedby="emailHelp" placeholder="${enterEmailAddress}" name="username" required>
-                    </div>
-                    <div class="form-group">
+					  <input type="email" class="form-control form-control-user" id="userId" aria-describedby="emailHelp" placeholder="${enterEmailAddress}" name="username" required>
+					</div>
+					<div class="form-group">
 					  <spring:message code="passwordPlaceholder" var="passwordPlaceholder"/>
-                      <input type="password" class="form-control form-control-user" id="password" placeholder="${passwordPlaceholder}" name="password" required>
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="rememberMe" name="remember-me">
-                        <label class="custom-control-label" for="rememberMe"><spring:message code="login.rememberme"/></label>
-                      </div>
-                    </div>
+					  <input type="password" class="form-control form-control-user" id="password" placeholder="${passwordPlaceholder}" name="password" required>
+					</div>
+					<div class="form-group">
+					  <div class="custom-control custom-checkbox small">
+						<input type="checkbox" class="custom-control-input" id="rememberMe" name="remember-me">
+						<label class="custom-control-label" for="rememberMe"><spring:message code="login.rememberme"/></label>
+					  </div>
+					</div>
 					<button type="submit" class="btn btn-primary btn-user btn-block"><spring:message code="login"/></button>
-                  </form>
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
-                  </div>
+				  </form>
+				  <hr>
 				  <div class="text-center">
-                    <a class="small" href="store/register"><spring:message code="register"/></a>
-                  </div>
+					<a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
+				  </div>
 				  <div class="text-center">
-                    <a class="small" href="store?language=el">Ελληνικά</a> | <a class="small" href="store?language=en">English</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+					<a class="small" href="store/register"><spring:message code="register"/></a>
+				  </div>
+				  <div class="text-center">
+					<a class="small" href="store?language=el">Ελληνικά</a> | <a class="small" href="store?language=en">English</a>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
 
-      </div>
+	  </div>
 
-    </div>
+	</div>
 
-  </div>
-
-<c:if test="${not empty mainMessage}">
-	<!-- MAIN MESSAGE PANEL (ALWAYS HAS TO BE IN UTILS, OR WHEREVER THE CLOSING body TAG IS, IF NO UTILS IS AVAILABLE) -->
-	<div id="mainMessagePanelCFN" class="alert alert-success">${mainMessage}</div>
-</c:if>
-</body>
+</div>

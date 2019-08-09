@@ -36,8 +36,11 @@ public class StoreProfileProductsController {
     public String store_dashboard_profile_products(
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
-            @ModelAttribute("storeProduct") StoreProduct storeProduct
+            @ModelAttribute("storeProduct") StoreProduct storeProduct, 
+            @ModelAttribute("mainMessage") final String msg
     ) {
+        
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         // add store products
         modelmap.addAttribute("storeProducts", storeProductService.findAllByStoreId(currentUser.getId()));

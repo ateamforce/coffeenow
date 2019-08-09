@@ -149,6 +149,7 @@ button.multiselect-clear-filter {
 	opacity: 0;
     -webkit-animation: fadeInThenOut 7s;
     -moz-animation: fadeInThenOut 7s;
+	text-align: center;
 }
 
 /* overrides */
