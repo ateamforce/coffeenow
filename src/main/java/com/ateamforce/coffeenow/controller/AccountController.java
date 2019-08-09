@@ -4,13 +4,19 @@ import com.ateamforce.coffeenow.dto.NewStoreDto;
 import com.ateamforce.coffeenow.event.OnStoreRegistrationCompleteEvent;
 import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
 import com.ateamforce.coffeenow.model.AppUser;
+import com.ateamforce.coffeenow.model.AppUserToken;
 import com.ateamforce.coffeenow.service.AppUserService;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +45,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AccountController {
     
     @Autowired
-    AppUserService appUserService;
+    private AppUserService appUserService;
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -51,15 +57,36 @@ public class AccountController {
     private UserDetailsService userDetailsService;
     
     @Autowired
-    LocaleResolver localeResolver;
+    private LocaleResolver localeResolver;
     
-    // Store Backend Registration form Page
+    @Autowired
+    private JavaMailSender mailSender;
+    
+    @Autowired
+    private Environment env;
+    
+    /**
+     * Store Backend Registration form Page
+     * 
+     * @param modelmap
+     * @param newStore
+     * @return 
+     */
     @RequestMapping(value = "/store/register", method = RequestMethod.GET)
     public String store_register_form(ModelMap modelmap, @ModelAttribute("newStore") NewStoreDto newStore) {
         return "back_store/register";
     }
 
-    // Store Backend register parse
+    /**
+     * Store Backend register parse
+     * 
+     * @param request
+     * @param modelmap
+     * @param newStore
+     * @param result
+     * @param attributes
+     * @return 
+     */
     @RequestMapping(value = "/store/register", method = RequestMethod.POST)
     public String store_register_parse(
             HttpServletRequest request,
@@ -78,12 +105,8 @@ public class AccountController {
             }
             else {
                 try {
-                    String appUrl = request.getContextPath();
-                    // we publish the event listener, that will send confirmation/activation email, passing request.getLocale() 
-                    // which is the browser (client) locale, not the app locale. So the email's lalnguage depends on the browser's
-                    // language, not the app's.
                     eventPublisher.publishEvent(new OnStoreRegistrationCompleteEvent
-                      (registered, request.getLocale(), appUrl));
+                      (registered, localeResolver.resolveLocale(request), getAppUrl(request)));
                 } catch (Exception me) {
                     result.rejectValue("email", "email.exists");
                 }
@@ -104,6 +127,16 @@ public class AccountController {
         return "redirect:/store";
     }
     
+    /**
+     * Store backend register confirmation parsing
+     * 
+     * @param request
+     * @param model
+     * @param token
+     * @param attributes
+     * @return
+     * @throws UnsupportedEncodingException 
+     */
     @GetMapping("/store/register/confirm")
     public String confirmRegistration(
             final HttpServletRequest request, 
@@ -125,24 +158,65 @@ public class AccountController {
         return "redirect:/store";
     }
     
-    // Store Backend Resend Registration confirmation/validation email form
+    /**
+     * Store Backend Resend Registration confirmation/validation email form
+     * 
+     * @param modelmap
+     * @return 
+     */
     @RequestMapping(value = "/store/register/resend/confirm", method = RequestMethod.GET)
     public String store_register_resend_confirmation_form(ModelMap modelmap) {
         return "back_store/registerResendConfirm";
     }
 
-    // Store Backend Resend Registration confirmation/validation email parse
+    /**
+     * Store Backend Resend Registration confirmation/validation email parse
+     * 
+     * @param request
+     * @param attributes
+     * @param modelmap
+     * @param email
+     * @return 
+     */
     @RequestMapping(value = "/store/register/resend/confirm", method = RequestMethod.POST)
     public String store_register_resend_confirmation_parse(
             HttpServletRequest request,
+            RedirectAttributes attributes,
             ModelMap modelmap,
             @RequestParam("email") String email
     ) {
 
+        final AppUser user = appUserService.getUserByEmail(email);
+        
+        // check is user exists and is NOT enabled
+        if ( user != null ) {
+            if ( !user.isEnabled() ) {
+                AppUserToken oldToken = appUserService.getAppTokenByUser(user);
+                final AppUserToken newToken;
+                // check if old token sxists
+                if ( oldToken != null ) {
+                    newToken = appUserService.generateNewAppUserToken(oldToken);
+                    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user, request));
+                }
+                else {
+                    final String token = UUID.randomUUID().toString();
+                    newToken = appUserService.createTokenForAppUser(user, token);
+                    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user, request));
+                }
+                attributes.addFlashAttribute("mainMessage", messages.getMessage("message.newTokenCreated", null, localeResolver.resolveLocale(request)));
+            }
+            else {
+                attributes.addFlashAttribute("mainMessage", messages.getMessage("message.userIsEnabled", null, localeResolver.resolveLocale(request)));
+            }
+        }
+        else {
+            attributes.addFlashAttribute("mainMessage", messages.getMessage("message.userNotFound", null, localeResolver.resolveLocale(request)));
+        }
         
         return "redirect:/store";
     }
 
+    // creates a new store account
     private AppUser createUserAccount(NewStoreDto newStore) {
         AppUser registered = null;
         try {
@@ -160,6 +234,32 @@ public class AccountController {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);      
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+    }
+    
+    private SimpleMailMessage constructResendVerificationTokenEmail(
+            final String contextPath, 
+            final Locale locale, 
+            final AppUserToken newToken, 
+            final AppUser user, 
+            HttpServletRequest request
+    ) {
+        final String confirmationUrl = contextPath + "/store/register/confirm?token=" + newToken.getToken();
+        final String message = messages.getMessage("message.resendToken", null, locale);
+        return constructEmail(messages.getMessage("message.resendConf", null, localeResolver.resolveLocale(request)), message + " \r\n" + confirmationUrl, user);
+    }
+    
+    private SimpleMailMessage constructEmail(String subject, String body, AppUser user) {
+        final SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject(subject);
+        email.setText(body);
+        email.setTo(user.getEmail());
+        email.setFrom(env.getProperty("support.email"));
+        return email;
+    }
+    
+    // returns the current app's url
+    private String getAppUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 
 }

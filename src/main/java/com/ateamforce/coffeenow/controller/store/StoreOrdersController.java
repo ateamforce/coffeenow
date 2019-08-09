@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -24,9 +25,12 @@ public class StoreOrdersController {
     @GetMapping
     public String store_dashboard_orders(
             @SessionAttribute(name = "currentUser") Store currentUser, 
-            ModelMap modelmap
+            ModelMap modelmap, 
+            @ModelAttribute("mainMessage") final String msg
     ) {
 
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
+        
         // add store extras
         modelmap.addAttribute("storeOrders", orderService.findByStoreId(currentUser.getId()));
 

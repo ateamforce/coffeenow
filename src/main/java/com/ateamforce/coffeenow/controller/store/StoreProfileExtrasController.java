@@ -36,8 +36,11 @@ public class StoreProfileExtrasController {
     public String store_dashboard_profile_extras(
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
-            @ModelAttribute("storeExtra") StoreExtra storeExtra
+            @ModelAttribute("storeExtra") StoreExtra storeExtra, 
+            @ModelAttribute("mainMessage") final String msg
     ) {
+        
+        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         // add store extras
         modelmap.addAttribute("storeExtras", storeExtraService.findByStoreid(currentUser.getId()));

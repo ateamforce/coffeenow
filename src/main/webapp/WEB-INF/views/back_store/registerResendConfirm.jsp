@@ -33,6 +33,9 @@
 				</form>
               <hr>
               <div class="text-center">
+                <a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
+              </div>
+              <div class="text-center">
                 <a class="small" href="store"><spring:message code="store.haveAccount"/></a>
               </div>
 			  <div class="text-center">

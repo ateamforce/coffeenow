@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //Get the User
         AppUser appuser = appUserService.getUserByEmail(email);
 
+        // check if user exists and is enabled
         if (appuser == null || !appuser.isEnabled()) {
             throw new UsernameNotFoundException(email);
         }

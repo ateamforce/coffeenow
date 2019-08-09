@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import java.util.UUID;
+import org.springframework.core.env.Environment;
 
 /**
  *
@@ -25,6 +26,9 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
 
     @Autowired
     private JavaMailSender mailSender;
+    
+    @Autowired
+    private Environment env;
 
     // API
 
@@ -43,7 +47,7 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
     }
 
     // Setup registration confirmation email
-    private final SimpleMailMessage constructEmailMessage(final OnStoreRegistrationCompleteEvent event, final AppUser user, final String token) {
+    private SimpleMailMessage constructEmailMessage(final OnStoreRegistrationCompleteEvent event, final AppUser user, final String token) {
         final String recipientAddress = user.getEmail();
         final String subject = messages.getMessage("message.regConf", null, event.getLocale()) + " - coffeenow.gr";
         final String confirmationUrl = event.getAppUrl() + "/store/register/confirm?token=" + token;
@@ -52,7 +56,7 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
         email.setTo(recipientAddress);
         email.setSubject(subject);
         email.setText(message + " \r\n" + confirmationUrl);
-        email.setFrom("coffeenow_gr@mail.com");
+        email.setFrom(env.getProperty("support.email"));
         return email;
     }
 
