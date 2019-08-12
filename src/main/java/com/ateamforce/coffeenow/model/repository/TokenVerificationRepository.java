@@ -1,7 +1,7 @@
 package com.ateamforce.coffeenow.model.repository;
 
 import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.AppUserToken;
+import com.ateamforce.coffeenow.model.TokenVerification;
 import java.util.Date;
 import java.util.stream.Stream;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,18 +10,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AppUserTokenRepository extends JpaRepository<AppUserToken, Long> {
+public interface TokenVerificationRepository extends JpaRepository<TokenVerification, Long> {
     
-    AppUserToken findByToken(String token);
+    TokenVerification findByToken(String token);
 
-    AppUserToken findByUser(AppUser user);
+    TokenVerification findByUser(AppUser user);
 
-    Stream<AppUserToken> findAllByExpiryDateLessThan(Date now);
+    Stream<TokenVerification> findAllByExpiryDateLessThan(Date now);
 
     void deleteByExpiryDateLessThan(Date now);
 
     @Modifying
-    @Query("DELETE FROM AppUserToken t where t.expiryDate <= ?1")
+    @Query("DELETE FROM TokenVerification t where t.expiryDate <= ?1")
     void deleteAllExpiredSince(Date now);
     
 }
