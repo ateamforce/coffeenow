@@ -1,19 +1,19 @@
 package com.ateamforce.coffeenow.dto;
 
 import com.ateamforce.coffeenow.annotation.PasswordMatches;
-import com.ateamforce.coffeenow.model._PasswordCarrier;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import com.ateamforce.coffeenow.util.PasswordService;
 
 /**
  *
  * @author Sakel
  */
 @PasswordMatches
-public class PasswordDto implements _PasswordCarrier {
+public class PasswordDto implements PasswordService {
 
     @NotNull(message = "{password.notempty.restriction.message}")
     @NotEmpty(message = "{password.notempty.restriction.message}")

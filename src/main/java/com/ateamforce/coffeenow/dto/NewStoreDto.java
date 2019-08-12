@@ -2,7 +2,6 @@ package com.ateamforce.coffeenow.dto;
 
 import com.ateamforce.coffeenow.annotation.PasswordMatches;
 import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model._PasswordCarrier;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import com.ateamforce.coffeenow.util.PasswordService;
 
 /**
  *
@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Entity 
 @Table(name = "stores")
 @PasswordMatches
-public class NewStoreDto extends AppUser implements _PasswordCarrier {
+public class NewStoreDto extends AppUser implements PasswordService {
     @Column(name = "vat")
     @NotNull(message = "{vat.notempty.restriction.message}")
     private long vat;

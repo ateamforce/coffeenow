@@ -1,4 +1,4 @@
-package com.ateamforce.coffeenow.model;
+package com.ateamforce.coffeenow.util;
 
 /**
  * 
@@ -6,7 +6,7 @@ package com.ateamforce.coffeenow.model;
  *
  * @author Sakel
  */
-public interface _PasswordCarrier {
+public interface PasswordService {
     String getPassword();
     String getPasswordRepeat();
 }
