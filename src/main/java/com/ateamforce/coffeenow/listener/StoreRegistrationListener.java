@@ -40,7 +40,7 @@ public class StoreRegistrationListener implements ApplicationListener<OnStoreReg
     private void confirmRegistration(final OnStoreRegistrationCompleteEvent event) {
         final AppUser user = event.getUser();
         final String token = UUID.randomUUID().toString();
-        service.createTokenForAppUser(user, token);
+        service.createVerificationTokenForAppUser(user, token);
 
         final SimpleMailMessage email = constructEmailMessage(event, user, token);
         mailSender.send(email);

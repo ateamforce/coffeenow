@@ -9,16 +9,18 @@ import com.ateamforce.coffeenow.dto.NewStoreDto;
 import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
 import com.ateamforce.coffeenow.service.AppUserService;
 import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.AppUserToken;
+import com.ateamforce.coffeenow.model.TokenVerification;
 import com.ateamforce.coffeenow.model.Store;
+import com.ateamforce.coffeenow.model.TokenPasswordReset;
 import com.ateamforce.coffeenow.model.repository.AppUserRepository;
-import com.ateamforce.coffeenow.model.repository.AppUserTokenRepository;
+import com.ateamforce.coffeenow.model.repository.TokenPasswordResetRepository;
 import java.util.Calendar;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.ateamforce.coffeenow.model.repository.TokenVerificationRepository;
 
 /**
  *
@@ -31,7 +33,10 @@ public class AppUserServiceImpl implements AppUserService {
     AppUserRepository appUserRepository;
     
     @Autowired
-    private AppUserTokenRepository tokenRepository;
+    private TokenVerificationRepository tokenVerificationRepository;
+    
+    @Autowired
+    private TokenPasswordResetRepository tokenPasswordResetRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,6 +49,12 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUser addAppUser(AppUser appUser) {
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         return appUserRepository.save(appUser);
+    }
+    
+    @Override
+    public void changeAppUserPassword(AppUser appUser, String password) {
+        appUser.setPassword(passwordEncoder.encode(password));
+        appUserRepository.save(appUser);
     }
 
     @Override
@@ -87,27 +98,38 @@ public class AppUserServiceImpl implements AppUserService {
     private boolean emailExists(final String email) {
         return appUserRepository.findByEmail(email) != null;
     }
-
+    
+    // verification token
+    
     @Override
-    public AppUserToken createTokenForAppUser(AppUser user, String token) {
-        final AppUserToken myToken = new AppUserToken(token, user);
-        return tokenRepository.save(myToken);
+    public AppUser getAppUserByVerificationToken(String token) {
+        final TokenVerification verificationToken = tokenVerificationRepository.findByToken(token);
+        if (verificationToken != null) {
+            return verificationToken.getUser();
+        }
+        return null;
     }
 
     @Override
-    public AppUserToken getAppUserToken(String verificationToken) {
-        return tokenRepository.findByToken(verificationToken);
+    public TokenVerification createVerificationTokenForAppUser(AppUser user, String token) {
+        final TokenVerification myToken = new TokenVerification(token, user);
+        return tokenVerificationRepository.save(myToken);
     }
 
     @Override
-    public AppUserToken generateNewAppUserToken(AppUserToken token) {
+    public TokenVerification getVerificationToken(String verificationToken) {
+        return tokenVerificationRepository.findByToken(verificationToken);
+    }
+
+    @Override
+    public TokenVerification generateNewVerificationToken(TokenVerification token) {
         token.updateToken(UUID.randomUUID().toString());
-        return tokenRepository.save(token);
+        return tokenVerificationRepository.save(token);
     }
 
     @Override
-    public String validateAppUserToken(String token) {
-        final AppUserToken verificationToken = tokenRepository.findByToken(token);
+    public String validateVerificationToken(String token) {
+        final TokenVerification verificationToken = tokenVerificationRepository.findByToken(token);
         if (verificationToken == null) {
             return TOKEN_INVALID;
         }
@@ -118,32 +140,86 @@ public class AppUserServiceImpl implements AppUserService {
             .getTime()
             - cal.getTime()
                 .getTime()) <= -4) {
-            tokenRepository.delete(verificationToken);
+            tokenVerificationRepository.delete(verificationToken);
             return TOKEN_EXPIRED;
         }
 
         user.setEnabled(true);
-        tokenRepository.delete(verificationToken);
+        tokenVerificationRepository.delete(verificationToken);
         appUserRepository.save(user);
         return TOKEN_VALID;
     }
-
+    
     @Override
-    public AppUser getUserByToken(String appUserToken) {
-        final AppUserToken token = tokenRepository.findByToken(appUserToken);
-        if (token != null) {
-            return token.getUser();
+    public TokenVerification getVerificationTokenByAppUser(AppUser user){
+        final TokenVerification verificationToken = tokenVerificationRepository.findByUser(user);
+        if (verificationToken != null) {
+            return verificationToken;
         }
         return null;
     }
     
+    // password reset token
+
     @Override
-    public AppUserToken getAppTokenByUser(AppUser user){
-        final AppUserToken token = tokenRepository.findByUser(user);
-        if (token != null) {
-            return token;
+    public AppUser getAppUserByPasswordResetToken(String token) {
+        final TokenPasswordReset passwordResetToken = tokenPasswordResetRepository.findByToken(token);
+        if (passwordResetToken != null) {
+            return passwordResetToken.getUser();
         }
         return null;
+    }
+
+    @Override
+    public TokenPasswordReset createPasswordResetTokenForAppUser(AppUser user, String token) {
+        final TokenPasswordReset myToken = new TokenPasswordReset(token, user);
+        return tokenPasswordResetRepository.save(myToken);
+    }
+
+    @Override
+    public TokenPasswordReset getPasswordResetToken(String token) {
+        return tokenPasswordResetRepository.findByToken(token);
+    }
+
+    @Override
+    public TokenPasswordReset generateNewPasswordResetToken(TokenPasswordReset token) {
+        token.updateToken(UUID.randomUUID().toString());
+        return tokenPasswordResetRepository.save(token);
+    }
+    
+    @Override
+    public String validatePasswordResetToken(long id, String token) {
+        final TokenPasswordReset passwordResetToken = tokenPasswordResetRepository.findByToken(token);
+        if ((passwordResetToken == null) || (passwordResetToken.getUser().getId() != id)) {
+            return TOKEN_INVALID;
+        }
+
+        final Calendar cal = Calendar.getInstance();
+        if ((passwordResetToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= -4) {
+            tokenPasswordResetRepository.delete(passwordResetToken);
+            return TOKEN_EXPIRED;
+        }
+        
+        return TOKEN_VALID;
+    }
+
+    @Override
+    public TokenPasswordReset getPasswordResetTokenByAppUser(AppUser user) {
+        final TokenPasswordReset passwordResetToken = tokenPasswordResetRepository.findByUser(user);
+        if (passwordResetToken != null) {
+            return passwordResetToken;
+        }
+        return null;
+    }
+
+    @Override
+    public void deletePasswordResetToken(TokenPasswordReset token) {
+        tokenPasswordResetRepository.delete(token);
+    }
+
+    @Override
+    public void deletePasswordResetToken(String token) {
+        tokenPasswordResetRepository.delete(tokenPasswordResetRepository.findByToken(token));
     }
 
 }

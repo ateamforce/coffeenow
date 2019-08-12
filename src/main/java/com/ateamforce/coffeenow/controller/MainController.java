@@ -3,20 +3,19 @@ package com.ateamforce.coffeenow.controller;
 import com.ateamforce.coffeenow.model.Administrator;
 import com.ateamforce.coffeenow.model.AppRole;
 import com.ateamforce.coffeenow.model.Store;
-import com.ateamforce.coffeenow.model.repository.AppUserTokenRepository;
 import com.ateamforce.coffeenow.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.ateamforce.coffeenow.model.repository.TokenVerificationRepository;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
     
     @Autowired
-    private AppUserTokenRepository tokenRepository;
+    private TokenVerificationRepository tokenRepository;
 
     // Home Page
     @RequestMapping
@@ -32,9 +31,7 @@ public class MainController {
 
     // Store Backend Login Page
     @RequestMapping("/store")
-    public String store_login(ModelMap modelmap, @ModelAttribute("mainMessage") final String msg) {
-        // catch the flash attribute that may be coming from AccountController
-        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
+    public String store_login(ModelMap modelmap) {
         return "back_store/index";
     }
 

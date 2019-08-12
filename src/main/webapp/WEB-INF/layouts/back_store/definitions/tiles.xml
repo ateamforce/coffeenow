@@ -29,6 +29,16 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/back_store/registerResendConfirm.jsp" />
 	</definition>
 	
+	<!-- Store Reset Password - Email Form -->
+	<definition name="back_store/resetPassword" extends="loginLayout_store">
+		<put-attribute name="content" value="/WEB-INF/views/back_store/resetPassword.jsp" />
+	</definition>
+	
+	<!-- Store Reset Password - Write New Password Form -->
+	<definition name="back_store/changePassword" extends="loginLayout_store">
+		<put-attribute name="content" value="/WEB-INF/views/back_store/changePassword.jsp" />
+	</definition>
+	
 	
 	<!-- ############################################################################ -->
 	

@@ -20,8 +20,8 @@ import javax.persistence.TemporalType;
  * @author Sakel
  */
 @Entity
-@Table(name = "appusertokens")
-public class AppUserToken implements Serializable {
+@Table(name = "tokens_verification")
+public class TokenVerification implements Serializable {
 
     private static final int EXPIRATION = 60 * 24;
 
@@ -39,18 +39,18 @@ public class AppUserToken implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiryDate;
 
-    public AppUserToken() {
+    public TokenVerification() {
         super();
     }
 
-    public AppUserToken(final String token) {
+    public TokenVerification(final String token) {
         super();
 
         this.token = token;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
-    public AppUserToken(final String token, final AppUser user) {
+    public TokenVerification(final String token, final AppUser user) {
         super();
 
         this.token = token;
@@ -121,7 +121,7 @@ public class AppUserToken implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AppUserToken other = (AppUserToken) obj;
+        final TokenVerification other = (TokenVerification) obj;
         if (expiryDate == null) {
             if (other.expiryDate != null) {
                 return false;
