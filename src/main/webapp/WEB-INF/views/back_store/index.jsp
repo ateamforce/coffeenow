@@ -62,7 +62,7 @@
 				  </form>
 				  <hr>
 				  <div class="text-center">
-					<a class="small" href="#"><spring:message code="login.forgotpassword"/></a>
+					<a class="small" href="store/reset/password"><spring:message code="login.forgotpassword"/></a>
 				  </div>
 				  <div class="text-center">
 					<a class="small" href="store/register"><spring:message code="register"/></a>

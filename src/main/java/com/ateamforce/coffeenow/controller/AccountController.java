@@ -1,10 +1,12 @@
 package com.ateamforce.coffeenow.controller;
 
 import com.ateamforce.coffeenow.dto.NewStoreDto;
+import com.ateamforce.coffeenow.dto.PasswordDto;
 import com.ateamforce.coffeenow.event.OnStoreRegistrationCompleteEvent;
 import com.ateamforce.coffeenow.exception.UserAlreadyExistException;
 import com.ateamforce.coffeenow.model.AppUser;
-import com.ateamforce.coffeenow.model.AppUserToken;
+import com.ateamforce.coffeenow.model.TokenPasswordReset;
+import com.ateamforce.coffeenow.model.TokenVerification;
 import com.ateamforce.coffeenow.service.AppUserService;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
@@ -143,10 +145,10 @@ public class AccountController {
             final Model model, 
             @RequestParam("token") final String token, 
             RedirectAttributes attributes
-    ) throws UnsupportedEncodingException {
+    ) {
         
-        final AppUser user = appUserService.getUserByToken(token);
-        final String result = appUserService.validateAppUserToken(token); // this also deletes the persisted token if validation is successful 
+        final AppUser user = appUserService.getAppUserByVerificationToken(token);
+        final String result = appUserService.validateVerificationToken(token); // this also deletes the persisted token if validation is successful 
                                                                           // or it's expiration date has passed
         if (result.equals("valid")) {
             authWithoutPassword(user, request);
@@ -191,18 +193,17 @@ public class AccountController {
         // check is user exists and is NOT enabled
         if ( user != null ) {
             if ( !user.isEnabled() ) {
-                AppUserToken oldToken = appUserService.getAppTokenByUser(user);
-                final AppUserToken newToken;
+                TokenVerification oldToken = appUserService.getVerificationTokenByAppUser(user);
+                final TokenVerification newToken;
                 // check if old token sxists
                 if ( oldToken != null ) {
-                    newToken = appUserService.generateNewAppUserToken(oldToken);
-                    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user, request));
+                    newToken = appUserService.generateNewVerificationToken(oldToken);
                 }
                 else {
                     final String token = UUID.randomUUID().toString();
-                    newToken = appUserService.createTokenForAppUser(user, token);
-                    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user, request));
+                    newToken = appUserService.createVerificationTokenForAppUser(user, token);
                 }
+                mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), localeResolver.resolveLocale(request), newToken, user, request));
                 attributes.addFlashAttribute("mainMessage", messages.getMessage("message.newTokenCreated", null, localeResolver.resolveLocale(request)));
             }
             else {
@@ -215,6 +216,140 @@ public class AccountController {
         
         return "redirect:/store";
     }
+    
+    /**
+     * Store Backend Reset password email FORM
+     * 
+     * @param modelmap
+     * @return 
+     */
+    @RequestMapping(value = "/store/reset/password", method = RequestMethod.GET)
+    public String store_reset_password_form(ModelMap modelmap) {
+        return "back_store/resetPassword";
+    }
+    
+    /**
+     * Store Backend Reset password email PARSE
+     * 
+     * @param request
+     * @param attributes
+     * @param modelmap
+     * @param email
+     * @return 
+     */
+    @RequestMapping(value = "/store/reset/password", method = RequestMethod.POST)
+    public String store_reset_password_parse(
+            HttpServletRequest request,
+            RedirectAttributes attributes,
+            ModelMap modelmap,
+            @RequestParam("email") String email
+    ) {
+
+        final AppUser user = appUserService.getUserByEmail(email);
+        
+        // check is user exists and IS enabled
+        if ( user != null ) {
+            if ( user.isEnabled() ) {
+                final String token = UUID.randomUUID().toString();
+                TokenPasswordReset newToken = appUserService.createPasswordResetTokenForAppUser(user, token);
+                mailSender.send(constructResetPasswordTokenEmail(getAppUrl(request), localeResolver.resolveLocale(request), newToken, user, request));
+                attributes.addFlashAttribute("mainMessage", messages.getMessage("message.email.instructions", null, localeResolver.resolveLocale(request)));
+            }
+            else {
+                attributes.addFlashAttribute("mainMessage", messages.getMessage("message.userIsDisabled", null, localeResolver.resolveLocale(request)));
+            }
+        }
+        else {
+            attributes.addFlashAttribute("mainMessage", messages.getMessage("message.userNotFound", null, localeResolver.resolveLocale(request)));
+        }
+        
+        return "redirect:/store";
+    }
+    
+    /**
+     * Store Backend Change password authorization parsing and FORM
+     * 
+     * @param request
+     * @param model
+     * @param modelmap
+     * @param passwordDto
+     * @param id
+     * @param token
+     * @param attributes
+     * @return 
+     */
+    @RequestMapping(value = "/store/reset/password/change", method = RequestMethod.GET)
+    public String store_change_password_form(
+            HttpServletRequest request,
+            final Model model, 
+            ModelMap modelmap,
+            @ModelAttribute("passwordDto") PasswordDto passwordDto,
+            @RequestParam("id") long id,
+            @RequestParam("token") String token,
+            RedirectAttributes attributes
+    ) {
+        
+        String auth = appUserService.validatePasswordResetToken(id, token);
+        
+        if (auth.equals("valid")) {
+            modelmap.addAttribute("id", id);
+            modelmap.addAttribute("token", token);
+            modelmap.addAttribute("mainMessage", messages.getMessage("message.changePassword", null, localeResolver.resolveLocale(request)));
+            return "back_store/changePassword";
+        }
+        
+        attributes.addFlashAttribute("mainMessage", messages.getMessage("auth.message." + auth, null, localeResolver.resolveLocale(request)));
+        return "redirect:/store";
+    }
+    
+    /**
+     * Store Backend Change password PARSE
+     * 
+     * @param request
+     * @param passwordDto
+     * @param result
+     * @param id
+     * @param token
+     * @param attributes
+     * @return 
+     */
+    @RequestMapping(value = "/store/reset/password/change", method = RequestMethod.POST)
+    public String store_change_password_parse(
+            HttpServletRequest request,
+            ModelMap modelmap,
+            @ModelAttribute("passwordDto") @Valid PasswordDto passwordDto,
+            BindingResult result,
+            @RequestParam("id") long id,
+            @RequestParam("token") String token,
+            RedirectAttributes attributes
+    ) {
+        
+        if (result.hasErrors()) {
+            modelmap.addAttribute("id", id);
+            modelmap.addAttribute("token", token);
+            return "back_store/changePassword";
+        }
+        
+        String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: "
+                    + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
+        
+        String auth = appUserService.validatePasswordResetToken(id, token);
+        if (auth.equals("valid")) {
+            final AppUser user = appUserService.getAppUserByPasswordResetToken(token);
+            appUserService.changeAppUserPassword(user, passwordDto.getPassword());
+            appUserService.deletePasswordResetToken(token);
+            attributes.addFlashAttribute("mainMessage", messages.getMessage("success.passwordChange", null, localeResolver.resolveLocale(request)));
+        }
+
+        return "redirect:/store";
+    }
+    
+    
+    
+    //////////////////////////////////////////////////////////////////////////////
 
     // creates a new store account
     private AppUser createUserAccount(NewStoreDto newStore) {
@@ -236,10 +371,11 @@ public class AccountController {
         request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
     }
     
+    // Resend Verification Token Email
     private SimpleMailMessage constructResendVerificationTokenEmail(
             final String contextPath, 
             final Locale locale, 
-            final AppUserToken newToken, 
+            final TokenVerification newToken, 
             final AppUser user, 
             HttpServletRequest request
     ) {
@@ -248,6 +384,20 @@ public class AccountController {
         return constructEmail(messages.getMessage("message.resendConf", null, localeResolver.resolveLocale(request)), message + " \r\n" + confirmationUrl, user);
     }
     
+    // Reset Password Email
+    private SimpleMailMessage constructResetPasswordTokenEmail(
+            final String contextPath, 
+            final Locale locale, 
+            final TokenPasswordReset newToken, 
+            final AppUser user, 
+            HttpServletRequest request
+    ) {
+        final String url = contextPath + "/store/reset/password/change?id=" + user.getId() + "&token=" + newToken.getToken();
+        final String message = messages.getMessage("message.resetPasswordExp", null, locale);
+        return constructEmail(messages.getMessage("message.resetPassword", null, localeResolver.resolveLocale(request)), message + " \r\n" + url, user);
+    }
+    
+    // utility method for sending emails
     private SimpleMailMessage constructEmail(String subject, String body, AppUser user) {
         final SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject(subject);

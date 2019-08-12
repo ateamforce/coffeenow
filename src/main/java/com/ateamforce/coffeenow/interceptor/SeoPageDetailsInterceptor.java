@@ -67,6 +67,7 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
     }
     
     // initializes map of urls/titles/descriptions
+    // take extra care to have / at the beginning AND the end of the url
     private void preSeo(HttpServletRequest request){
         
         String defaultDescription = messageSource.getMessage("seo.description.default", null, localeResolver.resolveLocale(request));
@@ -82,7 +83,9 @@ public class SeoPageDetailsInterceptor implements HandlerInterceptor {
         pageDetails.put("/administrator/dashboard/extracategories/", new String[]{"Extras Categories | Administrator Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store/", new String[]{"Store Login | CoffeeNow",defaultDescription});
         pageDetails.put("/store/register/", new String[]{"Store Registration | CoffeeNow",defaultDescription});
-        pageDetails.put("/store/register/resend/confirm", new String[]{"Resend Confirmation Email | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/register/resend/confirm/", new String[]{"Resend Confirmation Email | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/reset/password/", new String[]{"Reset Password | CoffeeNow",defaultDescription});
+        pageDetails.put("/store/reset/password/change/", new String[]{"Provide a New Password | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/", new String[]{"Store Dashboard | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/profile/", new String[]{"Your Store Profile | CoffeeNow",defaultDescription});
         pageDetails.put("/store/dashboard/profile/products/", new String[]{"Your Products | CoffeeNow",defaultDescription});

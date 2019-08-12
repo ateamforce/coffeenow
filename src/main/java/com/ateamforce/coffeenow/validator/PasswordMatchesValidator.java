@@ -1,7 +1,7 @@
 package com.ateamforce.coffeenow.validator;
 
 import com.ateamforce.coffeenow.annotation.PasswordMatches;
-import com.ateamforce.coffeenow.dto.NewStoreDto;
+import com.ateamforce.coffeenow.model._PasswordCarrier;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -16,8 +16,8 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     }
     @Override
     public boolean isValid(final Object obj, final ConstraintValidatorContext context){   
-        final NewStoreDto newStoreDto = (NewStoreDto) obj;
-        return newStoreDto.getPassword().equals(newStoreDto.getPasswordRepeat());    
+        final _PasswordCarrier passwordCarrier = (_PasswordCarrier) obj;
+        return passwordCarrier.getPassword().equals(passwordCarrier.getPasswordRepeat());    
     }     
 }
 

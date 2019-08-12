@@ -15,9 +15,9 @@
           <div class="col-lg-7">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4"><spring:message code="store.resendConfirm"/></h1>
+                <h1 class="h4 text-gray-900 mb-4"><spring:message code="login.forgotpassword"/></h1>
               </div>
-				<form id="storeResendConfirmFormCFN" action="store/register/resend/confirm" method="POST" class="user">
+				<form id="storeResetPasswordFormCFN" action="store/reset/password" method="POST" class="user">
 					<div class="form-group row">
 						<div class="col">
 							<spring:message code="enterEmailAddress" var="enterEmailAddress"/>
@@ -33,13 +33,13 @@
 				</form>
               <hr>
               <div class="text-center">
-                <a class="small" href="store/reset/password"><spring:message code="login.forgotpassword"/></a>
-              </div>
-              <div class="text-center">
                 <a class="small" href="store"><spring:message code="store.haveAccount"/></a>
               </div>
 			  <div class="text-center">
-				<a class="small" href="store/register/resend/confirm?language=el">Ελληνικά</a> | <a class="small" href="store/register/resend/confirm?language=en">English</a>
+				<a class="small" href="store/register"><spring:message code="register"/></a>
+			  </div>
+			  <div class="text-center">
+				<a class="small" href="store/reset/password?language=el">Ελληνικά</a> | <a class="small" href="store/reset/password?language=en">English</a>
 			  </div>
             </div>
           </div>
