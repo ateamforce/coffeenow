@@ -59,7 +59,11 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	
-	<body id="page-top">
+	<c:if test="${cookie.containsKey('storeSidebarToggled')}">
+		<c:set var="toggled" value="sidebar-toggled" />
+	</c:if>
+	
+	<body id="page-top" class="${toggled}">
 
 		<div id="contentPreLoaderCFN"><img src="img/administrator/boilerplate/mainloader.gif" /></div>
 		

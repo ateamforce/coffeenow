@@ -26,7 +26,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<!-- Admin main template definition -->
 	<definition name="baseLayout_admin" template="/WEB-INF/layouts/back_admin/template/baseLayout.jsp">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/script.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/common/script_backend.js,js/administrator/script.js" />
 
 		<put-attribute name="leftsidebar" value="/WEB-INF/layouts/back_admin/template/sidebar-left.jsp" />
 		<put-attribute name="navbar" value="/WEB-INF/layouts/back_admin/template/navbar.jsp" />
@@ -42,14 +42,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<!-- Admin Products Page -->
 	<definition name="back_admin/dashboard/products" extends="baseLayout_admin">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/administrator/products.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/common/script_backend.js,js/administrator/script.js,js/administrator/products.js" />
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/products.jsp" />
 	</definition>
 
 	<!-- Admin Product Categories Page -->
 	<definition name="back_admin/dashboard/product_categories" extends="baseLayout_admin">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/administrator/productCategories.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/common/script_backend.js,js/administrator/script.js,js/administrator/productCategories.js" />
 
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/product_categories.jsp" />
 	</definition>
@@ -57,14 +57,14 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<!-- Admin Extras Page -->
 	<definition name="back_admin/dashboard/extras" extends="baseLayout_admin">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/administrator/extras.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/common/script_backend.js,js/administrator/script.js,js/administrator/extras.js" />
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extras.jsp" />
 	</definition>
 
 	<!-- Admin Extras Categories Page -->
 	<definition name="back_admin/dashboard/extra_categories" extends="baseLayout_admin">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/administrator/script.js,js/administrator/extraCategories.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/pixie.min.js,js/common/script_backend.js,js/administrator/script.js,js/administrator/extraCategories.js" />
 
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/extra_categories.jsp" />
 
@@ -73,7 +73,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<!-- Admin Stores Page -->
 	<definition name="back_admin/dashboard/stores" extends="baseLayout_admin">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/administrator/style.css" />
-		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/administrator/script.js,js/administrator/stores.js" />
+		<put-attribute name="scripts" value="js/common/script.js,js/administrator/language.js,js/administrator/sb-admin-2.js,js/administrator/jquery.datatables.js,js/administrator/multiselect.bootstrap.js,js/common/script_backend.js,js/administrator/script.js,js/administrator/stores.js" />
 
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/stores.jsp" />
 
