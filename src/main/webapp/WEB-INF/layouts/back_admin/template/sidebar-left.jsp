@@ -2,8 +2,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
+<c:if test="${cookie.containsKey('adminSidebarToggled')}">
+	<c:set var="toggled" value="toggled" />
+</c:if>
+
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${toggled}" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="administrator/dashboard">
