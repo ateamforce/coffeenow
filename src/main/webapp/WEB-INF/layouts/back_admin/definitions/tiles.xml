@@ -38,6 +38,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 	<definition name="back_admin/dashboard/index" extends="baseLayout_admin">
 		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/index.jsp" />
 	</definition>
+	
+	<!-- Admin Dashboard 404 Page -->
+	<definition name="back_admin/dashboard/404" extends="baseLayout_admin">
+		<put-attribute name="content" value="/WEB-INF/views/back_admin/dashboard/404.jsp" />
+	</definition>
 
 	<!-- Admin Products Page -->
 	<definition name="back_admin/dashboard/products" extends="baseLayout_admin">

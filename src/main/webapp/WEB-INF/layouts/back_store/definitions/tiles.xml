@@ -59,6 +59,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/back_store/dashboard/index.jsp" />
 	</definition>
 	
+	<!-- Store Dashboard 404 Page -->
+	<definition name="back_store/dashboard/404" extends="baseLayout_store">
+		<put-attribute name="content" value="/WEB-INF/views/back_store/dashboard/404.jsp" />
+	</definition>
+	
 	<!-- Store Profile Page -->
 	<definition name="back_store/dashboard/profile" extends="baseLayout_store">
 		<put-attribute name="styles" value="css/common/style.css,css/administrator/sb-admin-2.css,css/administrator/datatables.css,css/administrator/datatables.bootstrap4.css,css/administrator/multiselect.bootstrap.css,css/common/pixie.min.css,css/administrator/style.css,css/store/style.css" />
