@@ -2,6 +2,7 @@ package com.ateamforce.coffeenow.config;
 
 import com.ateamforce.coffeenow.filter.CurrentUserFilter;
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -32,5 +33,10 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected Filter[] getServletFilters() {
         return new Filter[]{new CurrentUserFilter()};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 }

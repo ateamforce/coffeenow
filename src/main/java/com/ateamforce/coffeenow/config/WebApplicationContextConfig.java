@@ -55,11 +55,6 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
-
-    @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         TilesViewResolver viewResolver = new TilesViewResolver();
         registry.viewResolver(viewResolver);
