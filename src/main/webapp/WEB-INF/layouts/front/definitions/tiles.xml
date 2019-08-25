@@ -18,4 +18,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
 		<put-attribute name="content" value="/WEB-INF/views/front/index.jsp" />
 	</definition>
 	
+	<!-- 404 Page -->
+	<definition name="front/404" extends="baseLayout_front">
+		<put-attribute name="content" value="/WEB-INF/views/front/404.jsp" />
+	</definition>
+	
 </tiles-definitions>
