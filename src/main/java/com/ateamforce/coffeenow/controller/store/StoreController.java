@@ -21,10 +21,7 @@ public class StoreController {
 
     // DASHBOARD
     @RequestMapping
-    public String store_dashboard(ModelMap modelmap, @ModelAttribute("mainMessage") final String msg) {
-        
-        // catch the flash attribute that may be coming from AccountController
-        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
+    public String store_dashboard(ModelMap modelmap) {
         
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("dashboardIsActive", "active");

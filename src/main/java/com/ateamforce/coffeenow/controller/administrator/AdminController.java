@@ -39,13 +39,11 @@ public class AdminController {
      * Go to administrator dashboard page
      * 
      * @param modelmap
-     * @param msg Main message. Shown in div#mainMessagePanelCFN (baseLayout.jsp and loginLayout.jsp, before closing body tags). Passed as flash attributes by controller methods that redirect here
      * @return 
      */
     @GetMapping
     public String admin_dashboard(
-            ModelMap modelmap, 
-            @ModelAttribute("mainMessage") final String msg
+            ModelMap modelmap
     ) {
 
         modelmap.addAttribute("appRoles", appRoleService.getAllAppRoles());

@@ -38,7 +38,7 @@ function yesNo(
 	.html(
 		'<div class="modal-header"><h5 class="modal-title" id="logoutModalLabel">'
 		+ headerMessage +
-		'</h5><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">'
+		'</h5><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button></div><div class="modal-body">'
 		+ bodyMessage +
 		'</div><div class="modal-footer"><form id="yesNoFormCFN" action="'
 		+ yesUrl +
@@ -57,7 +57,7 @@ function inform(message, openModal = true){
 	.html(
 		'<div class="modal-header"><h5 class="modal-title" id="logoutModalLabel">'
 		+ language_JSON[locale]["attention"] +
-		'</h5><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div><div class="modal-body">'
+		'</h5><button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button></div><div class="modal-body">'
 		+ message +
 		'</div><div class="modal-footer"><form id="yesNoFormCFN"><button type="button" class="btn btn-primary no"><span class="text-white">'
 		+ language_JSON[locale]["close"] +

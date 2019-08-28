@@ -48,11 +48,8 @@ public class StoreProfileController {
             @SessionAttribute(name = "currentUser") Store currentUser, 
             ModelMap modelmap, 
             @ModelAttribute("storeMedia") StoreMedia storeMedia,
-            @ModelAttribute("store") NewStoreDto store, 
-            @ModelAttribute("mainMessage") final String msg
+            @ModelAttribute("store") NewStoreDto store
     ) {
-        
-        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
 
         // add store payment types
         modelmap.addAttribute("paytypes", storePaymentTypeService.findAllByStoreId(currentUser.getId()));
