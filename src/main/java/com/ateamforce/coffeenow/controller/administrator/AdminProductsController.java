@@ -51,6 +51,39 @@ public class AdminProductsController {
     
     @Autowired
     LocaleResolver localeResolver;
+    
+    /**
+     * Gets all products to display them in products page
+     * prepares add new product form
+     * Go to administrator products page
+     * 
+     * @param modelmap
+     * @param newProduct
+     * @return 
+     */
+    @GetMapping
+    public String admin_dashboard_products(
+            ModelMap modelmap, 
+            @ModelAttribute("newProduct") Product newProduct
+    ) {
+
+        List<Product> products = productService.getAllProducts();
+
+        products.forEach((product) -> {
+            product.setProductcategoriesList(productCategoryService
+                    .getAllProductCategoriesByProductId(product.getId()));
+        });
+
+        // add products
+        modelmap.addAttribute("products", products);
+
+        modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("productsIsActive", "active");
+
+        return "back_admin/dashboard/products";
+    }
 
     /**
      * INSERT/UPDATE a product

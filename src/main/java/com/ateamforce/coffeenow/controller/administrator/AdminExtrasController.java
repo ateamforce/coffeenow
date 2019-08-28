@@ -51,6 +51,39 @@ public class AdminExtrasController {
     
     @Autowired
     LocaleResolver localeResolver;
+    
+    /**
+     * Gets all extras to display them in extras page
+     * prepares add new extra form
+     * Go to administrator extras page
+     * 
+     * @param modelmap
+     * @param newExtra
+     * @return 
+     */
+    @GetMapping
+    public String admin_dashboard_extras(
+            ModelMap modelmap, 
+            @ModelAttribute("newExtra") Extra newExtra
+    ) {
+        
+        List<Extra> extras = extraService.getAllExtras();
+
+        extras.forEach((extra) -> {
+            extra.setExtracategoriesList(extraCategoryService
+                    .getAllExtraCategoriesByExtraId(extra.getId()));
+        });
+
+        // add extras
+        modelmap.addAttribute("extras", extras);
+        
+        modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("extrasIsActive", "active");
+
+        return "back_admin/dashboard/extras";
+    }
 
     /**
      * INSERT/UPDATE an Extra
