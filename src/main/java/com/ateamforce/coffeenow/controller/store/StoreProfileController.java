@@ -8,8 +8,12 @@ import com.ateamforce.coffeenow.service.PaymentTypeService;
 import com.ateamforce.coffeenow.service.StoreMediaService;
 import com.ateamforce.coffeenow.service.StorePaymentTypeService;
 import java.io.IOException;
+import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -20,7 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.LocaleResolver;
 
 /**
  *
@@ -42,31 +48,61 @@ public class StoreProfileController {
     @Autowired
     StoreMediaService storeMediaService;
     
-    // PROFILE page of store. Includes forms for payment types / profile details / store media
+    @Autowired
+    private MessageSource messages;
+    
+    @Autowired
+    LocaleResolver localeResolver;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    // PROFILE page of store. Ask user for relogin first
     @GetMapping
-    public String store_dashboard_profile(
-            @SessionAttribute(name = "currentUser") Store currentUser, 
-            ModelMap modelmap, 
-            @ModelAttribute("storeMedia") StoreMedia storeMedia,
-            @ModelAttribute("store") NewStoreDto store
-    ) {
-
-        // add store payment types
-        modelmap.addAttribute("paytypes", storePaymentTypeService.findAllByStoreId(currentUser.getId()));
-        // add all payment types
-        modelmap.addAttribute("allPaytypes", paymentTypeService.getAllPaymentTypes());
-        
-        // add store media
-        modelmap.addAttribute("allMedia", storeMediaService.findByStore(currentUser.getId()));
+    public String store_dashboard_profile_relogin(ModelMap modelmap) {
         
         // add variable to indicate active sidebar menu
         modelmap.addAttribute("profileIsActive", "active");
         
-        return "back_store/dashboard/profile";
+        return "back_store/dashboard/profile1";
+    }
+    
+    // PROFILE page of store. Includes forms for payment types / profile details / store media
+    @PostMapping
+    public String store_dashboard_profile(
+            ModelMap modelmap, 
+            HttpServletRequest request, 
+            @SessionAttribute(name = "currentUser") Store currentUser,
+            @ModelAttribute("storeMedia") StoreMedia storeMedia,
+            @ModelAttribute("store") NewStoreDto store,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password
+    ) {
+        
+        Locale locale = localeResolver.resolveLocale(request);
+        
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("profileIsActive", "active");
+
+        // check if credentials match before allowing profile editing
+        if ( currentUser.getEmail().equals(username) && passwordEncoder.matches(password, currentUser.getPassword()) ) {
+            // add store payment types
+            modelmap.addAttribute("paytypes", storePaymentTypeService.findAllByStoreId(currentUser.getId()));
+            // add all payment types
+            modelmap.addAttribute("allPaytypes", paymentTypeService.getAllPaymentTypes());
+            // add store media
+            modelmap.addAttribute("allMedia", storeMediaService.findByStore(currentUser.getId()));
+            
+            modelmap.addAttribute("mainMessage", messages.getMessage("canEditProfile", null, locale));
+            return "back_store/dashboard/profile2";
+        }
+        
+        modelmap.addAttribute("mainMessage", messages.getMessage("wrongCredentials", null, locale));
+        return "back_store/dashboard/profile1";
     }
     
     // UPDATE STORE DETAILS
-    @PostMapping
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String store_dashboard_profile_updateStore(
             @SessionAttribute(name = "currentUser") Store currentUser,
             ModelMap modelmap,
@@ -86,7 +122,7 @@ public class StoreProfileController {
             // add variable to indicate active sidebar menu
             modelmap.addAttribute("profileIsActive", "active");
             
-            return "back_store/dashboard/profile";
+            return "back_store/dashboard/profile2";
         }
         else {
             String[] suppressedFields = result.getSuppressedFields();
@@ -120,7 +156,7 @@ public class StoreProfileController {
             // add variable to indicate active sidebar menu
             modelmap.addAttribute("profileIsActive", "active");
             
-            return "back_store/dashboard/profile";
+            return "back_store/dashboard/profile2";
         }
         else {
             String[] suppressedFields = result.getSuppressedFields();
