@@ -59,6 +59,42 @@ public class AdminProductCategoriesController {
     
     @Autowired
     LocaleResolver localeResolver;
+    
+    /**
+     * Gets all productcaregories to display them in productcategories page
+     * prepares add new product category form
+     * Go to administrator productcategories page
+     * 
+     * @param modelmap
+     * @param productCategory
+     * @return 
+     */
+    @GetMapping
+    public String admin_dashboard_productcategories(
+            ModelMap modelmap, 
+            @ModelAttribute("productCategory") ProductCategory productCategory
+    ) {
+
+        // add product categories with ExtraCategories and Products
+        List<ProductCategory> productcategories = productCategoryService.getAllProductCategories();
+        for (ProductCategory productcategory : productcategories) {
+            productcategory.setProductsList(productService.getAllProductsByProductCategoryId(productcategory.getId()));
+            productcategory.setExtrascategoriesList(extraCategoryService.getAllExtraCategoriesByProductCategoryId(productcategory.getId()));
+        }
+
+        modelmap.addAttribute("productcategories", productcategories);
+
+        // add products
+        modelmap.addAttribute("products", productService.getAllProducts());
+
+        // add extras categories
+        modelmap.addAttribute("extracategories", extraCategoryService.getAllExtraCategories());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("productcategoriesIsActive", "active");
+
+        return "back_admin/dashboard/product_categories";
+    }
 
     /**
      * INSERT/UPDATE a product category

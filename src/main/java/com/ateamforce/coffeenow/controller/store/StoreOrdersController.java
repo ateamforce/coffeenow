@@ -25,11 +25,8 @@ public class StoreOrdersController {
     @GetMapping
     public String store_dashboard_orders(
             @SessionAttribute(name = "currentUser") Store currentUser, 
-            ModelMap modelmap, 
-            @ModelAttribute("mainMessage") final String msg
+            ModelMap modelmap
     ) {
-
-        if (msg != null && !msg.isEmpty()) modelmap.addAttribute("mainMessage", msg);
         
         // add store extras
         modelmap.addAttribute("storeOrders", orderService.findByStoreId(currentUser.getId()));

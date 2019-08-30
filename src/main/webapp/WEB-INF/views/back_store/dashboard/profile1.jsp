@@ -16,7 +16,7 @@
 				<!-- Main Profile Login Card -->
 				<div class="card shadow mb-4">
 					<div class="card-body">
-					  <spring:url value="store/dashboard/profile/auth" var="loginUrl" />
+					  <spring:url value="store/dashboard/profile" var="loginUrl" />
 					  <form action=${loginUrl} method="post" class="user">
 						<c:choose>
 						  <c:when test="${param.error != null}">

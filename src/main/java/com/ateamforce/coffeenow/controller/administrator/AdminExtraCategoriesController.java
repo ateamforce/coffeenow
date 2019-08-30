@@ -56,6 +56,42 @@ public class AdminExtraCategoriesController {
     
     @Autowired
     LocaleResolver localeResolver;
+    
+    /**
+     * Gets all extracaregories to display them in extracaregories page
+     * prepares add new extra category form
+     * Go to administrator extracaregories page
+     * 
+     * @param modelmap
+     * @param extraCategory
+     * @return 
+     */
+    @GetMapping
+    public String admin_dashboard_extrascategories(
+            ModelMap modelmap, 
+            @ModelAttribute("extraCategory") ExtraCategory extraCategory
+    ) {
+
+        List<ExtraCategory> extracategories = extraCategoryService.getAllExtraCategories();
+        for (ExtraCategory extracategory : extracategories) {
+            extracategory.setExtrasList(extraService.getAllExtrasByExtraCategoryId(extracategory.getId()));
+            extracategory.setProductcategoriesList(productCategoryService.getAllProductCategoriesByExtraCategoryId(extracategory.getId()));
+        }
+
+        // add extras categories
+        modelmap.addAttribute("extracategories", extracategories);
+
+        //add all extras
+        modelmap.addAttribute("extras", extraService.getAllExtras());
+
+        //add all product categories
+        modelmap.addAttribute("productcategories", productCategoryService.getAllProductCategories());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("extracategoriesIsActive", "active");
+
+        return "back_admin/dashboard/extra_categories";
+    }
 
     /**
      * INSERT/UPDATE a extra category

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,26 @@ public class AdminStoresController {
     
     @Autowired
     LocaleResolver localeResolver;
+    
+    /**
+     * Gets all stores and enables editing them
+     * 
+     * @param modelmap
+     * @return 
+     */
+    @GetMapping
+    public String admin_dashboard_stores(
+            ModelMap modelmap
+    ) {
+        
+        //add all stores
+        modelmap.addAttribute("stores", storeService.findAll());
+
+        // add variable to indicate active sidebar menu
+        modelmap.addAttribute("storesIsActive", "active");
+
+        return "back_admin/dashboard/stores";
+    }
 
     /**
      * ENABLE/DISABLE a store
